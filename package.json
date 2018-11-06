@@ -1,0 +1,24 @@
+{
+	"name": "vue-feathers-productivity-app",
+	"version": "0.1.0",
+	"description": "Productivity app (ToDos, reminders, notes) created with Vue and Feathers",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/emaesen/vue-feathers-productivity-app.git"
+	},
+	"keywords": [
+		"javascript",
+		"vue",
+		"feathers"
+	],
+	"author": "Edward Maesen",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/emaesen/vue-feathers-productivity-app/issues"
+	},
+	"homepage": "https://github.com/emaesen/vue-feathers-productivity-app#readme"
+}
