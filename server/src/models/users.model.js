@@ -8,7 +8,10 @@ module.exports = function (app) {
     autoload: true
   });
 
-  Model.ensureIndex({ fieldName: 'email', unique: true });
+  Model.ensureIndex({ fieldName: 'username', unique: true }, function(err){
+    // handle errors...
+    // err.errorType, err.key, err.message
+  });
 
   return Model;
 };

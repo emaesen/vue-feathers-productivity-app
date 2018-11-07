@@ -3,8 +3,8 @@
   "port": 3030,
   "public": "../public/",
   "paginate": {
-    "default": 10,
-    "max": 50
+    "default": 50,
+    "max": 500
   },
   "authentication": {
     "secret": "cfa02f864a5e58bd1dda5e96fbd0d6e94c9580d3245e799fb764311da47c177a04b2b19e082b61e99880dfd08944d5bba43b635ab9ad1caa388fc3566eb4e697da279758403659d09e8765b3fc57ecfc00395cdf83a59e908dab5390f879d0047f21096d206bf75c3e62c03d5b0033cc36a7cc70fd5512f2ac7ea5e32693376fe1f3c6114da7ed5813422b6a8dd1f1321b820b4c3b7d0a81370d36bdc63a2b97f999a16f418c6ce1f117de3d3ef32a6ae01393c8c7c1f9db1bf70585580652b946295cea4e1d82e959d55494198a8bf2f55b30c87091bd3dcf5d2a506893c429eb7b23fa4336bb7a480a37e85d36a5f83ccd2b6ab825694b9bd525749d006ef4",
@@ -26,7 +26,7 @@
     },
     "local": {
       "entity": "user",
-      "usernameField": "email",
+      "usernameField": "username",
       "passwordField": "password"
     }
   },
