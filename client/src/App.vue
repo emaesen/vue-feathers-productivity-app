@@ -1,14 +1,39 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
       <router-link to="/register">Register</router-link> |
       <router-link to="/login">Login</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/dashboard">Dashboard</router-link>
     </div>
     <router-view/>
   </div>
 </template>
+
+
+<script>
+import { mapActions } from 'vuex';
+
+export default {
+  name: 'App',
+  data: function() {
+    return {
+    };
+  },
+  created: function() {
+    this.authenticate().then(resp => {
+      console.log('authenticated user: ', resp);
+      this.$router.push('/dashboard');
+    }).catch(e => {
+      console.error('Authentication error: ', e);
+      this.$router.push('/login');
+    })
+
+  },
+  methods: {
+    ...mapActions('auth', ['authenticate'])
+  }
+};
+</script>
 
 <style lang="less">
 body {

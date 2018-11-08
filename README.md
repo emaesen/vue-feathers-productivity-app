@@ -16,16 +16,16 @@ Vue-CLI plugins used:
   * [x] functional login page
     * [x] on success: redirect to dashboard
   * [ ] logout functionality
-  * [ ] basic dashboard page
-    * [ ] dashboard is not accessible when not logged in
-      * [ ] if not logged in: redirect to login
+  * [x] basic dashboard page
+    * [x] dashboard is not accessible when not logged in
+      * [x] if not logged in: redirect to login
 * [ ] Dashboard components
   * [ ] ToDo service
   * [ ] Reminders service
   * [ ] Notes service
   * [ ] Bookmarks service
   * [ ] Calendar service
-* [ ] Page flow:
+* [x] Page flow:
 
 ```
 /
