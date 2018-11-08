@@ -10,15 +10,38 @@ Vue-CLI plugins used:
 
 
 ## *--WORK IN PROGRESS--*
-* [ ] Create MVP
-  * [x] registration
-  * [ ] login
-  * [ ] one basic service (notes?)
-* [ ] Add ToDo service
-* [ ] Add Reminders service
-* [ ] Add Notes service
-* [ ] Add Bookmarks service
-* [ ] Add Calendar service
+* [ ] Minimum Viable Product
+  * [x] functional registration page
+    * [x] on success: redirect to login
+  * [x] functional login page
+    * [x] on success: redirect to dashboard
+  * [ ] logout functionality
+  * [ ] basic dashboard page
+    * [ ] dashboard is not accessible when not logged in
+      * [ ] if not logged in: redirect to login
+* [ ] Dashboard components
+  * [ ] ToDo service
+  * [ ] Reminders service
+  * [ ] Notes service
+  * [ ] Bookmarks service
+  * [ ] Calendar service
+* [ ] Page flow:
+
+```
+/
+if logged in -> dashboard
+else -> login
+
+/dashboard
+if logged in -> ok, stay
+else -> login
+
+/login
+if authenticated -> dashboard
+
+/register
+if valid entry -> login
+```
 
 ## Setup
 

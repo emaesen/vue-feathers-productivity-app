@@ -98,10 +98,10 @@ export default {
         console.log("submitting login form");
         this.authenticate({
           strategy: 'local',
-          username: this.user.username,
-          password: this.user.password
+          ...this.user
         }).then(resp => {
           console.log('logged in: ', resp);
+          this.$router.push('/dashboard');
         }).catch(e => {
           console.error('Authentication error: ', e);
           this.authError = e.message;
