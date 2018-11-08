@@ -4,7 +4,7 @@
       <legend>
         Login
       </legend>
-      <div v-if="errors.length">
+      <div v-if="errors.length" class="errors">
         <b>Please correct the following error(s):</b>
         <ul>
           <li v-for="error in errors">{{ error }}</li>
@@ -44,6 +44,7 @@
           class="button"
           type="submit"
           value="Login"
+          :disabled="!isValid"
         />
       </div>
     </fieldset>
@@ -63,6 +64,9 @@ export default {
     };
   },
   computed: {
+    isValid: function() {
+      return this.validUsername() && this.validPassword();
+    }
   },
   methods: {
     login: function(evt) {
@@ -75,17 +79,22 @@ export default {
     validForm(){
       // form has html5 validation
       // do some js validation as backup
-      let un = this.user.username;
-      let pwd = this.user.password;
       let err = this.errors = [];
-      if (!un) {
-        err.push('Username is required.');
+      if (!this.validUsername()) {
+        err.push('Username is invalid.');
       }
-      if (!pwd) {
-        err.push('Password is required.');
+      if (!this.validPassword()) {
+        err.push('Password is invalid.');
       }
-
       return err.length === 0;
+    },
+    validUsername: function() {
+      var re = /^[0-9A-Za-z][0-9A-Za-z ]{3,15}$/;
+      return re.test(this.user.username);
+    },
+    validPassword: function() {
+      var re = /^.{4,15}$/;
+      return re.test(this.user.password);
     }
   }
 };
@@ -126,5 +135,12 @@ input:valid + span:after {
 input:valid + span + span.validation {
   color: #26b72b;
   visibility: visible;
+}
+.errors {
+  font-size: .85rem;
+  color: #e67d09;
+}
+ul {
+  margin: 0 -1em 1em 0;
 }
 </style>

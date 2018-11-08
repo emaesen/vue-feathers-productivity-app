@@ -4,7 +4,7 @@
       <legend>
         Register
       </legend>
-      <div v-if="errors.length">
+      <div v-if="errors.length" class="errors">
         <b>Please correct the following error(s):</b>
         <ul>
           <li v-for="error in errors">{{ error }}</li>
@@ -58,6 +58,7 @@
           class="button"
           type="submit"
           value="Register"
+          :disabled="!isValid"
         />
       </div>
     </fieldset>
@@ -78,6 +79,9 @@ export default {
     };
   },
   computed: {
+    isValid: function() {
+      return this.validUsername() && this.validPassword() && this.matchingPasswords();
+    }
   },
   methods: {
     register: function(evt) {
@@ -90,33 +94,32 @@ export default {
     validForm(){
       // form has html5 validation
       // do some js validation as backup
-      let un = this.user.username;
-      let pwd = this.user.password;
-      let cpwd = this.user.confirmPassword;
       let err = this.errors = [];
-      if (!un) {
+      if (!this.user.username) {
         err.push('Username is required.');
-      } else if (!this.validUsername(un)) {
+      } else if (!this.validUsername()) {
         err.push('Username must have 4 to 15 letters and/or numbers.');
       }
-      if (!pwd) {
+      if (!this.user.password) {
         err.push('Password is required.');
-      } else if (!this.validPassword(pwd)) {
+      } else if (!this.validPassword()) {
         err.push('Password must have 4 to 15 characters.');
       }
-      if (cpwd !== pwd) {
+      if (!this.matchingPasswords()) {
         err.push('Both passwords must match.');
       }
-
       return err.length === 0;
     },
-    validUsername: function(val) {
+    validUsername: function() {
       var re = /^[0-9A-Za-z][0-9A-Za-z ]{3,15}$/;
-      return re.test(val);
+      return re.test(this.user.username);
     },
-    validPassword: function(val) {
+    validPassword: function() {
       var re = /^.{4,15}$/;
-      return re.test(val);
+      return re.test(this.user.password);
+    },
+    matchingPasswords: function() {
+      return this.user.password === this.user.confirmPassword;
     }
   }
 };
@@ -152,5 +155,12 @@ input:valid + span:after {
   margin-left: 5px;
   font-size: .65rem;
   color: #e67d09;
+}
+.errors {
+  font-size: .85rem;
+  color: #e67d09;
+}
+ul {
+  margin: 0 -1em 1em 0;
 }
 </style>
