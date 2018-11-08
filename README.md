@@ -1,6 +1,13 @@
 # vue-feathers-productivity-app
 A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeDB.
 
+Vue-CLI plugins used:
+* [babel](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel)
+* [pwa](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa)
+* [eslint](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint)
+* [unit-mocha](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-unit-mocha)
+* [e2e-nightwatch](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-nightwatch)
+
 
 ## *--WORK IN PROGRESS--*
 * [ ] Create MVP
