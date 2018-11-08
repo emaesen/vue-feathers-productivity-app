@@ -4,7 +4,21 @@ import Home from './views/Home.vue'
 import Register from './views/Register.vue'
 import Login from './views/Login.vue'
 
+import store from './store';
+
 Vue.use(Router)
+
+function checkAuth(to, from, next, target) {
+  store.dispatch('auth/authenticate').then(() => {
+    // authentication succeeded
+    // if target is defined, redirect, else stay on page
+    next(target);
+  }).catch(() => {
+    // authentication failed
+    // redirect to login
+    next('/login');
+  });
+}
 
 export default new Router({
   mode: 'history',
@@ -13,7 +27,10 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Home,
+      beforeEnter(to, from, next) {
+        checkAuth(to, from, next, 'dashboard')
+      }
     },
     {
       path: '/register',
@@ -31,7 +48,8 @@ export default new Router({
       // route level code-splitting
       // this generates a separate chunk (dashboard.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "dashboard" */ './views/Dashboard.vue')
+      component: () => import(/* webpackChunkName: "dashboard" */ './views/Dashboard.vue'),
+      beforeEnter: checkAuth,
     }
   ]
 })

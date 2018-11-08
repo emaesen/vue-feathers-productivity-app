@@ -11,26 +11,12 @@
 
 
 <script>
-import { mapActions } from 'vuex';
 
 export default {
   name: 'App',
   data: function() {
     return {
     };
-  },
-  created: function() {
-    this.authenticate().then(resp => {
-      console.log('authenticated user: ', resp);
-      this.$router.push('/dashboard');
-    }).catch(e => {
-      console.error('Authentication error: ', e);
-      this.$router.push('/login');
-    })
-
-  },
-  methods: {
-    ...mapActions('auth', ['authenticate'])
   }
 };
 </script>
