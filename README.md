@@ -19,6 +19,7 @@ Vue-CLI plugins used:
   * [x] basic dashboard page
     * [x] dashboard is not accessible when not logged in
       * [x] if not logged in: redirect to login
+    * [ ] access simple service (notes)
 * [ ] Dashboard components
   * [ ] ToDo service
   * [ ] Reminders service
