@@ -17,9 +17,8 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
 
 First clone this repo.
 ```bash
-# install node_modules in main directory
+# cd to repo directory
 $ cd vue-feathers-productivity
-$ npm install
 # install node_modules in server directory
 $ cd server
 $ npm install
