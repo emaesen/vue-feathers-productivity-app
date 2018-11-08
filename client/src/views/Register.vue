@@ -7,6 +7,7 @@
       <div v-if="errors.length" class="errors">
         <b>Please correct the following error(s):</b>
         <ul>
+          <!-- eslint-disable-next-line -->
           <li v-for="error in errors">{{ error }}</li>
         </ul>
       </div>
@@ -45,7 +46,7 @@
           id="confirm-password"
           name="confirm-password"
           required
-          v-model="user.confirmPassword"
+          v-model="confirmPassword"
           type="password"
           :pattern="user.password"
           placeholder=""
@@ -55,10 +56,18 @@
       </div>
       <div class="">
         <input
+          v-if="!loading"
           class="button"
           type="submit"
           value="Register"
           :disabled="!isValid"
+        />
+        <input
+          v-if="loading"
+          class="button"
+          type="submit"
+          value="in progress..."
+          disabled
         />
       </div>
     </fieldset>
@@ -66,6 +75,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'Register',
   data: function() {
@@ -73,21 +84,29 @@ export default {
       errors: [],
       user: {
         username: '',
-        password: '',
-        confirmPassword: ''
-      }
+        password: ''
+      },
+      confirmPassword: ''
     };
   },
   computed: {
     isValid: function() {
       return this.validUsername() && this.validPassword() && this.matchingPasswords();
-    }
+    },
+    ...mapState('users', { loading: 'isCreatePending' })
   },
   methods: {
     register: function(evt) {
       if (this.validForm()) {
         console.log("submitting form");
-        //submit form
+        // create user instance
+        const { User } = this.$FeathersVuex;
+        const user = new User(this.user);
+        user.save()
+          .then((user) => {
+            console.log({user:user});
+            this.$router.push('/login');
+          });
       }
       evt.preventDefault();
     },
@@ -119,7 +138,7 @@ export default {
       return re.test(this.user.password);
     },
     matchingPasswords: function() {
-      return this.user.password === this.user.confirmPassword;
+      return this.user.password === this.confirmPassword;
     }
   }
 };

@@ -25,6 +25,12 @@ export default new Vuex.Store({
 
   },
   plugins: [
+    service('users', {
+      instanceDefaults: {
+        username: '',
+        password: ''
+      }
+    }),
     // Setup the auth plugin.
     auth({ userService: 'users' })
   ]
