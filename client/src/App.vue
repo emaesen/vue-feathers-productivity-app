@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/register">Register</router-link> |
-      <router-link to="/login">Login</router-link> |
-      <router-link to="/dashboard">Dashboard</router-link>
+      <div v-if="loggedIn">
+        <a href="#" @click="logout">Logout</a>
+      </div>
     </div>
     <router-view/>
   </div>
@@ -11,12 +11,23 @@
 
 
 <script>
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'App',
   data: function() {
     return {
     };
+  },
+  computed: {
+    ...mapState('auth', { loggedIn: 'payload'})
+  },
+  methods: {
+    ...mapActions('auth', { authLogout: 'logout'}),
+    logout() {
+      console.log("logging out...");
+      this.authLogout().then(() => this.$router.push('login'));
+    }
   }
 };
 </script>
@@ -25,6 +36,9 @@ export default {
 body {
   color: #e9e4f2;
   background-color: #17161c;
+}
+h1{
+  text-align: center;
 }
 input, textarea, select, button {
   background-color: #000;
@@ -76,13 +90,11 @@ input {
 }
 #app {
   font-family: Helvetica, Arial, sans-serif;
-  position: relative;
   font-size: 14px;
 }
 #nav {
   padding: 0 0 1em 0;
-  position: relative;
-  right: 0;
+  text-align: right;
   a {
     font-weight: bold;
     &.router-link-exact-active {

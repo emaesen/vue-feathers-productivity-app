@@ -15,7 +15,7 @@ Vue-CLI plugins used:
     * [x] on success: redirect to login
   * [x] functional login page
     * [x] on success: redirect to dashboard
-  * [ ] logout functionality
+  * [x] logout functionality
   * [x] basic dashboard page
     * [x] dashboard is not accessible when not logged in
       * [x] if not logged in: redirect to login
