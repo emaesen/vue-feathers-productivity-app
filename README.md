@@ -17,8 +17,8 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
 
 First clone this repo.
 ```bash
-# cd to repo directory
-$ cd vue-feathers-productivity
+# cd to vue-feathers-productivity repo directory
+$ cd [path/to/vue-feathers-productivity]
 # install node_modules in server directory
 $ cd server
 $ npm install
@@ -32,14 +32,20 @@ $ npm install
 
 ## Development Usage
 
-In Git Bash window #1:
+1. **In Git Bash window #1**:
 ```bash
+# cd to vue-feathers-productivity repo directory
+$ cd [path/to/vue-feathers-productivity]
 $ cd server
 $ npm run dev
 ```
+You should see a generic Feathers page at http://localhost:3030/.
 
-In Git Bash window #2:
+2. **In Git Bash window #2**:
 ```bash
+# cd to vue-feathers-productivity repo directory
+$ cd [path/to/vue-feathers-productivity]
 $ cd client
 $ npm run dev
 ```
+You can view the client app at http://localhost:8080/ (local) or http://192.168.56.1:8080/ (network).
