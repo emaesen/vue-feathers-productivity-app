@@ -7,6 +7,7 @@
       <div v-if="errors.length" class="errors">
         <b>Please correct the following error(s):</b>
         <ul>
+          <!-- eslint-disable-next-line -->
           <li v-for="error in errors">{{ error }}</li>
         </ul>
       </div>
@@ -19,7 +20,7 @@
           autofocus
           v-model="user.username"
           type="text"
-          pattern="[0-9A-Za-z][0-9A-Za-z ]{3,15}"
+          pattern="[0-9A-Za-z][0-9A-Za-z ]{0,16}[0-9A-Za-z]"
           placeholder=""
         />
         <span></span>
@@ -33,7 +34,7 @@
           required
           v-model="user.password"
           type="password"
-          pattern=".{4,15}"
+          pattern=".{4,18}"
           placeholder=""
         />
         <span></span>
@@ -89,11 +90,11 @@ export default {
       return err.length === 0;
     },
     validUsername: function() {
-      var re = /^[0-9A-Za-z][0-9A-Za-z ]{3,15}$/;
+      var re = /^[0-9A-Za-z][0-9A-Za-z ]{0,16}[0-9A-Za-z]$/;
       return re.test(this.user.username);
     },
     validPassword: function() {
-      var re = /^.{4,15}$/;
+      var re = /^.{4,18}$/;
       return re.test(this.user.password);
     }
   }

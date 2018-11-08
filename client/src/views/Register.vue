@@ -20,11 +20,11 @@
           autofocus
           v-model="user.username"
           type="text"
-          pattern="[0-9A-Za-z][0-9A-Za-z ]{3,15}"
+          pattern="[0-9A-Za-z][0-9A-Za-z ]{0,16}[0-9A-Za-z]"
           placeholder=""
         />
         <span></span>
-        <span class="warning">4 to 15 letters, numbers or spaces</span>
+        <span class="warning">2 to 18 letters, numbers or spaces</span>
       </div>
       <div>
         <label for="password">Password</label>
@@ -34,11 +34,11 @@
           required
           v-model="user.password"
           type="password"
-          pattern=".{4,15}"
+          pattern=".{4,18}"
           placeholder=""
         />
         <span></span>
-        <span class="warning">4 to 15 characters</span>
+        <span class="warning">4 to 18 characters</span>
       </div>
       <div>
         <label for="confirm-password">Confirm Password</label>
@@ -117,12 +117,12 @@ export default {
       if (!this.user.username) {
         err.push('Username is required.');
       } else if (!this.validUsername()) {
-        err.push('Username must have 4 to 15 letters and/or numbers.');
+        err.push('Username must have 2 to 18 letters, numbers or spaces.');
       }
       if (!this.user.password) {
         err.push('Password is required.');
       } else if (!this.validPassword()) {
-        err.push('Password must have 4 to 15 characters.');
+        err.push('Password must have 4 to 18 characters.');
       }
       if (!this.matchingPasswords()) {
         err.push('Both passwords must match.');
@@ -130,11 +130,11 @@ export default {
       return err.length === 0;
     },
     validUsername: function() {
-      var re = /^[0-9A-Za-z][0-9A-Za-z ]{3,15}$/;
+      var re = /^[0-9A-Za-z][0-9A-Za-z ]{0,16}[0-9A-Za-z]$/;
       return re.test(this.user.username);
     },
     validPassword: function() {
-      var re = /^.{4,15}$/;
+      var re = /^.{4,18}$/;
       return re.test(this.user.password);
     },
     matchingPasswords: function() {
