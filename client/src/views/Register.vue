@@ -23,7 +23,7 @@
           pattern="[0-9A-Za-z][0-9A-Za-z ]{0,16}[0-9A-Za-z]"
           placeholder=""
         />
-        <span></span>
+        <span class="icon"></span>
         <span class="warning">2 to 18 letters, numbers or spaces</span>
       </div>
       <div>
@@ -37,7 +37,7 @@
           pattern=".{4,18}"
           placeholder=""
         />
-        <span></span>
+        <span class="icon"></span>
         <span class="warning">4 to 18 characters</span>
       </div>
       <div>
@@ -51,7 +51,7 @@
           :pattern="user.password"
           placeholder=""
         />
-        <span></span>
+        <span class="icon"></span>
         <span class="warning">Match password</span>
       </div>
       <div class="">
@@ -64,7 +64,7 @@
         />
         <input
           v-if="loading"
-          class="button"
+          class="button loading"
           type="submit"
           value="in progress..."
           disabled
@@ -145,31 +145,6 @@ export default {
 </script>
 
 <style scoped>
-fieldset {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  display: inline-block;
-}
-legend {
-  margin:1em 0;
-  font-size: 1.1rem;
-}
-label {
-  display:flex;
-}
-input {
-  margin-bottom:1em;
-}
-input:invalid + span:after {
-  content: '✖';
-  color: #f00;
-  padding-left: 5px;
-}
-input:valid + span:after {
-  content: '✓';
-  color: #26b72b;
-  padding-left: 5px;
-}
 .warning {
   margin-left: 5px;
   font-size: .65rem;

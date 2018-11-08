@@ -23,7 +23,7 @@
           pattern="[0-9A-Za-z][0-9A-Za-z ]{0,16}[0-9A-Za-z]"
           placeholder=""
         />
-        <span></span>
+        <span class="icon"></span>
         <span class="validation">Acceptable</span>
       </div>
       <div>
@@ -37,7 +37,7 @@
           pattern=".{4,18}"
           placeholder=""
         />
-        <span></span>
+        <span class="icon"></span>
         <span class="validation">Acceptable</span>
       </div>
       <div class="">
@@ -46,7 +46,7 @@
           type="submit"
           value="Login"
           :disabled="!isValid"
-        />
+        /> <span class="register">-or- &nbsp;<router-link to="/register">Register</router-link></span>
       </div>
     </fieldset>
   </form>
@@ -101,32 +101,7 @@ export default {
 };
 </script>
 
-<style scoped>
-fieldset {
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  display: inline-block;
-}
-legend {
-  margin:1em 0;
-  font-size: 1.1rem;
-}
-label {
-  display:flex;
-}
-input {
-  margin-bottom:1em;
-}
-input:invalid + span:after {
-  content: '✖';
-  color: #f00;
-  padding-left: 5px;
-}
-input:valid + span:after {
-  content: '✓';
-  color: #26b72b;
-  padding-left: 5px;
-}
+<style scoped lang="less">
 .validation {
   visibility: hidden;
   margin-left: 5px;
@@ -143,5 +118,11 @@ input:valid + span + span.validation {
 }
 ul {
   margin: 0 -1em 1em 0;
+}
+.register {
+  margin-left: 1em;
+  font-size: .85rem;
+  color: #999;
+  font-style: italic;
 }
 </style>
