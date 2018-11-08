@@ -27,6 +27,9 @@ $ cd ../client
 $ npm install
 ```
 
+***Note***: *You may receive vulnerability warnings. They are in 'cli-plugin-e2e-nightwatch', an e2e test utility. Thus they do no impact the normal usage of either server or client. Run `npm audit fix` to fix them, or `npm audit` for details. (As of 11/08/2018 no fix is yet available)*
+
+
 ## Development Usage
 
 In Git Bash window #1:
