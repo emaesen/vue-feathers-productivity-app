@@ -13,7 +13,7 @@ module.exports = function (app) {
   /*
   note: {
     _id: '',
-    userId: user._id,
+    ownerId: user._id,
     text: '',
     category: '',
     createdAt: {},
