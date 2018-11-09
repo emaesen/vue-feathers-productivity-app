@@ -1,6 +1,6 @@
 {
 	"name": "vue-feathers-productivity-app",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Productivity app (ToDos, reminders, notes) created with Vue and Feathers",
 	"main": "index.js",
 	"scripts": {
