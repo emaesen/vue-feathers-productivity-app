@@ -14,5 +14,16 @@ module.exports = function (app) {
     // err.errorType, err.key, err.message
   });
 
+  // schema:
+  /*
+  user: {
+    _id: '',
+    username: '',
+    password: '',
+    createdAt: {},
+    updatedAt: {}
+  }
+  */
+
   return Model;
 };
