@@ -13,6 +13,8 @@ Vue-CLI plugins used:
 * [ ] Minimum Viable Product
   * [x] functional registration page
     * [x] on success: redirect to login
+      * [x] user is created in db
+      * [x] display username
   * [x] functional login page
     * [x] on success: redirect to dashboard
   * [x] logout functionality

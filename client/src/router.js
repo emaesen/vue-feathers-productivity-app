@@ -35,12 +35,14 @@ export default new Router({
     {
       path: '/register',
       name: 'register',
-      component: Register
+      component: Register,
+      beforeEnter: checkAuth
     },
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: Login,
+      beforeEnter: checkAuth
     },
     {
       path: '/dashboard',
@@ -49,7 +51,7 @@ export default new Router({
       // this generates a separate chunk (dashboard.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "dashboard" */ './views/Dashboard.vue'),
-      beforeEnter: checkAuth,
+      beforeEnter: checkAuth
     }
   ]
 })

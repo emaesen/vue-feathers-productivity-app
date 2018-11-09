@@ -1,7 +1,13 @@
 <template>
   <div id="app">
     <div id="nav">
-      <div v-if="loggedIn">
+      <div v-if="!dashboard" class="nav-item">
+        <router-link to="/dashboard">Dashboard</router-link> |
+      </div>
+      <div v-if="user" class="nav-item">
+        <span class="info">
+          {{ userName }}
+        </span>
         <a href="#" @click="logout">Logout</a>
       </div>
     </div>
@@ -20,7 +26,14 @@ export default {
     };
   },
   computed: {
-    ...mapState('auth', { loggedIn: 'payload'})
+    ...mapState('auth', { user: 'user' }),
+    userName() {
+      console.log({user: this.user});
+      return "Logged in as “" + this.user.username + "” ⇾ ";
+    },
+    dashboard() {
+      return this.$route.name === "dashboard";
+    }
   },
   methods: {
     ...mapActions('auth', { authLogout: 'logout'}),
@@ -108,5 +121,11 @@ a {
   letter-spacing: 1px;
   color: #bdb1db;
   font-style: normal;
+}
+.info {
+  color: #e9e4f272;
+}
+.nav-item {
+  display: inline;
 }
 </style>
