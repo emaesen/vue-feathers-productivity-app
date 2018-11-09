@@ -1,16 +1,16 @@
 # vue-feathers-productivity-app
 A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeDB.
 
-Vue-CLI plugins used:
-* [babel](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel)
-* [pwa](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa)
-* [eslint](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint)
-* [unit-mocha](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-unit-mocha)
-* [e2e-nightwatch](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-nightwatch)
+## Versions
 
+
+* ***v0.1***: *Functional basic registration and login flow*
+  * can be used as starting point for any vue.js application requiring authentication.
+  * uses feathers-vuex for authentication.
+  * uses NeDB as database. Sufficient for small scale applications - if need be can be swapped easily for MongoDB or similar more robust DB solution.
 
 ## *--WORK IN PROGRESS--*
-* [ ] Minimum Viable Product
+* [x] Minimum Viable Product - authentication (v0.1)
   * [x] functional registration page
     * [x] on success: redirect to login
       * [x] user is created in db
@@ -21,7 +21,8 @@ Vue-CLI plugins used:
   * [x] basic dashboard page
     * [x] dashboard is not accessible when not logged in
       * [x] if not logged in: redirect to login
-    * [ ] access simple service (notes)
+* [ ] Minimum Viable Product - service (v0.2)
+  * [ ] access simple service (notes)
 * [ ] Dashboard components
   * [ ] ToDo service
   * [ ] Reminders service
@@ -45,6 +46,14 @@ if authenticated -> dashboard
 /register
 if valid entry -> login
 ```
+* [ ] Mobile optimized
+* [ ] Progressive Web App
+* [ ] Test suite
+* [ ] CI
+* [ ] Deploy to cloud
+  * [ ] Static (pre-rendered) + Lambda functions?
+  * [ ] AWS? Netlify?
+
 
 ## Setup
 
@@ -82,3 +91,42 @@ $ cd client
 $ npm run dev
 ```
 You can view the client app at http://localhost:8080/ (local) or http://192.168.56.1:8080/ (network).
+
+
+## Dependencies
+
+
+***Client Dependencies:***
+* @feathersjs/authentication-client
+* @feathersjs/feathers
+* @feathersjs/socketio-client
+* feathers-vuex
+* register-service-worker
+* socket.io-client
+* vue
+* vue-router
+* vuex
+
+***Server Dependencies:***
+* @feathersjs/authentication
+* @feathersjs/authentication-jwt
+* @feathersjs/authentication-local
+* @feathersjs/configuration
+* @feathersjs/errors
+* @feathersjs/express
+* @feathersjs/feathers
+* @feathersjs/socketio
+* compression
+* cors
+* feathers-nedb
+* helmet
+* nedb
+* serve-favicon
+* winston
+
+***Vue-CLI plugins:***
+* [babel](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel)
+* [pwa](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa)
+* [eslint](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint)
+* [unit-mocha](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-unit-mocha)
+* [e2e-nightwatch](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-nightwatch)
