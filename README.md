@@ -22,7 +22,9 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     * [x] dashboard is not accessible when not logged in
       * [x] if not logged in: redirect to login
 * [ ] Minimum Viable Product - service (v0.2)
-  * [ ] access simple service (notes)
+  * [ ] add notes service
+    * [ ] CRUD operations
+    * [ ] only the logged-in user can access their own notes
 * [ ] Dashboard components
   * [ ] ToDo service
   * [ ] Reminders service
@@ -118,6 +120,7 @@ You can view the client app at http://localhost:8289/ (local) or http://192.168.
 * @feathersjs/socketio
 * compression
 * cors
+* feathers-authentication-hooks
 * feathers-nedb
 * helmet
 * nedb
