@@ -1,9 +1,6 @@
 <template>
   <div id="app">
     <div id="nav">
-      <div v-if="!dashboard" class="nav-item">
-        <router-link to="/dashboard">Dashboard</router-link> |
-      </div>
       <div v-if="user" class="nav-item">
         <span class="info">
           {{ userName }}
@@ -30,9 +27,6 @@ export default {
     userName() {
       console.log({user: this.user});
       return "Logged in as “" + this.user.username + "” ⇾ ";
-    },
-    dashboard() {
-      return this.$route.name === "dashboard";
     }
   },
   methods: {
