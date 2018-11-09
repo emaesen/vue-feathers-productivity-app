@@ -10,13 +10,21 @@ Vue.use(Router)
 
 function checkAuth(to, from, next, target) {
   store.dispatch('auth/authenticate').then(() => {
+    console.log("authenticated ...");
     // authentication succeeded
-    // if target is defined, redirect, else stay on page
+    // if target is defined, redirect to target, else stay on page
     next(target);
   }).catch(() => {
+    console.log("not authenticated ...");
     // authentication failed
     // redirect to login
     next('/login');
+  });
+}
+function logOut(to, from, next) {
+  console.log("logging out...");
+  store.dispatch('auth/logout').then(() => {
+    next();
   });
 }
 
@@ -36,13 +44,17 @@ export default new Router({
       path: '/register',
       name: 'register',
       component: Register,
-      beforeEnter: checkAuth
+      beforeEnter(to, from, next) {
+        logOut(to, from, next)
+      }
     },
     {
       path: '/login',
       name: 'login',
       component: Login,
-      beforeEnter: checkAuth
+      beforeEnter(to, from, next) {
+        logOut(to, from, next)
+      }
     },
     {
       path: '/dashboard',
