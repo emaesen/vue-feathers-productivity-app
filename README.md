@@ -76,20 +76,25 @@ $ npm install
 
 ## Development Usage
 
-1. **In Git Bash window #1**:
+1. **In Git Bash window #1 - run server**:
 ```bash
 # cd to vue-feathers-productivity repo directory
 $ cd [path/to/vue-feathers-productivity]
 $ cd server
+# copy dummy data as a starting point
+# 4 users: test1, test2, test3 and test4. Password equals username
+$ npm run setup:dev
+# start the server
 $ npm run dev
 ```
 You should see a generic Feathers page at http://localhost:3030/.
 
-2. **In Git Bash window #2**:
+2. **In Git Bash window #2 - run client**:
 ```bash
 # cd to vue-feathers-productivity repo directory
 $ cd [path/to/vue-feathers-productivity]
 $ cd client
+# start the server (hot-reload enabled)
 $ npm run dev
 ```
 You can view the client app at http://localhost:8289/ (local) or http://192.168.56.1:8289/ (network).

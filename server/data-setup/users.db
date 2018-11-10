@@ -1,0 +1,5 @@
+{"username":"test1","password":"$2a$13$A1J4E11hq/Tbxfd2ioEdsuA4MGIvmOhDjwdzaQhb5Kzar64GGlIwy","_id":"6FdSuzYSthWmTVud","createdAt":{"$$date":1541874675242},"updatedAt":{"$$date":1541874675242}}
+{"username":"test2","password":"$2a$13$LUT3zDKgx3y/JUxo6uUBo.nWunCZuD18iu0orUndo9zSariy0Xjqe","_id":"T4hIrznRX5CqTOMq","createdAt":{"$$date":1541874697113},"updatedAt":{"$$date":1541874697113}}
+{"username":"test4","password":"$2a$13$.lgqjx8eCHURVw3kRdVYuu2wumU8Me1bhhFnajZuTr2oAZ2SVqUlq","_id":"YdnP6dcxnJST5bkR","createdAt":{"$$date":1541874799158},"updatedAt":{"$$date":1541874799158}}
+{"username":"test3","password":"$2a$13$frnSubXH4So82r9Bm3p80OXBGcvJP8QyzXyL/DtCezufdFCJHyFkm","_id":"Z6C4gQ0sDDDs5k2E","createdAt":{"$$date":1541874732198},"updatedAt":{"$$date":1541874732198}}
+{"$$indexCreated":{"fieldName":"username","unique":true,"sparse":false}}

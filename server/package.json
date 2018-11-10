@@ -22,6 +22,8 @@
     "npm": ">= 3.0.0"
   },
   "scripts": {
+    "setup:dev": "cp -a data-setup/. data-dev/",
+    "setup:test": "cp -a data-setup/. data-test/",
     "test": "npm run eslint && npm run mocha",
     "eslint": "eslint src/. test/. --config .eslintrc.json",
     "dev": "nodemon src/",
