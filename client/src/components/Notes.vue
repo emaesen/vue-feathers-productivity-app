@@ -23,6 +23,8 @@
 </template>
 
 <script>
+// Get notes as "Reactive Lists with Live Queries"
+// https://feathers-plus.github.io/v1/feathers-vuex/common-patterns.html#Reactive-Lists-with-Live-Queries
 import { mapState, mapGetters, mapActions } from 'vuex';
 
 export default {
@@ -30,6 +32,7 @@ export default {
   components: {
   },
   created: function() {
+    // Find all appointments. We'll use the getters to separate them.
     this.findNotes({ query: {} });
   },
   methods: {
