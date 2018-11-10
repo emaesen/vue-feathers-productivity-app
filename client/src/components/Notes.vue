@@ -32,7 +32,7 @@ export default {
   components: {
   },
   created: function() {
-    // Find all appointments. We'll use the getters to separate them.
+    // Find all notes. We'll use the getters to separate them.
     this.findNotes({ query: {} });
   },
   methods: {
