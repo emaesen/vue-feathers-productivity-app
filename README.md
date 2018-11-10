@@ -24,7 +24,12 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
 * [ ] Minimum Viable Product - service (v0.2)
   * [ ] add notes service
     * [ ] CRUD operations
-    * [ ] only the logged-in user can access their own notes
+      * [ ] Create
+      * [x] Read
+      * [ ] Update
+      * [ ] Delete
+    * [ ] the logged-in user can access only their own notes
+    * [ ] when user logs out, all their store data are cleared
 * [ ] Dashboard components
   * [ ] ToDo service
   * [ ] Reminders service
