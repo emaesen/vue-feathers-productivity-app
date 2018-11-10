@@ -13,7 +13,7 @@ module.exports = {
     get: [],
     create: [
       hooks.associateCurrentUser({
-        as: 'userId'
+        as: 'ownerId'
       })
     ],
     update: [],

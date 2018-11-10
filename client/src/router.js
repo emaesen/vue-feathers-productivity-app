@@ -24,6 +24,17 @@ function checkAuth(to, from, next, target) {
 function logOut(to, from, next) {
   console.log("logging out...");
   store.dispatch('auth/logout').then(() => {
+    console.log("logged out...");
+    // TODO!: Clear the store state here
+    // to prevent bleed-through of data from previous session.
+    // Use the following?:
+    // https://feathers-plus.github.io/v1/feathers-vuex/service-module.html#clearAll-state
+    // or
+    // https://feathers-plus.github.io/v1/feathers-vuex/model-classes.html#instance-reset
+    // or something like:
+    //  https://forum.vuejs.org/t/how-to-completely-reset-the-vuex-store/13611/3
+    // or:
+    // https://github.com/ianwalter/vuex-reset
     next();
   });
 }
