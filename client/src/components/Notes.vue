@@ -51,15 +51,11 @@ export default {
       return null;
     },
     query() {
-      // TODO: it should not be necessary to define ownerId in the query!
-      // The 'before' hooks in notes.hooks.js should guarantee that only
+      // it is not necessary to define ownerId in the query:
+      // The 'before' hooks in notes.hooks.js guarantee that only
       // the current user's notes are returned.
-      // This works properly on initial pageload, but when switching between
-      // logged in users, the notes from the previously logged in user are
-      // still accessible!!!
-      let query = {
-        ownerId: this.user.userId
-      };
+      // In combination with notes service clearAll on logout
+      let query = {};
       if (this.category) {
         query.category = this.category
       }
