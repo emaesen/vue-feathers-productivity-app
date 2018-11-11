@@ -28,8 +28,8 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       * [x] Read
       * [ ] Update
       * [ ] Delete
-    * [ ] the logged-in user can access only their own notes
-    * [ ] when user logs out, all their store data are cleared
+    * [x] the logged-in user can access only their own notes
+    * [x] when user logs out, their notes data are cleared from store
 * [ ] Dashboard components
   * [ ] ToDo service
   * [ ] Reminders service
