@@ -30,6 +30,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       * [ ] Delete
     * [x] the logged-in user can access only their own notes
     * [x] when user logs out, their notes data are cleared from store
+* [ ] add "remain logged in" option to extend 1-day jwt expiration
 * [ ] Dashboard components
   * [ ] ToDo service
   * [ ] Reminders service
@@ -53,6 +54,7 @@ if authenticated -> dashboard
 /register
 if valid entry -> login
 ```
+* [ ] Encrypt NeDB data items - each with user's key
 * [ ] Mobile optimized
 * [ ] Progressive Web App
 * [ ] Test suite
@@ -60,6 +62,7 @@ if valid entry -> login
 * [ ] Deploy to cloud
   * [ ] Static (pre-rendered) + Lambda functions?
   * [ ] AWS? Netlify?
+* [ ] Replace NeDB with Solid POD implementation
 
 
 ## Setup
