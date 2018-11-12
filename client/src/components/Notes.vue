@@ -11,10 +11,10 @@
       >
         <div class="note">
           <div class="category">
-            category: {{ note.category }}
+            {{ note.category }}
           </div>
           <div class="text">
-            text: {{ note.text }}
+            {{ note.text }}
           </div>
         </div>
       </div>
