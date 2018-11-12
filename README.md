@@ -30,7 +30,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       * [ ] Delete
     * [x] the logged-in user can access only their own notes
     * [x] when user logs out, their notes data are cleared from store
-* [ ] add "remain logged in" option to extend 1-day jwt expiration
+  * [ ] add "remain logged in" option to extend 1-day jwt expiration
 * [ ] Dashboard components
   * [ ] ToDo service
   * [ ] Reminders service
