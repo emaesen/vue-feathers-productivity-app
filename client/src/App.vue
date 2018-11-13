@@ -5,7 +5,7 @@
         <span class="info">
           {{ userName }}
         </span>
-        <a href="#" @click="logout">Logout</a>
+        <a href="#" @click.prevent="logout" class="action button">Logout</a>
       </div>
     </div>
     <router-view/>
@@ -43,9 +43,13 @@ export default {
 body {
   color: #e9e4f2;
   background-color: #17161c;
+  margin: 9px;
 }
-h1{
-  text-align: center;
+section {
+  padding: 5px;
+  background-color: #212027;
+  border: 1px solid #2c2b31;
+  border-radius: 5px;
 }
 input, textarea, select, button {
   background-color: #000;
@@ -100,8 +104,8 @@ input {
   font-size: 14px;
 }
 #nav {
-  padding: 0 0 1em 0;
-  text-align: right;
+  position: absolute;
+  right: 9px;
   a {
     font-weight: bold;
     &.router-link-exact-active {
@@ -110,14 +114,35 @@ input {
     }
   }
 }
-a {
+a, .action {
+  cursor:pointer;
   text-decoration: none;
   letter-spacing: 1px;
   color: #bdb1db;
   font-style: normal;
 }
+.action.button {
+  border:1px solid #62518c;
+  background-color: #150550;
+  padding: 2px 5px;
+  margin: 5px 0;
+  display: inline-block;
+  border-radius: 5px;
+}
+.action.button + .action.button{
+  margin-left: 5px;
+}
+.actionable {
+  cursor:pointer;
+}
 .info {
   color: #e9e4f272;
+}
+.float {
+  float: left;
+}
+.float.right {
+  float: right;
 }
 .nav-item {
   display: inline;

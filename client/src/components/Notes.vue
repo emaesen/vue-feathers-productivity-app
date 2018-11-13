@@ -1,28 +1,29 @@
 <template>
-  <div>
+  <section>
+    <span
+      class="icon action float right"
+    >
+      ⊕
+    </span>
     <h2>Notes</h2>
     <div v-if="loading" class="loading">
       loading...
     </div>
     <div v-if="!loading">
-      <div
+      <note
         v-for="note in notes"
+        :note="note"
         :key="note._id"
-      >
-        <div class="note">
-          <div class="category">
-            {{ note.category }}
-          </div>
-          <div class="text">
-            {{ note.text }}
-          </div>
-        </div>
-      </div>
+        @delete-note="deleteNote"
+        @edit-note="editNote"
+      />
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
+import Note from './Note';
+
 // Get notes as "Reactive Lists with Live Queries"
 // https://feathers-plus.github.io/v1/feathers-vuex/common-patterns.html#Reactive-Lists-with-Live-Queries
 import { mapState, mapGetters, mapActions } from 'vuex';
@@ -30,13 +31,29 @@ import { mapState, mapGetters, mapActions } from 'vuex';
 export default {
   name: 'Notes',
   components: {
+    Note
+  },
+  props: {
   },
   created: function() {
     // Find all notes. We'll use the getters to separate them.
     this.findNotes({ query: {} });
   },
   methods: {
-    ...mapActions('notes', { findNotes: 'find' } )
+    ...mapActions('notes', { findNotes: 'find' } ),
+    deleteNote(note) {
+      console.log("Delete note ", note);
+      //delete the note
+    },
+    editNote(props) {
+      console.log("Edit note ", props);
+      //save the modifictions
+      props.note.text = props.mod.text;
+      props.note.category = props.mod.category;
+      props.note.save().then((note) => {
+        console.log("edit succesful", note);
+      })
+    }
   },
   computed: {
     ...mapState('auth', { user: 'payload' }),
@@ -71,13 +88,5 @@ export default {
 </script>
 
 <style scoped>
-.note {
-  border: 1px solid #555;
-  border-radius: 10px;
-  padding: 5px;
-  margin-bottom: 5px;
-}
-.category {
-  text-align: right;
-}
+
 </style>
