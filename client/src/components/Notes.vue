@@ -1,11 +1,10 @@
 <template>
   <section>
-    <span
-      class="icon action float right"
-    >
-      ⊕
-    </span>
     <h2>Notes</h2>
+    <create-note
+      @create-note="createNote"
+      @create-note-warning="createNoteWarning"
+    />
     <div v-if="loading" class="loading">
       loading...
     </div>
@@ -23,6 +22,7 @@
 
 <script>
 import Note from './Note';
+import CreateNote from './CreateEditNote';
 
 // Get notes as "Reactive Lists with Live Queries"
 // https://feathers-plus.github.io/v1/feathers-vuex/common-patterns.html#Reactive-Lists-with-Live-Queries
@@ -31,7 +31,8 @@ import { mapState, mapGetters, mapActions } from 'vuex';
 export default {
   name: 'Notes',
   components: {
-    Note
+    Note,
+    CreateNote
   },
   props: {
   },
@@ -41,18 +42,38 @@ export default {
   },
   methods: {
     ...mapActions('notes', { findNotes: 'find' } ),
+    createNote(newNote) {
+      console.log("Create note ", newNote);
+      // TODO! create the note
+      // create note instance
+      const { Note } = this.$FeathersVuex;
+      const note = new Note(newNote);
+      note.save()
+        .then((note) => {
+          console.log("Note created ", note);
+        });
+
+    },
     deleteNote(note) {
       console.log("Delete note ", note);
-      //delete the note
+      //TODO! delete the note
     },
     editNote(props) {
       console.log("Edit note ", props);
       //save the modifictions
       props.note.text = props.mod.text;
       props.note.category = props.mod.category;
-      props.note.save().then((note) => {
+      props.note.update().then((note) => {
         console.log("edit succesful", note);
       })
+    },
+    createNoteWarning(warning) {
+      // TODO! show warning.title, warning.text
+      console.log("create warning", warning);
+    },
+    editNoteWarning(warning) {
+      // TODO! show warning.title, warning.text
+      console.log("edit warning", warning);
     }
   },
   computed: {

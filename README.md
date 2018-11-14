@@ -24,12 +24,13 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
 * [ ] Minimum Viable Product - service (v0.2)
   * [ ] add notes service
     * [ ] CRUD operations
-      * [ ] Create
+      * [x] Create
       * [x] Read
-      * [ ] Update
+      * [x] Update
       * [ ] Delete
     * [x] the logged-in user can access only their own notes
     * [x] when user logs out, their notes data are cleared from store
+    * [x] changes in one browser are immediately reflected in another
   * [ ] add "remain logged in" option to extend 1-day jwt expiration
 * [ ] Dashboard components
   * [ ] ToDo service

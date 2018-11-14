@@ -26,7 +26,7 @@ export default {
     ...mapState('auth', { user: 'user' }),
     userName() {
       console.log({user: this.user});
-      return "Logged in as “" + this.user.username + "” ⇾ ";
+      return "Logged in as “" + this.user.username + "” ➔ ";
     }
   },
   methods: {
@@ -41,15 +41,42 @@ export default {
 
 <style lang="less">
 body {
-  color: #e9e4f2;
   background-color: #17161c;
   margin: 9px;
+}
+body, input, textarea, select, button {
+  color: #e9e4f2;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+h2 {
+  margin: 0 0 .5em .2em;
 }
 section {
   padding: 5px;
   background-color: #212027;
   border: 1px solid #2c2b31;
   border-radius: 5px;
+  position: relative;
+}
+fieldset {
+  border: 1px solid #555;
+  border-radius: 10px;
+  display: inline-block;
+}
+legend {
+  margin:1em 0;
+  font-size: 1.1rem;
+}
+label {
+  display:flex;
+}
+textarea {
+  min-height:4em;
+  height:8em;
+  width: 90%;
+  width: -moz-available;
+  width: -webkit-fill-available;
 }
 input, textarea, select, button {
   background-color: #000;
@@ -84,24 +111,8 @@ input:valid + span.icon:after {
   color: #26b72b;
   padding-left: 5px;
 }
-fieldset {
-  border: 1px solid #555;
-  border-radius: 10px;
-  display: inline-block;
-}
-legend {
-  margin:1em 0;
-  font-size: 1.1rem;
-}
-label {
-  display:flex;
-}
 input {
   margin-bottom:1em;
-}
-#app {
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 14px;
 }
 #nav {
   position: absolute;
@@ -122,8 +133,9 @@ a, .action {
   font-style: normal;
 }
 .action.button {
+  font-weight: bold;
   border:1px solid #62518c;
-  background-color: #150550;
+  background-color: #3e2200;
   padding: 2px 5px;
   margin: 5px 0;
   display: inline-block;
@@ -143,6 +155,18 @@ a, .action {
 }
 .float.right {
   float: right;
+}
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
+.top {
+  top: 0;
+}
+.right {
+  right: 0;
 }
 .nav-item {
   display: inline;

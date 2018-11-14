@@ -1,12 +1,12 @@
 <template>
   <div class="">
-    <button
+    <span
       v-show="!showForm && !isEdit"
-      class=""
+      class="icon action button absolute top right"
       @click="openNoteForm"
     >
-      <i class=""/> Add a note
-    </button>
+      ⊕ add note
+    </span>
     <div
       v-show="showForm"
       class=""
@@ -21,7 +21,7 @@
           </div>
           <div class="">
             <label>Category</label>
-            <textarea
+            <input
               v-model="category"
             />
           </div>
@@ -30,13 +30,13 @@
               class="action button"
               @click="save"
             >
-              save
+              <span class="icon">✓</span> save
             </button>
             <button
               class="action button"
               @click="cancel"
             >
-              cancel
+              <span class="icon">✕</span> cancel
             </button>
           </div>
         </div>
@@ -114,8 +114,4 @@ export default {
 </script>
 
 <style scoped>
-textarea {
-  min-height:4em;
-  height:8em;
-}
 </style>
