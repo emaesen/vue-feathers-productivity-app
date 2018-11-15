@@ -8,40 +8,48 @@
       class=""
     >
       <div
-        class="actionable"
+        class="actionable trans"
         :class="{collapsed: isCollapsed}"
         @click="toggleCollapse"
+        :style="{
+          maxHeight: maxNoteHeight,
+          'transition-duration': transitionDuration
+        }"
       >
         <div
-          v-if="note.category"
-          class="category"
+          :id="'note-'+note._id+'-content'"
         >
-          {{ note.category }}
-        </div>
-        <div
-          v-else
-          class="category"
-        />
-        <div
-          class=""
-          v-html="textAsHtml"
-        />
-        <div class="">
-          <span
-            class="action button"
-            title="edit"
-            @click="showForm"
+          <div
+            v-if="note.category"
+            class="category"
           >
-            <span class="icon">✎</span> edit
-          </span>
+            {{ note.category }}
+          </div>
+          <div
+            v-else
+            class="category"
+          />
+          <div
+            class=""
+            v-html="textAsHtml"
+          />
+          <div class="">
+            <span
+              class="action button"
+              title="edit"
+              @click="showForm"
+            >
+              <span class="icon">✎</span> edit
+            </span>
 
-          <span
-            class="action button"
-            title="delete"
-            @click="deleteNote(note)"
-          >
-            <span class="icon">⊗</span> delete
-          </span>
+            <span
+              class="action button"
+              title="delete"
+              @click="deleteNote(note)"
+            >
+              <span class="icon">⊗</span> delete
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -99,11 +107,21 @@ export default {
     return {
       isEditing: false,
       isCollapsed: !!this.initCollapsed && true,
-      nrOfCharsWhenCollapsed: 15
+      nrOfCharsWhenCollapsed: 15,
+      maxNoteHeight: '10px'
     };
   },
+  mounted: function () {
+    this.$nextTick(function () {
+      // Code that will run only after the
+      // entire view has been rendered
+      let elHeight = document.getElementById('note-'+this.note._id +'-content').offsetHeight;
+      this.maxNoteHeight = elHeight + 'px';
+      this.transitionDuration = (.3 + elHeight/500) + 's';
+    })
+  },
   computed: {
-    textAsHtml: function() {
+    textAsHtml() {
       return simpleFormat(this.note.text);
     }
   },
@@ -157,8 +175,18 @@ export default {
 .icon.large {
   font-size: 2rem;
 }
-.collapsed {
-  height: 1em;
+.trans {
+  /* use max-height to transition the height */
+  transition: max-height 1s ease-out;
+  /* set fall-back max-height here - accurate max-height is set as inline style on the element */
+  max-height: 50em;
   overflow: hidden;
+}
+.collapsed {
+  /* must use !important to override inline style */
+  max-height: 1.1em!important;
+}
+.show-overflow {
+  overflow: auto;
 }
 </style>
