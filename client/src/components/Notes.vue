@@ -44,7 +44,6 @@ export default {
     ...mapActions('notes', { findNotes: 'find' } ),
     createNote(newNote) {
       console.log("Create note ", newNote);
-      // TODO! create the note
       // create note instance
       const { Note } = this.$FeathersVuex;
       const note = new Note(newNote);
@@ -56,11 +55,14 @@ export default {
     },
     deleteNote(note) {
       console.log("Delete note ", note);
-      //TODO! delete the note
+      // delete the note
+      note.remove().then(() => {
+        console.log("remove succesful");
+      })
     },
     editNote(props) {
       console.log("Edit note ", props);
-      //save the modifictions
+      // save the modifictions
       props.note.text = props.mod.text;
       props.note.category = props.mod.category;
       props.note.update().then((note) => {

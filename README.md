@@ -22,12 +22,14 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     * [x] dashboard is not accessible when not logged in
       * [x] if not logged in: redirect to login
 * [ ] Minimum Viable Product - service (v0.2)
-  * [ ] add notes service
-    * [ ] CRUD operations
+  * [x] add notes service
+    * [x] CRUD operations
       * [x] Create
       * [x] Read
       * [x] Update
-      * [ ] Delete
+      * [x] Delete
+    * [ ] display Create/Update error messages
+    * [ ] last Update/Delete operation can be undone
     * [x] the logged-in user can access only their own notes
     * [x] when user logs out, their notes data are cleared from store
     * [x] changes in one browser are immediately reflected in another
