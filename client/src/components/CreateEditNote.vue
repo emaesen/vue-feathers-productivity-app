@@ -1,14 +1,14 @@
 <template>
   <div class="">
     <span
-      v-show="!showForm && !isEdit"
+      v-if="!showForm && !isEdit"
       class="icon action button absolute top right"
       @click="openNoteForm"
     >
       ⊕ add note
     </span>
     <div
-      v-show="showForm"
+      v-if="showForm"
       class=""
     >
       <div class="">

@@ -4,7 +4,7 @@
     class="note"
   >
     <div
-      v-show="!isEditing"
+      v-if="!isEditing"
       class=""
     >
       <div
@@ -46,7 +46,7 @@
       </div>
     </div>
     <edit-note
-      v-show="isEditing"
+      v-if="isEditing"
       :note="note"
       @edit-note="editNote"
       @cancel-edit="cancelEdit"
