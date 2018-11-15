@@ -114,6 +114,10 @@ input:valid + span.icon:after {
 input {
   margin-bottom:1em;
 }
+pre {
+  margin: .5em;
+  padding: .5em;
+}
 #nav {
   position: absolute;
   right: 9px;

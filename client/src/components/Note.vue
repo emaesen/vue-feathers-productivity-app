@@ -58,10 +58,12 @@
 <script>
 import EditNote from './CreateEditNote';
 
+// allow limited markdown-inspired formatting
 function simpleFormat(inp){
   return inp && inp
     .replace(/</g, "&lt;")
     .replace(/\* /g, "⊛ ")
+    .replace(/```\n([^`]+)\n```\n/g, '<pre>$1</pre>')
     .replace(/(http.+\b)/g, '<a href="$1" target="_blank">$1</a>')
     .replace(/\n/g, "<br>");
 }
