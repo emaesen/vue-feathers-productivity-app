@@ -10,7 +10,7 @@
       <div
         class="actionable"
         :class="{collapsed: isCollapsed}"
-        @click="toggleCollapse()"
+        @click="toggleCollapse"
       >
         <div
           v-if="note.category"
@@ -30,7 +30,7 @@
           <span
             class="action button"
             title="edit"
-            @click="showForm()"
+            @click="showForm"
           >
             <span class="icon">✎</span> edit
           </span>
@@ -106,8 +106,16 @@ export default {
     }
   },
   methods: {
-    toggleCollapse() {
-      this.isCollapsed = !this.isCollapsed;
+    toggleCollapse(evt) {
+      let sel = window.getSelection && window.getSelection().toString();
+      // collapse, unless user clicked a link or made a selection
+      if (evt.target.localName!=='a' && !sel) {
+        this.isCollapsed = !this.isCollapsed;
+      }
+      if (sel) {
+        // write selection automically to clipboard if possible
+        navigator.clipboard && navigator.clipboard.writeText(sel);
+      }
     },
     deleteNote(note) {
       this.$emit('delete-note', note);
