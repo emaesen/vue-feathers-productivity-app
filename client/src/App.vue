@@ -5,7 +5,7 @@
         <span class="info">
           {{ userName }}
         </span>
-        <a href="#" @click.prevent="logout" class="action button">Logout</a>
+        <button @click="logout" class="action button">Logout</button>
       </div>
     </div>
     <router-view/>
@@ -137,6 +137,7 @@ a, .action {
   font-style: normal;
 }
 .action.button {
+  vertical-align: middle;
   font-weight: bold;
   border:1px solid #62518c;
   background-color: #3e2200;
@@ -144,6 +145,7 @@ a, .action {
   margin: 5px 0;
   display: inline-block;
   border-radius: 5px;
+  min-height: 25px;
 }
 .action.button + .action.button{
   margin-left: 5px;

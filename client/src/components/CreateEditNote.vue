@@ -1,13 +1,13 @@
 <template>
   <div class="">
     <transition name="fade">
-      <span
+      <button
         v-if="!showForm && !isEdit"
-        class="icon action button absolute top right"
+        class="action button absolute top right"
         @click="openNoteForm"
       >
-        ⊕ add note
-      </span>
+        <span class="icon">⊕</span> add note
+      </button>
     </transition>
     <transition name="slidefade">
       <div
