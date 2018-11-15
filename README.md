@@ -28,6 +28,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       * [x] Read
       * [x] Update
       * [x] Delete
+    * [x] supports basic markdown-style formatting of note text
     * [ ] display Create/Update error messages
     * [ ] last Update/Delete operation can be undone
     * [x] the logged-in user can access only their own notes
