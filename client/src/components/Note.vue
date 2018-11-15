@@ -34,21 +34,21 @@
             v-html="textAsHtml"
           />
           <div class="">
-            <span
+            <button
               class="action button"
               title="edit"
               @click="showForm"
             >
               <span class="icon">✎</span> edit
-            </span>
+            </button>
 
-            <span
+            <button
               class="action button"
               title="delete"
               @click="deleteNote(note)"
             >
               <span class="icon">⊗</span> delete
-            </span>
+            </button>
           </div>
         </div>
       </div>
@@ -133,8 +133,9 @@ export default {
   methods: {
     toggleCollapse(evt) {
       let sel = window.getSelection && window.getSelection().toString();
-      // collapse, unless user clicked a link or made a selection
-      if (evt.target.localName!=='a' && !sel) {
+      let elName = evt.target.localName
+      // collapse, unless user clicked a link, a button or made a selection
+      if (elName!=='a' && elName!=='button' && !sel) {
         this.isCollapsed = !this.isCollapsed;
       }
       if (sel) {
