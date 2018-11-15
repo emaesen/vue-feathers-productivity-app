@@ -39,7 +39,7 @@
               title="edit"
               @click="showForm"
             >
-              <span class="icon">✎</span> edit
+              <font-awesome-icon icon="edit" /> edit
             </button>
 
             <button
@@ -47,7 +47,7 @@
               title="delete"
               @click="deleteNote(note)"
             >
-              <span class="icon">⊗</span> delete
+              <font-awesome-icon icon="trash-alt" /> delete
             </button>
           </div>
         </div>
@@ -174,12 +174,6 @@ export default {
 }
 .category {
   float: right;
-}
-.icon {
-  vertical-align: middle;
-}
-.icon.large {
-  font-size: 2rem;
 }
 .trans {
   /* use max-height to transition the height */

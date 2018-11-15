@@ -3,9 +3,9 @@
     <div id="nav">
       <div v-if="user" class="nav-item">
         <span class="info">
-          {{ userName }}
+          <font-awesome-icon icon="user-check" /> {{ userName }}
         </span>
-        <button @click="logout" class="action button">Logout</button>
+        <button @click="logout" class="action button"><font-awesome-icon icon="sign-out-alt" /> Logout</button>
       </div>
     </div>
     <router-view/>
@@ -94,7 +94,8 @@ input[type="submit"] {
 input[type="submit"]:hover {
   border-color: #888;
 }
-input[type="submit"]:disabled {
+input[type="submit"]:disabled,
+button:disabled {
   cursor: default;
   color: #e9e4f250;
 }
@@ -150,6 +151,7 @@ a, .action {
 .action.button + .action.button{
   margin-left: 5px;
 }
+button,
 .actionable {
   cursor:pointer;
 }
@@ -176,5 +178,8 @@ a, .action {
 }
 .nav-item {
   display: inline;
+}
+.svg-inline--fa {
+  color: #cec0a1;
 }
 </style>

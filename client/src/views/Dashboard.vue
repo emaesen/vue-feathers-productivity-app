@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Dashboard</h1>
+    <h1><font-awesome-icon icon="tachometer-alt" /> Dashboard</h1>
     <Notes view="dashboard"/>
   </div>
 </template>

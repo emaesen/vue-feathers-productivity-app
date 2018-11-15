@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h2>Notes</h2>
+    <h2><font-awesome-icon icon="sticky-note" /> Notes</h2>
     <create-note
       @create-note="createNote"
       @create-note-warning="createNoteWarning"

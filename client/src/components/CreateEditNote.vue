@@ -6,7 +6,7 @@
         class="action button absolute top right"
         @click="openNoteForm"
       >
-        <span class="icon">⊕</span> add note
+        <font-awesome-icon icon="plus-circle" /> add note
       </button>
     </transition>
     <transition name="slidefade">
@@ -33,13 +33,13 @@
                 class="action button"
                 @click="save"
               >
-                <span class="icon">✓</span> save
+                <font-awesome-icon icon="check-circle" /> save
               </button>
               <button
                 class="action button"
                 @click="cancel"
               >
-                <span class="icon">✕</span> cancel
+                <font-awesome-icon icon="ban" /> cancel
               </button>
             </div>
           </div>

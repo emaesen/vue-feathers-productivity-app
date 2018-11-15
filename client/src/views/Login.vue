@@ -43,13 +43,12 @@
         <span class="validation">Acceptable</span>
       </div>
       <div class="">
-        <input
+        <button
           v-if="!loading"
-          class="button"
-          type="submit"
-          value="Login"
           :disabled="!isValid"
-        />
+        >
+          <font-awesome-icon icon="sign-in-alt" /> Login
+        </button>
         <input
           v-if="loading"
           class="button loading"
@@ -57,7 +56,12 @@
           value="in progress..."
           disabled
         />
-         <span class="register">-or- &nbsp;<router-link to="/register">Register</router-link></span>
+         <span class="register">
+           -or- &nbsp;
+           <router-link to="/register">
+             <font-awesome-icon icon="user-plus" /> Register
+           </router-link>
+         </span>
       </div>
       <div
         v-if="authError"

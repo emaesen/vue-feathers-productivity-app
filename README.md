@@ -28,6 +28,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       * [x] Read
       * [x] Update
       * [x] Delete
+    * [x] implements vue-fontawesome
     * [x] supports basic markdown-style formatting of note text
     * [ ] display Create/Update error messages
     * [ ] last Update/Delete operation can be undone
@@ -120,6 +121,9 @@ You can view the client app at http://localhost:8289/ (local) or http://192.168.
 * @feathersjs/feathers
 * @feathersjs/socketio-client
 * feathers-vuex
+* @fortawesome/vue-fontawesome
+* @fortawesome/fontawesome-svg-core
+* @fortawesome/free-solid-svg-icons
 * register-service-worker
 * socket.io-client
 * vue
