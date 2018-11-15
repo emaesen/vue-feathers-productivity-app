@@ -1,47 +1,51 @@
 <template>
   <div class="">
-    <span
-      v-if="!showForm && !isEdit"
-      class="icon action button absolute top right"
-      @click="openNoteForm"
-    >
-      ⊕ add note
-    </span>
-    <div
-      v-if="showForm"
-      class=""
-    >
-      <div class="">
+    <transition name="fade">
+      <span
+        v-if="!showForm && !isEdit"
+        class="icon action button absolute top right"
+        @click="openNoteForm"
+      >
+        ⊕ add note
+      </span>
+    </transition>
+    <transition name="slidefade">
+      <div
+        v-if="showForm"
+        class=""
+      >
         <div class="">
           <div class="">
-            <label>Text *</label>
-            <textarea
-              v-model="text"
-            />
-          </div>
-          <div class="">
-            <label>Category</label>
-            <input
-              v-model="category"
-            />
-          </div>
-          <div class="">
-            <button
-              class="action button"
-              @click="save"
-            >
-              <span class="icon">✓</span> save
-            </button>
-            <button
-              class="action button"
-              @click="cancel"
-            >
-              <span class="icon">✕</span> cancel
-            </button>
+            <div class="">
+              <label>Text *</label>
+              <textarea
+                v-model="text"
+              />
+            </div>
+            <div class="">
+              <label>Category</label>
+              <input
+                v-model="category"
+              />
+            </div>
+            <div class="">
+              <button
+                class="action button"
+                @click="save"
+              >
+                <span class="icon">✓</span> save
+              </button>
+              <button
+                class="action button"
+                @click="cancel"
+              >
+                <span class="icon">✕</span> cancel
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -114,4 +118,22 @@ export default {
 </script>
 
 <style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s, transform 1s;
+  transform: scaleY(1);
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+  transform: scaleY(0);
+}
+.slidefade-enter-active, .slidefade-leave-active {
+  transition: opacity 1s, transform 1s, max-height 2s;
+  transform: scaleY(1);
+  max-height: 50em;
+}
+.slidefade-enter, .slidefade-leave-to {
+  opacity: 0;
+  transform: scaleY(0);
+  max-height: 0;
+}
 </style>
