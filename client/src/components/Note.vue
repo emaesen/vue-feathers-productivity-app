@@ -108,7 +108,8 @@ export default {
       isEditing: false,
       isCollapsed: !!this.initCollapsed && true,
       nrOfCharsWhenCollapsed: 15,
-      maxNoteHeight: '10px'
+      maxNoteHeight: '10px',
+      transitionDuration: '1s'
     };
   },
   mounted: function () {
@@ -116,7 +117,11 @@ export default {
       // Code that will run only after the
       // entire view has been rendered
       let elHeight = document.getElementById('note-'+this.note._id +'-content').offsetHeight;
+      // set max-height to actual height
+      // (to allow for non-delay smooth open/close transition)
       this.maxNoteHeight = elHeight + 'px';
+      // calculate transition duration such that the transition speed
+      // is fairly consistent for various note heights.
       this.transitionDuration = (.3 + elHeight/500) + 's';
     })
   },
@@ -177,8 +182,10 @@ export default {
 }
 .trans {
   /* use max-height to transition the height */
+  /* the duration is calculated and set as inline style */
   transition: max-height 1s ease-out;
-  /* set fall-back max-height here - accurate max-height is set as inline style on the element */
+  /* set fall-back max-height here*/
+  /* accurate max-height is set as inline style on the element */
   max-height: 50em;
   overflow: hidden;
 }
