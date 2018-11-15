@@ -62,8 +62,10 @@ import EditNote from './CreateEditNote';
 function simpleFormat(inp){
   return inp && inp
     .replace(/</g, "&lt;")
-    .replace(/\* /g, "⊛ ")
+    .replace(/\n *\* /g, "\n⊛ ")
     .replace(/```\n([^`]+)\n```\n/g, '<pre>$1</pre>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*([^*]+)\*/g, '<i>$1</i>')
     .replace(/(http.+\b)/g, '<a href="$1" target="_blank">$1</a>')
     .replace(/\n/g, "<br>");
 }
