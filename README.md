@@ -7,7 +7,8 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
 * ***v0.1***: *Functional basic registration and login flow*
   * can be used as starting point for any vue.js application requiring authentication.
   * uses feathers-vuex for authentication.
-  * uses NeDB as database. Sufficient for small scale applications - if need be can be swapped easily for MongoDB or similar more robust DB solution.
+  * uses NeDB as database.
+    * Sufficient for small scale applications - if need be can be swapped easily for MongoDB or other more robust DB solution.
 
 ## *--WORK IN PROGRESS--*
 * [x] Minimum Viable Product - authentication (v0.1)
@@ -28,13 +29,18 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       * [x] Read
       * [x] Update
       * [x] Delete
-    * [x] implements vue-fontawesome icons
-    * [x] supports basic markdown-style formatting of note text
     * [ ] display Create/Update error messages
     * [x] ask confirmation before Delete
     * [x] the logged-in user can access only their own notes
     * [x] when user logs out, their notes data are cleared from store
     * [x] changes in one browser are immediately reflected in another
+    * [ ] nice to have beyond pure MVP:
+      * [x] has text and category properties
+        * [x] support basic markdown-style formatting of note text
+        * [ ] support color-coding by category
+      * [ ] has list and grid mode
+      * [x] implement vue-fontawesome icons
+      * [x] implement basic css and vue-based transitions
   * [ ] add "remain logged in" option to extend 1-day jwt expiration
 * [ ] Dashboard components
   * [ ] ToDo service
