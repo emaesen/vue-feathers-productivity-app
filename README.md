@@ -28,10 +28,10 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       * [x] Read
       * [x] Update
       * [x] Delete
-    * [x] implements vue-fontawesome
+    * [x] implements vue-fontawesome icons
     * [x] supports basic markdown-style formatting of note text
     * [ ] display Create/Update error messages
-    * [ ] last Update/Delete operation can be undone
+    * [x] ask confirmation before Delete
     * [x] the logged-in user can access only their own notes
     * [x] when user logs out, their notes data are cleared from store
     * [x] changes in one browser are immediately reflected in another

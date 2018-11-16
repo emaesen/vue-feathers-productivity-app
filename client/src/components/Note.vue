@@ -43,12 +43,35 @@
             </button>
 
             <button
+              v-if="!isDeleteClicked"
               class="action button"
               title="delete"
               @click="deleteNote(note)"
             >
               <font-awesome-icon icon="trash-alt" /> delete
             </button>
+            <transition name="fade">
+              <div
+                v-if="isDeleteClicked"
+                class="confirm"
+              >
+                Confirm Delete:
+                <button
+                  class="action button"
+                  title="delete"
+                  @click="deleteNote(note, true)"
+                >
+                  <font-awesome-icon icon="trash-alt" /> yes!
+                </button>
+                <button
+                  class="action button"
+                  title="delete"
+                  @click="deleteNote(note, false)"
+                >
+                  <font-awesome-icon icon="ban" /> no
+                </button>
+              </div>
+            </transition>
           </div>
         </div>
       </div>
@@ -109,7 +132,8 @@ export default {
       isCollapsed: !!this.initCollapsed && true,
       nrOfCharsWhenCollapsed: 15,
       maxNoteHeight: '10px',
-      transitionDuration: '1s'
+      transitionDuration: '1s',
+      isDeleteClicked: false
     };
   },
   mounted: function () {
@@ -143,8 +167,17 @@ export default {
         navigator.clipboard && navigator.clipboard.writeText(sel);
       }
     },
-    deleteNote(note) {
-      this.$emit('delete-note', note);
+    deleteNote(note, isConfirmed) {
+      if( typeof isConfirmed === "undefined" ) {
+        // ask for confirmation
+        this.isDeleteClicked = true;
+      } else {
+        this.isDeleteClicked = false;
+        if (isConfirmed){
+          this.$emit('delete-note', note);
+        }
+      }
+
     },
     showForm() {
       this.isEditing = true;
@@ -191,4 +224,18 @@ export default {
 .show-overflow {
   overflow: auto;
 }
+.confirm {
+  margin-left: 1em;
+  display: inline-block;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1s, transform 1s;
+  opacity: 1;
+  transform: scaleX(1);
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+  transform: scaleX(0);
+}
+
 </style>
