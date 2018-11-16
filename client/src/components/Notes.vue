@@ -3,7 +3,6 @@
     <h2><font-awesome-icon icon="sticky-note" /> Notes</h2>
     <create-note
       @create-note="createNote"
-      @create-note-warning="createNoteWarning"
     />
     <div v-if="loading" class="loading">
       loading...
@@ -68,14 +67,6 @@ export default {
       props.note.update().then((note) => {
         console.log("edit succesful", note);
       })
-    },
-    createNoteWarning(warning) {
-      // TODO! show warning.title, warning.text
-      console.log("create warning", warning);
-    },
-    editNoteWarning(warning) {
-      // TODO! show warning.title, warning.text
-      console.log("edit warning", warning);
     }
   },
   computed: {

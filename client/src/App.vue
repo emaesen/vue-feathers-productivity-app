@@ -70,6 +70,7 @@ legend {
 }
 label {
   display:flex;
+  margin-left:.3em;
 }
 textarea {
   min-height:4em;
@@ -78,14 +79,20 @@ textarea {
   width: -moz-available;
   width: -webkit-fill-available;
 }
-input, textarea, select, button {
+input,
+textarea,
+select,
+button {
   background-color: #000;
   color: #e9e4f2;
   border: 1px solid #333;
   border-radius: 5px;
   padding: 5px 10px;
 }
-input:focus {
+input:focus,
+textarea:focus,
+select:focus,
+button:focus {
   outline-color: #888;
 }
 input[type="submit"] {

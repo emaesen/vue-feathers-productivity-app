@@ -29,7 +29,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       * [x] Read
       * [x] Update
       * [x] Delete
-    * [ ] display Create/Update error messages
+    * [x] display Create/Update error messages
     * [x] ask confirmation before Delete
     * [x] the logged-in user can access only their own notes
     * [x] when user logs out, their notes data are cleared from store

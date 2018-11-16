@@ -17,7 +17,20 @@
         <div class="">
           <div class="">
             <div class="">
-              <label>Text *</label>
+              <label>Content
+                <span
+                  v-if="!showError && !isValid"
+                  class="req"
+                >
+                  (required)
+                </span>
+                <span
+                  v-if="showError"
+                  class="error"
+                >
+                  Please provide some content text
+                </span>
+              </label>
               <textarea
                 v-model="text"
               />
@@ -32,6 +45,7 @@
               <button
                 class="action button"
                 @click="save"
+                :disabled="!isValid"
               >
                 <font-awesome-icon icon="check-circle" /> save
               </button>
@@ -63,17 +77,23 @@ export default {
     return {
       text: this.note && this.note.text || '',
       category: this.note && this.note.category || '',
-      showForm: !!(this.note && this.note.text)
+      showForm: !!(this.note && this.note.text),
+      showError: false
+
     };
   },
   computed: {
-    isEdit: function(){
+    isEdit: function() {
       return !!(this.note && this.note.text);
+    },
+    isValid: function() {
+      return this.text;
     }
   },
   methods: {
     openNoteForm() {
       this.showForm = true;
+      this.showError = false;
     },
     cancel() {
       if (this.isEdit) {
@@ -99,6 +119,7 @@ export default {
     },
     save() {
       const msgType = this.isEdit? 'edit-note' : 'create-note';
+      this.showError = false;
       if (this.text.length > 0) {
         this.$emit(msgType, {
           text: this.text,
@@ -106,11 +127,7 @@ export default {
         });
         this.closeNoteForm();
       } else {
-        let txt = (this.text.length === 0)? "Please provide some text." : "";
-        this.$emit(msgType + '-warning', {
-          title: 'Missing input',
-          text: txt
-        });
+        this.showError = true;
       }
     },
   },
@@ -118,6 +135,16 @@ export default {
 </script>
 
 <style scoped>
+.req, .error {
+  font-style: italic;
+  margin-left: 1em;
+}
+.req {
+  color:#ffbc00ab;
+}
+.error {
+  color:#ffbc00;
+}
 .fade-enter-active, .fade-leave-active {
   transition: opacity 1s, transform 1s;
   transform: scaleY(1);
