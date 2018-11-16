@@ -17,7 +17,7 @@
         }"
       >
         <div
-          :id="'note-'+note._id+'-content'"
+          ref="content"
         >
           <div
             v-if="note.category"
@@ -140,7 +140,7 @@ export default {
     this.$nextTick(function () {
       // Code that will run only after the
       // entire view has been rendered
-      let elHeight = document.getElementById('note-'+this.note._id +'-content').offsetHeight;
+      let elHeight = this.$refs.content.offsetHeight;
       // set max-height to actual height
       // (to allow for non-delay smooth open/close transition)
       this.maxNoteHeight = elHeight + 'px';
