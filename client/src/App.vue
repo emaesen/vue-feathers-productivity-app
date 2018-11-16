@@ -119,6 +119,14 @@ pre {
   margin: .5em;
   padding: .5em;
 }
+code {
+  padding: 0 .2em;
+}
+pre, code {
+  background-color: #27262d;
+  border: 1px solid #474650;
+  border-radius: 5px;
+}
 #nav {
   position: absolute;
   right: 9px;
