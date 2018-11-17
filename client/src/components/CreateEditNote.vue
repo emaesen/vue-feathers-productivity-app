@@ -1,5 +1,7 @@
 <template>
-  <div class="">
+  <div
+    :class="[{form: showForm}, {border: showForm && !isEdit}]"
+  >
     <transition name="fade">
       <button
         v-if="!showForm && !isEdit"
@@ -33,7 +35,18 @@
               </label>
               <textarea
                 v-model="text"
+                :class="'clr-' + color"
               />
+            </div>
+            <div class="clr-selector">
+              <span
+                v-for="clr in colors"
+                :key="clr"
+                class="clr"
+                :class="'clr-' + clr"
+                :title="clr"
+                @click="selectClr(clr)"
+              >&nbsp;</span>
             </div>
             <div class="">
               <label>Category</label>
@@ -77,9 +90,10 @@ export default {
     return {
       text: this.note && this.note.text || '',
       category: this.note && this.note.category || '',
+      color: this.note && this.note.color || '',
       showForm: !!(this.note && this.note.text),
-      showError: false
-
+      showError: false,
+      colors: ['', 'red', 'blue', 'green', 'yellow', 'purple']
     };
   },
   computed: {
@@ -94,6 +108,9 @@ export default {
     openNoteForm() {
       this.showForm = true;
       this.showError = false;
+    },
+    selectClr(clr) {
+      this.color = clr;
     },
     cancel() {
       if (this.isEdit) {
@@ -111,10 +128,12 @@ export default {
     resetNoteForm() {
       this.text = this.note.text;
       this.category = this.note.category;
+      this.color = this.note.color;
     },
     clearNoteForm() {
       this.text = '';
       this.category = '';
+      this.color = '';
       this.showForm = false;
     },
     save() {
@@ -123,7 +142,8 @@ export default {
       if (this.text.length > 0) {
         this.$emit(msgType, {
           text: this.text,
-          category: this.category
+          category: this.category,
+          color: this.color
         });
         this.closeNoteForm();
       } else {
@@ -135,6 +155,19 @@ export default {
 </script>
 
 <style scoped>
+.form {
+  background-color: #212027;
+  border: 1px solid #212027;
+  border-radius: 10px;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+.border {
+  border: 1px solid #555;
+  border-radius: 10px;
+  padding: 5px;
+  margin-bottom: 5px;
+}
 .req, .error {
   font-style: italic;
   margin-left: 1em;
@@ -144,6 +177,19 @@ export default {
 }
 .error {
   color:#ffbc00;
+}
+.clr-selector {
+  margin-bottom: 1em;
+}
+.clr {
+  cursor: pointer;
+  display: inline-block;
+  border: 1px solid #555;
+  border-radius: 10px;
+  margin: 0 5px;
+  vertical-align: middle;
+  width:25px;
+  height:25px;
 }
 .fade-enter-active, .fade-leave-active {
   transition: opacity 1s, transform 1s;

@@ -2,6 +2,7 @@
   <div
     :id="'note-'+note._id"
     class="note"
+    :class="'clr-' + note.color"
   >
     <div
       v-if="!isEditing"
@@ -30,10 +31,9 @@
             class="category"
           />
           <div
-            class=""
             v-html="textAsHtml"
           />
-          <div class="">
+          <div class="action-row">
             <button
               class="action button"
               title="edit"
@@ -118,7 +118,8 @@ export default {
       default: function() {
         return {
           text:"",
-          category:""
+          category:"",
+          color:""
         }
       }
     },
@@ -208,6 +209,8 @@ export default {
 }
 .category {
   float: right;
+  font-style: italic;
+  color: #cec0a1;
 }
 .trans {
   /* use max-height to transition the height */
@@ -224,6 +227,14 @@ export default {
 }
 .show-overflow {
   overflow: auto;
+}
+.action-row {
+  display: inline-block;
+  background-color: #21202799;
+  border: 1px solid #212027;
+  border-radius: 10px;
+  margin-top: .5em;
+  padding: .2em .5em;
 }
 .confirm {
   margin-left: 1em;

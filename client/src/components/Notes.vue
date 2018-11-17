@@ -64,6 +64,7 @@ export default {
       // save the modifictions
       props.note.text = props.mod.text;
       props.note.category = props.mod.category;
+      props.note.color = props.mod.color;
       props.note.update().then((note) => {
         console.log("edit succesful", note);
       })
@@ -101,6 +102,20 @@ export default {
 };
 </script>
 
-<style scoped>
-
+<style>
+.clr-red {
+  background-color: #f9141418;
+}
+.clr-blue {
+  background-color: #141bf918;
+}
+.clr-green {
+  background-color: #14f92618;
+}
+.clr-yellow {
+  background-color: #f9e71418;
+}
+.clr-purple {
+  background-color: #c114f918;
+}
 </style>

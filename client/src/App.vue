@@ -71,6 +71,10 @@ legend {
 label {
   display:flex;
   margin-left:.3em;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-style: italic;
+  color: #cec0a1;
 }
 textarea {
   min-height:4em;
@@ -88,6 +92,7 @@ button {
   border: 1px solid #333;
   border-radius: 5px;
   padding: 5px 10px;
+  margin-bottom:1em;
 }
 input:focus,
 textarea:focus,
@@ -119,9 +124,6 @@ input:valid + span.icon:after {
   color: #26b72b;
   padding-left: 5px;
 }
-input {
-  margin-bottom:1em;
-}
 pre {
   margin: .5em;
   padding: .5em;
@@ -130,9 +132,7 @@ code {
   padding: 0 .2em;
 }
 pre, code {
-  background-color: #27262d;
-  border: 1px solid #474650;
-  border-radius: 5px;
+  color: #daefff;
 }
 #nav {
   position: absolute;
