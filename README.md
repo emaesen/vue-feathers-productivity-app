@@ -11,7 +11,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     * Sufficient for small scale applications - if need be can be swapped easily for MongoDB or other more robust DB solution.
 
 ## *--WORK IN PROGRESS--*
-* [x] Minimum Viable Product - authentication (v0.1)
+* [x] *Minimum Viable Product* - **authentication (v0.1)**
   * [x] functional registration page
     * [x] on success: redirect to login
       * [x] user is created in db
@@ -22,7 +22,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
   * [x] basic dashboard page
     * [x] dashboard is not accessible when not logged in
       * [x] if not logged in: redirect to login
-* [ ] Minimum Viable Product - service (v0.2)
+* [ ] *Minimum Viable Product* - **service (v0.2)**
   * [x] add notes service
     * [x] CRUD operations
       * [x] Create
@@ -34,21 +34,38 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     * [x] the logged-in user can access only their own notes
     * [x] when user logs out, their notes data are cleared from store
     * [x] changes in one browser are immediately reflected in another
-    * [ ] nice to have beyond basic MVP:
+    * [ ] *nice to have beyond basic MVP:*
       * [x] has text, category and color properties
         * [x] support basic markdown-style formatting of note text
         * [x] support color-coding
-        * [ ] support ordering by category and by color
+        * [ ] support ordering by
+          * [ ] created time
+          * [ ] modified time
+          * [ ] category
+          * [ ] color
       * [ ] has list and grid mode
       * [x] implement vue-fontawesome icons
       * [x] implement basic css and vue-based transitions
   * [ ] add "remain logged in" option to extend 1-day jwt expiration
+* [ ] *Minimum Viable Product* - **deployed (v0.3)**
+  * [ ] app is deployed on cloud service
+  * [ ] app is accessible on desktop and mobile device
+* [ ] *Minimum Viable Product* - **progressive web app (v0.4)**
+  * [ ] app is operational when offline
+  * [ ] app syncs when back online
 * [ ] Dashboard components
-  * [ ] ToDo service
-  * [ ] Reminders service
   * [ ] Notes service
-  * [ ] Bookmarks service
+  * [ ] Lists service
+    * [ ] can be associated to Notes
+    * [ ] has list items
+      * [ ] can be associated to Notes
+    * [ ] checked list item moves to bottom of list
+  * [ ] ToDos service
+    * [ ] can be associated to Notes
+  * [ ] Reminders service
+    * [ ] can be associated to Notes, Lists and ToDos
   * [ ] Calendar service
+  * [ ] Bookmarks service
 * [x] Page flow:
 
 ```
