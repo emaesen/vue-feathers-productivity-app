@@ -139,17 +139,7 @@ export default {
     };
   },
   mounted: function () {
-    this.$nextTick(function () {
-      // Code that will run only after the
-      // entire view has been rendered
-      let elHeight = this.$refs.content.offsetHeight;
-      // set max-height to actual height
-      // (to allow for non-delay smooth open/close transition)
-      this.maxNoteHeight = elHeight + 'px';
-      // calculate transition duration such that the transition speed
-      // is fairly consistent for various note heights.
-      this.transitionDuration = (.3 + elHeight/500) + 's';
-    })
+    this.setStyleProps();
   },
   computed: {
     textAsHtml() {
@@ -157,6 +147,17 @@ export default {
     }
   },
   methods: {
+    setStyleProps() {
+      this.$nextTick(function () {
+        let elHeight = this.$refs.content.offsetHeight;
+        // set max-height to actual height
+        // (to allow for non-delay smooth open/close transition)
+        this.maxNoteHeight = elHeight + 'px';
+        // calculate transition duration such that the transition speed
+        // is fairly consistent for various note heights.
+        this.transitionDuration = (.3 + elHeight/500) + 's';
+      })
+    },
     toggleCollapse(evt) {
       let sel = window.getSelection && window.getSelection().toString();
       let elName = evt.target.localName
@@ -179,7 +180,6 @@ export default {
           this.$emit('delete-note', note);
         }
       }
-
     },
     showForm() {
       this.isEditing = true;
@@ -188,6 +188,7 @@ export default {
     editNote(mod) {
       this.isEditing = false;
       this.$emit('edit-note', {note:this.note, mod:mod});
+      this.setStyleProps();
     },
     cancelEdit() {
       this.note.text = this.origNote.text;
