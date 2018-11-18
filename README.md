@@ -1,74 +1,75 @@
 # vue-feathers-productivity-app
+
 A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeDB.
 
 ## Versions
 
+- **_v0.1_**: _Functional basic registration and login flow_
+  - can be used as starting point for any vue.js application requiring authentication.
+  - uses feathers-vuex for authentication.
+  - uses NeDB as database.
+    - Sufficient for small scale applications - if need be can be swapped easily for MongoDB or other more robust DB solution.
 
-* ***v0.1***: *Functional basic registration and login flow*
-  * can be used as starting point for any vue.js application requiring authentication.
-  * uses feathers-vuex for authentication.
-  * uses NeDB as database.
-    * Sufficient for small scale applications - if need be can be swapped easily for MongoDB or other more robust DB solution.
+## _--WORK IN PROGRESS--_
 
-## *--WORK IN PROGRESS--*
-* [x] *Minimum Viable Product* - **authentication (v0.1)**
-  * [x] functional registration page
-    * [x] on success: redirect to login
-      * [x] user is created in db
-      * [x] display username
-  * [x] functional login page
-    * [x] on success: redirect to dashboard
-  * [x] logout functionality
-  * [x] basic dashboard page
-    * [x] dashboard is not accessible when not logged in
-      * [x] if not logged in: redirect to login
-* [ ] *Minimum Viable Product* - **service (v0.2)**
-  * [x] add notes service
-    * [x] CRUD operations
-      * [x] Create
-      * [x] Read
-      * [x] Update
-      * [x] Delete
-    * [x] display Create/Update error messages
-    * [x] ask confirmation before Delete
-    * [x] the logged-in user can access only their own notes
-    * [x] when user logs out, their notes data are cleared from store
-    * [x] changes in one browser are immediately reflected in another
-    * [ ] *nice to have beyond basic MVP:*
-      * [x] has text, category and color properties
-        * [x] support basic markdown-style formatting of note text
-        * [x] support color-coding
-        * [ ] support ordering by
-          * [ ] created time
-          * [ ] modified time
-          * [ ] category
-          * [ ] color
-      * [ ] has list and grid mode
-      * [x] implement vue-fontawesome icons
-      * [x] implement basic css and vue-based transitions
-  * [ ] add "remain logged in" option to extend 1-day jwt expiration
-* [ ] *Minimum Viable Product* - **deployed (v0.3)**
-  * [ ] app is deployed on cloud service
-  * [ ] app is accessible on desktop and mobile device
-* [ ] *Minimum Viable Product* - **progressive web app (v0.4)**
-  * [ ] app is operational when offline
-  * [ ] app syncs when back online
-* [ ] Dashboard components
-  * [ ] Notes service
-  * [ ] Lists service
-    * [ ] can be associated to Notes
-    * [ ] has list items
-      * [ ] can be associated to Notes
-    * [ ] checked list item moves to bottom of list
-  * [ ] ToDos service
-    * [ ] can be associated to Notes
-  * [ ] Reminders service
-    * [ ] can be associated to Notes, Lists and ToDos
-  * [ ] Calendar service
-  * [ ] Bookmarks service
-* [x] Page flow:
+- [x] _Minimum Viable Product_ - **authentication (v0.1)**
+  - [x] functional registration page
+    - [x] on success: redirect to login
+      - [x] user is created in db
+      - [x] display username
+  - [x] functional login page
+    - [x] on success: redirect to dashboard
+  - [x] logout functionality
+  - [x] basic dashboard page
+    - [x] dashboard is not accessible when not logged in
+      - [x] if not logged in: redirect to login
+- [ ] _Minimum Viable Product_ - **service (v0.2)**
+  - [x] add notes service
+    - [x] CRUD operations
+      - [x] Create
+      - [x] Read
+      - [x] Update
+      - [x] Delete
+    - [x] display Create/Update error messages
+    - [x] ask confirmation before Delete
+    - [x] the logged-in user can access only their own notes
+    - [x] when user logs out, their notes data are cleared from store
+    - [x] changes in one browser are immediately reflected in another
+    - [ ] _nice to have beyond basic MVP:_
+      - [x] has text, category and color properties
+        - [x] support basic markdown-style formatting of note text
+        - [x] support color-coding
+        - [ ] support ordering by
+          - [ ] created time
+          - [ ] modified time
+          - [ ] category
+          - [ ] color
+      - [ ] has list and grid mode
+      - [x] implement vue-fontawesome icons
+      - [x] implement basic css and vue-based transitions
+  - [ ] add "remain logged in" option to extend 1-day jwt expiration
+- [ ] _Minimum Viable Product_ - **deployed (v0.3)**
+  - [ ] app is deployed on cloud service
+  - [ ] app is accessible on desktop and mobile device
+- [ ] _Minimum Viable Product_ - **progressive web app (v0.4)**
+  - [ ] app is operational when offline
+  - [ ] app syncs when back online
+- [ ] Dashboard components
+  - [ ] Notes service
+  - [ ] Lists service
+    - [ ] can be associated to Notes
+    - [ ] has list items
+      - [ ] can be associated to Notes
+    - [ ] checked list item moves to bottom of list
+  - [ ] ToDos service
+    - [ ] can be associated to Notes
+  - [ ] Reminders service
+    - [ ] can be associated to Notes, Lists and ToDos
+  - [ ] Calendar service
+  - [ ] Bookmarks service
+- [x] Page flow:
 
-```
+```pseudo
 /
 if logged in -> dashboard
 else -> login
@@ -83,20 +84,21 @@ if authenticated -> dashboard
 /register
 if valid entry -> login
 ```
-* [ ] Encrypt NeDB data items - each with user's key
-* [ ] Mobile optimized
-* [ ] Progressive Web App
-* [ ] Test suite
-* [ ] CI
-* [ ] Deploy to cloud
-  * [ ] Static (pre-rendered) + Lambda functions?
-  * [ ] AWS? Netlify?
-* [ ] Replace NeDB with Solid POD implementation
 
+- [ ] Encrypt NeDB data items - each with user's key
+- [ ] Mobile optimized
+- [ ] Progressive Web App
+- [ ] Test suite
+- [ ] CI
+- [ ] Deploy to cloud
+  - [ ] Static (pre-rendered) + Lambda functions?
+  - [ ] AWS? Netlify?
+- [ ] Replace NeDB with Solid POD implementation
 
 ## Setup
 
 First clone this repo.
+
 ```bash
 # cd to vue-feathers-productivity repo directory
 $ cd [path/to/vue-feathers-productivity]
@@ -108,12 +110,12 @@ $ cd ../client
 $ npm install
 ```
 
-***Note***: *You may receive vulnerability warnings. They are in 'cli-plugin-e2e-nightwatch', an e2e test utility. Thus they do no impact the normal usage of either server or client. Run `npm audit fix` to fix them, or `npm audit` for details. (As of 11/08/2018 no fix is yet available)*
-
+**_Note_**: _You may receive vulnerability warnings. They are in 'cli-plugin-e2e-nightwatch', an e2e test utility. Thus they do no impact the normal usage of either server or client. Run `npm audit fix` to fix them, or `npm audit` for details. (As of 11/08/2018 no fix is yet available)_
 
 ## Development Usage
 
-1. **In Git Bash window #1 - run server**:
+**In Git Bash window #1 - run server**:
+
 ```bash
 # cd to vue-feathers-productivity repo directory
 $ cd [path/to/vue-feathers-productivity]
@@ -124,9 +126,11 @@ $ npm run setup:dev
 # start the server
 $ npm run dev
 ```
-You should see a generic Feathers page at http://localhost:3030/.
 
-2. **In Git Bash window #2 - run client**:
+You should see a generic Feathers page at <http://localhost:3030/>.
+
+**In Git Bash window #2 - run client**:
+
 ```bash
 # cd to vue-feathers-productivity repo directory
 $ cd [path/to/vue-feathers-productivity]
@@ -134,47 +138,49 @@ $ cd client
 # start the server (hot-reload enabled)
 $ npm run dev
 ```
-You can view the client app at http://localhost:8289/ (local) or http://192.168.56.1:8289/ (network).
 
+You can view the client app at <http://localhost:8289/> (local) or <http://192.168.56.1:8289/> (network).
 
 ## Dependencies
 
+**_Client Dependencies:_**
 
-***Client Dependencies:***
-* @feathersjs/authentication-client
-* @feathersjs/feathers
-* @feathersjs/socketio-client
-* feathers-vuex
-* @fortawesome/vue-fontawesome
-* @fortawesome/fontawesome-svg-core
-* @fortawesome/free-solid-svg-icons
-* register-service-worker
-* socket.io-client
-* vue
-* vue-router
-* vuex
+- @feathersjs/authentication-client
+- @feathersjs/feathers
+- @feathersjs/socketio-client
+- feathers-vuex
+- @fortawesome/vue-fontawesome
+- @fortawesome/fontawesome-svg-core
+- @fortawesome/free-solid-svg-icons
+- register-service-worker
+- socket.io-client
+- vue
+- vue-router
+- vuex
 
-***Server Dependencies:***
-* @feathersjs/authentication
-* @feathersjs/authentication-jwt
-* @feathersjs/authentication-local
-* @feathersjs/configuration
-* @feathersjs/errors
-* @feathersjs/express
-* @feathersjs/feathers
-* @feathersjs/socketio
-* compression
-* cors
-* feathers-authentication-hooks
-* feathers-nedb
-* helmet
-* nedb
-* serve-favicon
-* winston
+**_Server Dependencies:_**
 
-***Vue-CLI plugins:***
-* [babel](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel)
-* [pwa](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa)
-* [eslint](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint)
-* [unit-mocha](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-unit-mocha)
-* [e2e-nightwatch](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-nightwatch)
+- @feathersjs/authentication
+- @feathersjs/authentication-jwt
+- @feathersjs/authentication-local
+- @feathersjs/configuration
+- @feathersjs/errors
+- @feathersjs/express
+- @feathersjs/feathers
+- @feathersjs/socketio
+- compression
+- cors
+- feathers-authentication-hooks
+- feathers-nedb
+- helmet
+- nedb
+- serve-favicon
+- winston
+
+**_Vue-CLI plugins:_**
+
+- [babel](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel)
+- [pwa](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa)
+- [eslint](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint)
+- [unit-mocha](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-unit-mocha)
+- [e2e-nightwatch](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-nightwatch)
