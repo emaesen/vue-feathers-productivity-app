@@ -7,7 +7,7 @@
       <div v-if="errors.length" class="errors">
         <b>Please correct the following error(s):</b>
         <ul>
-          <!-- eslint-disable-next-line -->
+          <!-- eslint-disable-next-line vue/require-v-for-key -->
           <li v-for="error in errors">{{ error }}</li>
         </ul>
       </div>
@@ -74,25 +74,27 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 
 export default {
-  name: 'Register',
+  name: "Register",
   data: function() {
     return {
       errors: [],
       user: {
-        username: '',
-        password: ''
+        username: "",
+        password: ""
       },
-      confirmPassword: ''
+      confirmPassword: ""
     };
   },
   computed: {
     isValid: function() {
-      return this.validUsername() && this.validPassword() && this.matchingPasswords();
+      return (
+        this.validUsername() && this.validPassword() && this.matchingPasswords()
+      );
     },
-    ...mapState('users', { loading: 'isCreatePending' })
+    ...mapState("users", { loading: "isCreatePending" })
   },
   methods: {
     register: function(evt) {
@@ -101,30 +103,29 @@ export default {
         // create user instance
         const { User } = this.$FeathersVuex;
         const user = new User(this.user);
-        user.save()
-          .then((user) => {
-            console.log({user:user});
-            this.$router.push('/login');
-          });
+        user.save().then(user => {
+          console.log({ user: user });
+          this.$router.push("/login");
+        });
       }
       evt.preventDefault();
     },
-    validForm(){
+    validForm() {
       // form has html5 validation
       // do some js validation as backup
-      let err = this.errors = [];
+      let err = (this.errors = []);
       if (!this.user.username) {
-        err.push('Username is required.');
+        err.push("Username is required.");
       } else if (!this.validUsername()) {
-        err.push('Username must have 2 to 18 letters, numbers or spaces.');
+        err.push("Username must have 2 to 18 letters, numbers or spaces.");
       }
       if (!this.user.password) {
-        err.push('Password is required.');
+        err.push("Password is required.");
       } else if (!this.validPassword()) {
-        err.push('Password must have 4 to 18 characters.');
+        err.push("Password must have 4 to 18 characters.");
       }
       if (!this.matchingPasswords()) {
-        err.push('Both passwords must match.');
+        err.push("Both passwords must match.");
       }
       return err.length === 0;
     },
@@ -146,11 +147,11 @@ export default {
 <style scoped>
 .warning {
   margin-left: 5px;
-  font-size: .65rem;
+  font-size: 0.65rem;
   color: #e67d09;
 }
 .errors {
-  font-size: .85rem;
+  font-size: 0.85rem;
   color: #e67d09;
 }
 ul {

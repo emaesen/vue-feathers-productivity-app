@@ -87,24 +87,26 @@
 </template>
 
 <script>
-import EditNote from './CreateEditNote';
+import EditNote from "./CreateEditNote";
 
 // allow limited markdown-inspired formatting
-function simpleFormat(inp){
-  return inp && inp
-    .replace(/</g, "&lt;")
-    .replace(/\n *\* /g, "\n⊛ ")
-    .replace(/```\n([^`]+)\n```\n/g, '<pre>$1</pre>')
-    .replace(/`([^`]+)`/g, '<code>$1</code>')
-    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*([^*]+)\*/g, '<i>$1</i>')
-    .replace(/(http.+\b)/g, '<a href="$1" target="_blank">$1</a>')
-    .replace(/\n/g, "<br>");
+function simpleFormat(inp) {
+  return (
+    inp &&
+    inp
+      .replace(/</g, "&lt;")
+      .replace(/\n *\* /g, "\n⊛ ")
+      .replace(/```\n([^`]+)\n```\n/g, "<pre>$1</pre>")
+      .replace(/`([^`]+)`/g, "<code>$1</code>")
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+      .replace(/\*([^*]+)\*/g, "<i>$1</i>")
+      .replace(/(http.+\b)/g, '<a href="$1" target="_blank">$1</a>')
+      .replace(/\n/g, "<br>")
+  );
 }
 
-
 export default {
-  name: 'Note',
+  name: "Note",
   components: {
     EditNote
   },
@@ -117,10 +119,10 @@ export default {
       type: Object,
       default: function() {
         return {
-          text:"",
-          category:"",
-          color:""
-        }
+          text: "",
+          category: "",
+          color: ""
+        };
       }
     },
     initCollapsed: {
@@ -133,12 +135,12 @@ export default {
       isEditing: false,
       isCollapsed: !!this.initCollapsed && true,
       nrOfCharsWhenCollapsed: 15,
-      maxNoteHeight: '10px',
-      transitionDuration: '1s',
+      maxNoteHeight: "10px",
+      transitionDuration: "1s",
       isDeleteClicked: false
     };
   },
-  mounted: function () {
+  mounted: function() {
     this.setStyleProps();
   },
   computed: {
@@ -148,21 +150,21 @@ export default {
   },
   methods: {
     setStyleProps() {
-      this.$nextTick(function () {
+      this.$nextTick(function() {
         let elHeight = this.$refs.content.offsetHeight;
         // set max-height to actual height
         // (to allow for non-delay smooth open/close transition)
-        this.maxNoteHeight = elHeight + 'px';
+        this.maxNoteHeight = elHeight + "px";
         // calculate transition duration such that the transition speed
         // is fairly consistent for various note heights.
-        this.transitionDuration = (.3 + elHeight/500) + 's';
-      })
+        this.transitionDuration = 0.3 + elHeight / 500 + "s";
+      });
     },
     toggleCollapse(evt) {
       let sel = window.getSelection && window.getSelection().toString();
-      let elName = evt.target.localName
+      let elName = evt.target.localName;
       // collapse, unless user clicked a link, a button or made a selection
-      if (elName!=='a' && elName!=='button' && !sel) {
+      if (elName !== "a" && elName !== "button" && !sel) {
         this.isCollapsed = !this.isCollapsed;
       }
       if (sel) {
@@ -171,13 +173,13 @@ export default {
       }
     },
     deleteNote(note, isConfirmed) {
-      if( typeof isConfirmed === "undefined" ) {
+      if (typeof isConfirmed === "undefined") {
         // ask for confirmation
         this.isDeleteClicked = true;
       } else {
         this.isDeleteClicked = false;
-        if (isConfirmed){
-          this.$emit('delete-note', note);
+        if (isConfirmed) {
+          this.$emit("delete-note", note);
         }
       }
     },
@@ -187,7 +189,7 @@ export default {
     },
     editNote(mod) {
       this.isEditing = false;
-      this.$emit('edit-note', {note:this.note, mod:mod});
+      this.$emit("edit-note", { note: this.note, mod: mod });
       this.setStyleProps();
     },
     cancelEdit() {
@@ -196,9 +198,10 @@ export default {
       this.isEditing = false;
     },
     editNoteWarning(warning) {
-      this.$emit('edit-note-warning', warning);
+      this.$emit("edit-note-warning", warning);
     }
-  }};
+  }
+};
 </script>
 
 <style scoped>
@@ -224,7 +227,7 @@ export default {
 }
 .collapsed {
   /* must use !important to override inline style */
-  max-height: 1.1em!important;
+  max-height: 1.1em !important;
 }
 .show-overflow {
   overflow: auto;
@@ -234,21 +237,22 @@ export default {
   background-color: #21202799;
   border: 1px solid #212027;
   border-radius: 10px;
-  margin-top: .5em;
-  padding: .2em .5em;
+  margin-top: 0.5em;
+  padding: 0.2em 0.5em;
 }
 .confirm {
   margin-left: 1em;
   display: inline-block;
 }
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 1s, transform 1s;
   opacity: 1;
   transform: scaleX(1);
 }
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
   transform: scaleX(0);
 }
-
 </style>

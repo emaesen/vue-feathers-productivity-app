@@ -8,16 +8,15 @@
 
 <script>
 // @ is an alias to /src
-import Notes from '@/components/Notes.vue'
+import Notes from "@/components/Notes.vue";
 
 export default {
-  name: 'Dashboard',
+  name: "Dashboard",
   components: {
     Notes
   },
   data: function() {
-    return {
-    };
+    return {};
   }
 };
 </script>

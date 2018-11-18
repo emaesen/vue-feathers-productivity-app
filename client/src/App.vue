@@ -14,26 +14,25 @@
 
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState } from "vuex";
 
 export default {
-  name: 'App',
+  name: "App",
   data: function() {
-    return {
-    };
+    return {};
   },
   computed: {
-    ...mapState('auth', { user: 'user' }),
+    ...mapState("auth", { user: "user" }),
     userName() {
-      console.log({user: this.user});
+      console.log({ user: this.user });
       return "Logged in as “" + this.user.username + "” ➔ ";
     }
   },
   methods: {
-    ...mapActions('auth', { authLogout: 'logout'}),
+    ...mapActions("auth", { authLogout: "logout" }),
     logout() {
       console.log("logging out...");
-      this.authLogout().then(() => this.$router.push('login'));
+      this.authLogout().then(() => this.$router.push("login"));
     }
   }
 };
@@ -44,13 +43,17 @@ body {
   background-color: #17161c;
   margin: 9px;
 }
-body, input, textarea, select, button {
+body,
+input,
+textarea,
+select,
+button {
   color: #e9e4f2;
   font-family: Helvetica, Arial, sans-serif;
   font-size: 14px;
 }
 h2 {
-  margin: 0 0 .5em .2em;
+  margin: 0 0 0.5em 0.2em;
 }
 section {
   padding: 5px;
@@ -65,20 +68,20 @@ fieldset {
   display: inline-block;
 }
 legend {
-  margin:1em 0;
+  margin: 1em 0;
   font-size: 1.1rem;
 }
 label {
-  display:flex;
-  margin-left:.3em;
+  display: flex;
+  margin-left: 0.3em;
   font-weight: bold;
   letter-spacing: 1px;
   font-style: italic;
   color: #cec0a1;
 }
 textarea {
-  min-height:4em;
-  height:8em;
+  min-height: 4em;
+  height: 8em;
   width: 90%;
   width: -moz-available;
   width: -webkit-fill-available;
@@ -92,7 +95,7 @@ button {
   border: 1px solid #333;
   border-radius: 5px;
   padding: 5px 10px;
-  margin-bottom:1em;
+  margin-bottom: 1em;
 }
 input:focus,
 textarea:focus,
@@ -115,23 +118,24 @@ input[type="submit"].loading:disabled {
   color: #e9e4f290;
 }
 input:invalid + span.icon:after {
-  content: '✖';
+  content: "✖";
   color: #f00;
   padding-left: 5px;
 }
 input:valid + span.icon:after {
-  content: '✓';
+  content: "✓";
   color: #26b72b;
   padding-left: 5px;
 }
 pre {
-  margin: .5em;
-  padding: .5em;
+  margin: 0.5em;
+  padding: 0.5em;
 }
 code {
-  padding: 0 .2em;
+  padding: 0 0.2em;
 }
-pre, code {
+pre,
+code {
   color: #daefff;
 }
 #nav {
@@ -145,8 +149,9 @@ pre, code {
     }
   }
 }
-a, .action {
-  cursor:pointer;
+a,
+.action {
+  cursor: pointer;
   text-decoration: none;
   letter-spacing: 1px;
   color: #bdb1db;
@@ -155,7 +160,7 @@ a, .action {
 .action.button {
   vertical-align: middle;
   font-weight: bold;
-  border:1px solid #62518c;
+  border: 1px solid #62518c;
   background-color: #3e2200;
   padding: 2px 5px;
   margin: 5px 0;
@@ -163,12 +168,12 @@ a, .action {
   border-radius: 5px;
   min-height: 25px;
 }
-.action.button + .action.button{
+.action.button + .action.button {
   margin-left: 5px;
 }
 button,
 .actionable {
-  cursor:pointer;
+  cursor: pointer;
 }
 .info {
   color: #e9e4f272;

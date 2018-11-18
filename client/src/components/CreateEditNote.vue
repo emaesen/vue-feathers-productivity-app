@@ -82,18 +82,18 @@ export default {
     note: {
       type: Object,
       default: function() {
-        return {}
+        return {};
       }
     }
   },
   data() {
     return {
-      text: this.note && this.note.text || '',
-      category: this.note && this.note.category || '',
-      color: this.note && this.note.color || '',
+      text: (this.note && this.note.text) || "",
+      category: (this.note && this.note.category) || "",
+      color: (this.note && this.note.color) || "",
       showForm: !!(this.note && this.note.text),
       showError: false,
-      colors: ['', 'red', 'blue', 'green', 'yellow', 'purple']
+      colors: ["", "red", "blue", "green", "yellow", "purple"]
     };
   },
   computed: {
@@ -114,7 +114,7 @@ export default {
     },
     cancel() {
       if (this.isEdit) {
-        this.$emit('cancel-edit');
+        this.$emit("cancel-edit");
       }
       this.closeNoteForm();
     },
@@ -131,13 +131,13 @@ export default {
       this.color = this.note.color;
     },
     clearNoteForm() {
-      this.text = '';
-      this.category = '';
-      this.color = '';
+      this.text = "";
+      this.category = "";
+      this.color = "";
       this.showForm = false;
     },
     save() {
-      const msgType = this.isEdit? 'edit-note' : 'create-note';
+      const msgType = this.isEdit ? "edit-note" : "create-note";
       this.showError = false;
       if (this.text.length > 0) {
         this.$emit(msgType, {
@@ -149,8 +149,8 @@ export default {
       } else {
         this.showError = true;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -168,15 +168,16 @@ export default {
   padding: 5px;
   margin-bottom: 5px;
 }
-.req, .error {
+.req,
+.error {
   font-style: italic;
   margin-left: 1em;
 }
 .req {
-  color:#ffbc00ab;
+  color: #ffbc00ab;
 }
 .error {
-  color:#ffbc00;
+  color: #ffbc00;
 }
 .clr-selector {
   margin-bottom: 1em;
@@ -188,23 +189,27 @@ export default {
   border-radius: 10px;
   margin: 0 5px;
   vertical-align: middle;
-  width:25px;
-  height:25px;
+  width: 25px;
+  height: 25px;
 }
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity 1s, transform 1s;
   transform: scaleY(1);
 }
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
   transform: scaleY(0);
 }
-.slidefade-enter-active, .slidefade-leave-active {
+.slidefade-enter-active,
+.slidefade-leave-active {
   transition: opacity 1s, transform 1s, max-height 2s;
   transform: scaleY(1);
   max-height: 50em;
 }
-.slidefade-enter, .slidefade-leave-to {
+.slidefade-enter,
+.slidefade-leave-to {
   opacity: 0;
   transform: scaleY(0);
   max-height: 0;

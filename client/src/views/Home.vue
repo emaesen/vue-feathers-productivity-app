@@ -6,13 +6,13 @@
 
 <script>
 export default {
-  name: 'home'
-}
+  name: "home"
+};
 </script>
 
 <style scoped>
-.home{
-  margin:2em auto;
+.home {
+  margin: 2em auto;
   text-align: center;
 }
 </style>

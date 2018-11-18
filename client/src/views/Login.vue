@@ -7,7 +7,7 @@
       <div v-if="errors.length" class="errors">
         <b>Please correct the following error(s):</b>
         <ul>
-          <!-- eslint-disable-next-line -->
+          <!-- eslint-disable-next-line vue/require-v-for-key -->
           <li v-for="error in errors">{{ error }}</li>
         </ul>
       </div>
@@ -74,57 +74,59 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions } from "vuex";
 
 export default {
-  name: 'Login',
+  name: "Login",
   data: function() {
     return {
       errors: [],
       user: {
-        username: '',
-        password: ''
+        username: "",
+        password: ""
       },
-      authError: ''
+      authError: ""
     };
   },
   computed: {
     isValid: function() {
       return this.validUsername() && this.validPassword();
     },
-    ...mapState('auth', { loading: 'isAuthenticatePending' })
+    ...mapState("auth", { loading: "isAuthenticatePending" })
   },
   methods: {
-    ...mapActions('auth', ['authenticate']),
+    ...mapActions("auth", ["authenticate"]),
     login: function(evt) {
       if (this.validForm()) {
         //submit form
         console.log("submitting login form");
         this.authenticate({
-          strategy: 'local',
+          strategy: "local",
           ...this.user
-        }).then(resp => {
-          console.log('logged in: ', resp);
-          this.$router.push('/dashboard');
-        }).catch(e => {
-          console.error('Authentication error: ', e);
-          this.authError = e.message;
         })
+          .then(resp => {
+            console.log("logged in: ", resp);
+            this.$router.push("/dashboard");
+          })
+          .catch(e => {
+            console.error("Authentication error: ", e);
+            this.authError = e.message;
+          });
       }
       evt.preventDefault();
     },
-    clearError(){
-      this.authError = '';
+    clearError() {
+      this.authError = "";
     },
-    validForm(){
+    validForm() {
       // form has html5 validation
       // do some js validation as backup
-      let err = this.errors = [];
+      let err = (this.errors = []);
       if (!this.validUsername()) {
-        err.push('Username is invalid.');
+        err.push("Username is invalid.");
       }
       if (!this.validPassword()) {
-        err.push('Password is invalid.');
+        err.push("Password is invalid.");
       }
       return err.length === 0;
     },
@@ -144,7 +146,7 @@ export default {
 .validation {
   visibility: hidden;
   margin-left: 5px;
-  font-size: .65rem;
+  font-size: 0.65rem;
   color: #e67d09;
 }
 input:valid + span + span.validation {
@@ -153,18 +155,18 @@ input:valid + span + span.validation {
 }
 .errors,
 .auth-error {
-  font-size: .85rem;
+  font-size: 0.85rem;
   color: #e67d09;
 }
 .auth-error {
-  margin-left: .2em;
+  margin-left: 0.2em;
 }
 ul {
   margin: 0 -1em 1em 0;
 }
 .register {
   margin-left: 1em;
-  font-size: .85rem;
+  font-size: 0.85rem;
   color: #999;
   font-style: italic;
 }
