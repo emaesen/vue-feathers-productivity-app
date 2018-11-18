@@ -7,8 +7,7 @@
       <div v-if="errors.length" class="errors">
         <b>Please correct the following error(s):</b>
         <ul>
-          <!-- eslint-disable-next-line vue/require-v-for-key -->
-          <li v-for="error in errors">{{ error }}</li>
+          <li v-for="error in errors" :key="error">{{ error }}</li>
         </ul>
       </div>
       <div>
