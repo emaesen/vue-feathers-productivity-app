@@ -34,6 +34,13 @@ export default {
     CreateNote
   },
   props: {},
+  data() {
+    return {
+      sortAsc: true,
+      sortDateCreatedAsc: false,
+      sortNoCatLast: true
+    }
+  },
   created: function() {
     // Find all notes. We'll use the getters to separate them.
     this.findNotes({ query: {} });
@@ -65,6 +72,23 @@ export default {
       props.note.update().then(note => {
         console.log("edit succesful", note);
       });
+    },
+    sortByDateCreated(a,b) {
+      let dateDiff = new Date(b.createdAt) - new Date(a.createdAt)
+      return this.sortDateCreatedAsc? -dateDiff : dateDiff;
+    },
+    uiSort(a,b) {
+      // TODO: implement sort selector
+      let dir = this.sortAsc? 1 : -1;
+      return !a.category ? this.sortNoCatLast? 1 : -1
+      : !b.category ? this.sortNoCatLast? -1 : 1
+      : b.category < a.category ? 1*dir
+      : b.category > a.category ? -1*dir
+      : 0;
+    },
+    uiFilter(note) {
+      // TODO: implement category selector
+      return true; //note.category==="test";
     }
   },
   computed: {
@@ -75,8 +99,8 @@ export default {
     }),
     ...mapGetters("notes", { findNotesInStore: "find" }),
     category() {
-      // TODO: implement category selector
-      // Return null if no category is selected so that all are returned.
+      // For large datasets, an option is to implement a query-selector.
+      // But for the Notes service, best is to filter on the client.
       return null;
     },
     query() {
@@ -95,6 +119,9 @@ export default {
         ? this.findNotesInStore({
             query: this.query
           }).data
+          .filter(this.uiFilter)
+          .sort(this.sortByDateCreated)
+          .sort(this.uiSort)
         : [];
     }
   }
