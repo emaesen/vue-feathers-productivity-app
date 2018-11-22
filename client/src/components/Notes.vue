@@ -26,6 +26,13 @@
         {{ sortType }}
         <font-awesome-icon icon="check" />
       </button>
+      <button
+        @click="setFilter"
+        class="action button"
+      >
+        <font-awesome-icon icon="filter" />
+        {{ filterType }}
+      </button>
     </div>
     <create-note
       @create-note="createNote"
@@ -63,15 +70,17 @@ export default {
   data() {
     return {
       sortAsc: true,
-      sortColors: ['red', 'yellow', 'purple', 'blue', 'green', ''],
-      sortTypes: ['color', 'category', 'date created', 'date modified'],
+      colors: ['red', 'yellow', 'purple', 'blue', 'green', ''],
+      types: ['color', 'category', 'date created', 'date modified'],
       sortType: 'color',
+      filterType: '',
+      filter: '',
       sortDateAsc: false,
       sortNoCatLast: true
     }
   },
   created: function() {
-    // Find all notes. We'll use the getters to separate them.
+    // Find all notes from server. We'll filter/sort on the client.
     this.findNotes({ query: {} });
   },
   methods: {
@@ -103,11 +112,11 @@ export default {
       });
     },
     cycleSortType() {
-      let typeIndex = this.sortTypes.findIndex(t => t === this.sortType) + 1;
-      if (typeIndex >= this.sortTypes.length) {
+      let typeIndex = this.types.findIndex(t => t === this.sortType) + 1;
+      if (typeIndex >= this.types.length) {
         typeIndex = 0;
       }
-      this.sortType = this.sortTypes[typeIndex];
+      this.sortType = this.types[typeIndex];
       console.log(this.sortType + ' ' + typeIndex);
     },
     sortByDate(a,b, type) {
@@ -121,7 +130,7 @@ export default {
     uiSort(a,b) {
       // TODO: implement sort selector
       let dir = this.sortAsc? 1 : -1;
-      const colorIndex = clr => this.sortColors.findIndex(c => c === clr);
+      const colorIndex = clr => this.colors.findIndex(c => c === clr);
       let result;
       switch (this.sortType) {
         case 'color':
@@ -145,9 +154,18 @@ export default {
       }
       return result;
     },
+    setFilter() {
+      let result;
+      // TODO!
+      this.categories;
+      return result;
+    },
     uiFilter(note) {
-      // TODO: implement category/color selector
-      return true; //note.category==="test";
+      let result = true;
+      if (this.filterType && this.filter) {
+        result = note[this.filterType] === this.filter;
+      }
+      return result;
     }
   },
   computed: {
@@ -159,7 +177,7 @@ export default {
     ...mapGetters("notes", { findNotesInStore: "find" }),
     category() {
       // For large datasets, an option is to implement a query-selector.
-      // But for the Notes service, best is to filter on the client.
+      // But for the Notes service, we can just filter on the client.
       return null;
     },
     query() {
@@ -182,6 +200,14 @@ export default {
           .sort(this.sortByDate)
           .sort(this.uiSort)
         : [];
+    },
+    categories() {
+      // get list of user-defined categories and remove duplicates
+      let result = this.notes
+        .map(n => n.category)
+        .filter((c,i,s) => c!=='' && s.indexOf(c) === i);
+      console.log({categories: result})
+      return result;
     }
   }
 };

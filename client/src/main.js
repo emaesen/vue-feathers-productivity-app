@@ -9,6 +9,7 @@ import {
   faCheckCircle, // save, ok
   faEdit, // edit
   faEllipsisV, // ellipsis vertical
+  faFilter, // filter
   faMinusCircle, // remove
   faPlusCircle, // add
   faSignInAlt, // log/sign in
@@ -34,6 +35,7 @@ library.add(
   faCheckCircle,
   faEdit,
   faEllipsisV,
+  faFilter,
   faMinusCircle,
   faPlusCircle,
   faSignInAlt,
