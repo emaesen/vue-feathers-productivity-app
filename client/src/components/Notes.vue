@@ -1,6 +1,32 @@
 <template>
-  <section>
-    <h2><font-awesome-icon icon="sticky-note" /> Notes</h2>
+  <section id="notes">
+    <h2 class="notes"><font-awesome-icon icon="sticky-note" /> Notes</h2>
+    <div class="controls">
+      <button
+        v-if="sortType==='color' || sortType==='category'"
+        @click="sortAsc = !sortAsc"
+        class="action button"
+      >
+        sort
+        <font-awesome-icon :icon="sortAsc? 'sort-amount-down' : 'sort-amount-up'" />
+      </button>
+      <button
+        v-else
+        @click="sortDateAsc = !sortDateAsc"
+        class="action button"
+      >
+        sort
+        <font-awesome-icon :icon="sortDateAsc? 'sort-amount-down' : 'sort-amount-up'" />
+      </button>
+      <button
+        @click="cycleSortType"
+        class="action button"
+      >
+        ➔ by
+        {{ sortType }}
+        <font-awesome-icon icon="check" />
+      </button>
+    </div>
     <create-note
       @create-note="createNote"
     />
@@ -37,7 +63,10 @@ export default {
   data() {
     return {
       sortAsc: true,
-      sortDateCreatedAsc: false,
+      sortColors: ['red', 'yellow', 'purple', 'blue', 'green', ''],
+      sortTypes: ['color', 'category', 'date created', 'date modified'],
+      sortType: 'color',
+      sortDateAsc: false,
       sortNoCatLast: true
     }
   },
@@ -73,21 +102,51 @@ export default {
         console.log("edit succesful", note);
       });
     },
-    sortByDateCreated(a,b) {
-      let dateDiff = new Date(b.createdAt) - new Date(a.createdAt)
-      return this.sortDateCreatedAsc? -dateDiff : dateDiff;
+    cycleSortType() {
+      let typeIndex = this.sortTypes.findIndex(t => t === this.sortType) + 1;
+      if (typeIndex >= this.sortTypes.length) {
+        typeIndex = 0;
+      }
+      this.sortType = this.sortTypes[typeIndex];
+      console.log(this.sortType + ' ' + typeIndex);
+    },
+    sortByDate(a,b, type) {
+      type = type || 'updated';
+      let dateDiff 
+      dateDiff = (type === 'updated') ? 
+        new Date(b.updatedAt) - new Date(a.updatedAt) 
+        : new Date(b.createdAt) - new Date(a.createdAt);
+      return this.sortDateAsc? -dateDiff : dateDiff;
     },
     uiSort(a,b) {
       // TODO: implement sort selector
       let dir = this.sortAsc? 1 : -1;
-      return !a.category ? this.sortNoCatLast? 1 : -1
-      : !b.category ? this.sortNoCatLast? -1 : 1
-      : b.category < a.category ? 1*dir
-      : b.category > a.category ? -1*dir
-      : 0;
+      const colorIndex = clr => this.sortColors.findIndex(c => c === clr);
+      let result;
+      switch (this.sortType) {
+        case 'color':
+        result = colorIndex(b.color) < colorIndex(a.color) ? 1*dir
+          : colorIndex(b.color) > colorIndex(a.color) ? -1*dir
+          : 0;
+          break;
+        case 'category':
+          result = !a.category ? this.sortNoCatLast? 1 : -1
+          : !b.category ? this.sortNoCatLast? -1 : 1
+          : b.category < a.category ? 1*dir
+          : b.category > a.category ? -1*dir
+          : 0;
+          break;
+        case 'date created':
+          result = this.sortByDate(a,b, 'created');
+          break;
+        case 'date modified':
+          result = this.sortByDate(a,b);
+          break;
+      }
+      return result;
     },
     uiFilter(note) {
-      // TODO: implement category selector
+      // TODO: implement category/color selector
       return true; //note.category==="test";
     }
   },
@@ -120,7 +179,7 @@ export default {
             query: this.query
           }).data
           .filter(this.uiFilter)
-          .sort(this.sortByDateCreated)
+          .sort(this.sortByDate)
           .sort(this.uiSort)
         : [];
     }
@@ -129,6 +188,16 @@ export default {
 </script>
 
 <style>
+h2.notes {
+  display: inline-block;
+  margin-right: 1em;
+}
+#notes .controls {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  top: -5px;
+}
 .clr-red {
   background-color: #f9141418;
 }
