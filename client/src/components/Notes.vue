@@ -27,10 +27,10 @@
         <font-awesome-icon icon="check" />
       </button>
       <button
-        @click="showFilters = !showFilters"
+        @click="toggleFilters"
         class="action button"
       >
-        filter
+        {{ showFilters? 'hide' : 'show' }} filters
         <font-awesome-icon icon="filter" />
         ({{ nrFiltersApplied }})
       </button>
@@ -167,6 +167,10 @@ export default {
           break;
       }
       return result;
+    },
+    toggleFilters(evt) {
+      evt.target.blur();
+      this.showFilters = !this.showFilters;
     },
     uiFilter(note) {
       // Filter by selected colors and categories.
