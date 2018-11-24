@@ -30,15 +30,17 @@
         @click="showFilters = !showFilters"
         class="action button"
       >
+        filter
         <font-awesome-icon icon="filter" />
         ({{ nrFiltersApplied }})
       </button>
     </div>
-    <filter-control 
+    <filter-control
       v-show="showFilters"
       :colors="colors"
       :categories="categories"
       :filter="filter"
+      :filterMeta="notesFilterMeta"
     />
     <create-note
       @create-note="createNote"
@@ -133,7 +135,7 @@ export default {
     },
     sortByDate(a,b, type) {
       type = type || 'updated';
-      let dateDiff 
+      let dateDiff
       dateDiff = (type === 'updated') ? 
         new Date(b.updatedAt) - new Date(a.updatedAt) 
         : new Date(b.createdAt) - new Date(a.createdAt);
@@ -167,7 +169,9 @@ export default {
       return result;
     },
     uiFilter(note) {
-      // filter by selected colors and categories
+      // Filter by selected colors and categories.
+      // Multiple colors are `or`-ed. Multiple categories are `or`-ed.
+      // Example:
       // (note.color === 'green' || note.color === 'blue') && (note.category === 'code')
       const clrReducer = (acc,cur) => (acc || note.color === cur);
       const catReducer = (acc,cur) => (acc || note.category === cur);
@@ -180,7 +184,8 @@ export default {
       // get list of user-defined categories and remove duplicates
       this.categories = this.notes
         .map(n => n.category)
-        .filter((c,i,s) => c!=='' && s.indexOf(c) === i);
+        .filter((c,i,s) => s.indexOf(c) === i)
+        .sort();
       console.log({categories: this.categories});
     }
   },
@@ -219,6 +224,9 @@ export default {
     },
     nrFiltersApplied() {
       return this.filter.colors.length + this.filter.categories.length;
+    },
+    notesFilterMeta() {
+      return this.notes.map(n => ({color:n.color, category:n.category}));
     }
   }
 };
@@ -253,7 +261,7 @@ h2.notes {
   background-color: #141bf936;
 }
 .clr-green {
-  background-color: #14f92636;
+  background-color: #14f92627;
 }
 .clr-yellow {
   background-color: #ffea0245;
