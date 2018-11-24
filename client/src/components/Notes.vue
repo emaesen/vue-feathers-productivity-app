@@ -182,7 +182,7 @@ export default {
     },
     setCategories() {
       // get list of user-defined categories and remove duplicates
-      this.categories = this.notes
+      this.categories = this.notesUnfiltered
         .map(n => n.category)
         .filter((c,i,s) => s.indexOf(c) === i)
         .sort();
@@ -213,21 +213,23 @@ export default {
       return query;
     },
     notes() {
+      return this.notesUnfiltered
+          .filter(this.uiFilter)
+          .sort(this.sortByDate)
+          .sort(this.uiSort);
+    },
+    notesUnfiltered() {
       return this.user
         ? this.findNotesInStore({
             query: this.query
           }).data
-          .filter(this.uiFilter)
-          .sort(this.sortByDate)
-          .sort(this.uiSort)
         : [];
     },
     nrFiltersApplied() {
       return this.filter.colors.length + this.filter.categories.length;
     },
     notesFilterMeta() {
-      this.setCategories();
-      return this.notes.map(n => ({color:n.color, category:n.category}));
+      return this.notesUnfiltered.map(n => ({color:n.color, category:n.category}));
     }
   }
 };
