@@ -102,6 +102,7 @@ textarea:focus,
 select:focus,
 button:focus {
   outline-color: #888;
+  outline-width: 1px;
 }
 input[type="submit"] {
   cursor: pointer;
@@ -166,7 +167,7 @@ a,
   margin: 5px 0;
   display: inline-block;
   border-radius: 5px;
-  min-height: 25px;
+  line-height: 21px;
 }
 .action.button + .action.button {
   margin-left: 5px;

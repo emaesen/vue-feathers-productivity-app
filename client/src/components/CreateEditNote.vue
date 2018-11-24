@@ -182,16 +182,6 @@ export default {
 .clr-selector {
   margin-bottom: 1em;
 }
-.clr {
-  cursor: pointer;
-  display: inline-block;
-  border: 1px solid #555;
-  border-radius: 10px;
-  margin: 0 5px;
-  vertical-align: middle;
-  width: 25px;
-  height: 25px;
-}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 1s, transform 1s;

@@ -27,13 +27,19 @@
         <font-awesome-icon icon="check" />
       </button>
       <button
-        @click="setFilter"
+        @click="showFilters = !showFilters"
         class="action button"
       >
         <font-awesome-icon icon="filter" />
-        {{ filterType }}
+        ({{ nrFiltersApplied }})
       </button>
     </div>
+    <filter-control 
+      v-show="showFilters"
+      :colors="colors"
+      :categories="categories"
+      :filter="filter"
+    />
     <create-note
       @create-note="createNote"
     />
@@ -55,6 +61,7 @@
 <script>
 import Note from "./Note";
 import CreateNote from "./CreateEditNote";
+import FilterControl from './FilterControl';
 
 // Get notes as "Reactive Lists with Live Queries"
 // https://feathers-plus.github.io/v1/feathers-vuex/common-patterns.html#Reactive-Lists-with-Live-Queries
@@ -64,24 +71,26 @@ export default {
   name: "Notes",
   components: {
     Note,
-    CreateNote
+    CreateNote,
+    FilterControl
   },
   props: {},
   data() {
     return {
       sortAsc: true,
       colors: ['red', 'yellow', 'purple', 'blue', 'green', ''],
+      categories: [],
       types: ['color', 'category', 'date created', 'date modified'],
       sortType: 'color',
-      filterType: '',
-      filter: '',
+      filter: {colors:[], categories:[]},
+      showFilters: false,
       sortDateAsc: false,
       sortNoCatLast: true
     }
   },
-  created: function() {
+  created() {
     // Find all notes from server. We'll filter/sort on the client.
-    this.findNotes({ query: {} });
+    this.findNotes({ query: {} }).then(this.setCategories);
   },
   methods: {
     ...mapActions("notes", { findNotes: "find" }),
@@ -92,6 +101,7 @@ export default {
       const note = new Note(newNote);
       note.save().then(note => {
         console.log("Note created ", note);
+        this.setCategories();
       });
     },
     deleteNote(note) {
@@ -99,6 +109,7 @@ export default {
       // delete the note
       note.remove().then(() => {
         console.log("remove succesful");
+        this.setCategories();
       });
     },
     editNote(props) {
@@ -109,6 +120,7 @@ export default {
       props.note.color = props.mod.color;
       props.note.update().then(note => {
         console.log("edit succesful", note);
+        this.setCategories();
       });
     },
     cycleSortType() {
@@ -154,18 +166,22 @@ export default {
       }
       return result;
     },
-    setFilter() {
-      let result;
-      // TODO!
-      this.categories;
-      return result;
-    },
     uiFilter(note) {
-      let result = true;
-      if (this.filterType && this.filter) {
-        result = note[this.filterType] === this.filter;
-      }
-      return result;
+      // filter by selected colors and categories
+      // (note.color === 'green' || note.color === 'blue') && (note.category === 'code')
+      const clrReducer = (acc,cur) => (acc || note.color === cur);
+      const catReducer = (acc,cur) => (acc || note.category === cur);
+      const hasClr = this.filter.colors.length > 0;
+      const hasCat = this.filter.categories.length > 0;
+      return this.filter.colors.reduce(clrReducer, !hasClr) 
+          && this.filter.categories.reduce(catReducer, !hasCat);
+    },
+    setCategories() {
+      // get list of user-defined categories and remove duplicates
+      this.categories = this.notes
+        .map(n => n.category)
+        .filter((c,i,s) => c!=='' && s.indexOf(c) === i);
+      console.log({categories: this.categories});
     }
   },
   computed: {
@@ -201,13 +217,8 @@ export default {
           .sort(this.uiSort)
         : [];
     },
-    categories() {
-      // get list of user-defined categories and remove duplicates
-      let result = this.notes
-        .map(n => n.category)
-        .filter((c,i,s) => c!=='' && s.indexOf(c) === i);
-      console.log({categories: result})
-      return result;
+    nrFiltersApplied() {
+      return this.filter.colors.length + this.filter.categories.length;
     }
   }
 };
@@ -217,12 +228,23 @@ export default {
 h2.notes {
   display: inline-block;
   margin-right: 1em;
+  vertical-align: top;
 }
 #notes .controls {
   cursor: pointer;
   display: inline-block;
   position: relative;
   top: -5px;
+}
+.clr {
+  cursor: pointer;
+  display: inline-block;
+  border: 1px solid #555;
+  border-radius: 10px;
+  margin: 0 5px;
+  vertical-align: middle;
+  width: 25px;
+  height: 25px;
 }
 .clr-red {
   background-color: #f9141418;

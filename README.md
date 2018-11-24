@@ -39,17 +39,20 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       - [x] has text, category and color properties
         - [x] support basic markdown-style formatting of note text
         - [x] support color-coding
-        - [ ] support ordering by
-          - [ ] created time
-          - [ ] modified time
-          - [ ] category
-          - [ ] color
+        - [x] support ordering by
+          - [x] created time
+          - [x] modified time
+          - [x] category
+          - [x] color
+        - [x] support filtering by
+          - [x] color
+          - [x] category
       - [ ] has list and grid mode
       - [x] implement vue-fontawesome icons
       - [x] implement basic css and vue-based transitions
   - [ ] add "remain logged in" option to extend 1-day jwt expiration
 - [ ] _Minimum Viable Product_ - **deployed (v0.3)**
-  - [ ] app is deployed on cloud service
+  - [ ] app is deployed on "cloud" service
   - [ ] app is accessible on desktop and mobile device
 - [ ] _Minimum Viable Product_ - **progressive web app (v0.4)**
   - [ ] app is operational when offline
