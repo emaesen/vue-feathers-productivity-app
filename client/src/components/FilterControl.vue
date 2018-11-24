@@ -40,7 +40,9 @@
         </div>
       </div>
       <div class="filter">
-        <div>
+        <div
+          v-if="categoriesCount['cat-']!==undefined"
+        >
           <input type="checkbox" id="none"
             :value="''"
             v-model="filter.categories"

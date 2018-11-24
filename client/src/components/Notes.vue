@@ -226,6 +226,7 @@ export default {
       return this.filter.colors.length + this.filter.categories.length;
     },
     notesFilterMeta() {
+      this.setCategories();
       return this.notes.map(n => ({color:n.color, category:n.category}));
     }
   }
