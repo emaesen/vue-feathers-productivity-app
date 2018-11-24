@@ -79,6 +79,7 @@
     <edit-note
       v-if="isEditing"
       :note="note"
+      :categories="categories"
       @edit-note="editNote"
       @cancel-edit="cancelEdit"
       @edit-note-warning="editNoteWarning"
@@ -124,6 +125,9 @@ export default {
           color: ""
         };
       }
+    },
+    categories: {
+      type: Array
     },
     initCollapsed: {
       type: Boolean,

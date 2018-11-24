@@ -44,6 +44,7 @@
     />
     <create-note
       @create-note="createNote"
+      :categories="categories"
     />
     <div v-if="loading" class="loading">
       loading...
@@ -53,6 +54,7 @@
         v-for="note in notes"
         :note="note"
         :key="note._id"
+        :categories="categories"
         @delete-note="deleteNote"
         @edit-note="editNote"
       />

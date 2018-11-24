@@ -52,7 +52,22 @@
               <label>Category</label>
               <input
                 v-model="category"
+                placeholder="type new or select below"
               />
+              <div class="categories">
+                <span class="expl">└ select ➔</span>
+                <div class="category"
+                  v-for="cat in categories"
+                  :key="cat"
+                >
+                  <button class="action"
+                    v-if="cat.length>0"
+                    @click="category=cat"
+                  >
+                    {{ cat }}
+                  </button>
+                </div>
+              </div>
             </div>
             <div class="">
               <button
@@ -84,6 +99,9 @@ export default {
       default: function() {
         return {};
       }
+    },
+    categories: {
+      type: Array
     }
   },
   data() {
@@ -167,6 +185,16 @@ export default {
   border-radius: 10px;
   padding: 5px;
   margin-bottom: 5px;
+}
+.categories {
+  margin-top: -0.75em;
+}
+.category {
+  display: inline-block;
+}
+.expl {
+  margin-left: 0.5em;
+  color: #929292;
 }
 .req,
 .error {
