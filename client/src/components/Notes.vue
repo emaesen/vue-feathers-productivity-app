@@ -247,18 +247,18 @@ h2.notes {
   height: 25px;
 }
 .clr-red {
-  background-color: #f9141418;
+  background-color: #f9141436;
 }
 .clr-blue {
-  background-color: #141bf918;
+  background-color: #141bf936;
 }
 .clr-green {
-  background-color: #14f92618;
+  background-color: #14f92636;
 }
 .clr-yellow {
-  background-color: #f9e71418;
+  background-color: #ffea0245;
 }
 .clr-purple {
-  background-color: #c114f918;
+  background-color: #c114f936;
 }
 </style>

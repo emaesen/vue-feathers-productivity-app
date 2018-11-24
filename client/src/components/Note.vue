@@ -234,8 +234,8 @@ export default {
 }
 .action-row {
   display: inline-block;
-  background-color: #21202799;
-  border: 1px solid #212027;
+  background-color: #8a8a8a63;
+  border: 1px solid #212027a3;
   border-radius: 10px;
   margin-top: 0.5em;
   padding: 0.2em 0.5em;
