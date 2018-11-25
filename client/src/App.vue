@@ -200,6 +200,9 @@ button,
 .nav-item {
   display: inline;
 }
+.hidden {
+  visibility: hidden;
+}
 .svg-inline--fa {
   color: #cec0a1;
 }

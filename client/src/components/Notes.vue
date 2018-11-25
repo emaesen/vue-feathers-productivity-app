@@ -3,6 +3,12 @@
     <h2 class="notes"><font-awesome-icon icon="sticky-note" /> Notes</h2>
     <div class="controls">
       <button
+        @click="displayGrid=!displayGrid"
+        class="action button"
+      >
+        <font-awesome-icon :icon="displayGrid? 'th' : 'align-justify'" />
+      </button>
+      <button
         v-if="sortType==='color' || sortType==='category'"
         @click="sortAsc = !sortAsc"
         class="action button"
@@ -49,7 +55,7 @@
     <div v-if="loading" class="loading">
       loading...
     </div>
-    <div v-if="!loading">
+    <div :class="{grid : displayGrid}" v-if="!loading">
       <note
         v-for="note in notes"
         :note="note"
@@ -89,7 +95,8 @@ export default {
       filter: {colors:[], categories:[]},
       showFilters: false,
       sortDateAsc: false,
-      sortNoCatLast: true
+      sortNoCatLast: true,
+      displayGrid: true
     }
   },
   created() {
@@ -253,6 +260,35 @@ h2.notes {
   position: relative;
   top: -5px;
 }
+.grid {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  margin: 0 -0.2rem;
+}
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+}
+.grid .cell {
+  position: relative;
+  width: 33.333%;
+  display: inline-block;
+  transition: width 1s ease-out;
+}
+.grid .cell.expanded {
+  width: 100%;
+}
+.grid .collapsed {
+  overflow: auto;
+  max-height: 15rem !important;
+}
+.grid pre {
+  white-space: pre-wrap;
+}
 .clr {
   cursor: pointer;
   display: inline-block;
@@ -277,5 +313,43 @@ h2.notes {
 }
 .clr-purple {
   background-color: #c114f936;
+}
+::-webkit-scrollbar {
+  background-color: #3d3b4a;
+  width: 6px;
+  height: 6px;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-track {
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #ada0a0;
+  border-radius: 6px;
+}
+@media all and (max-width: 400px) {
+  .grid .cell {
+    width: 100%;
+  }
+}
+@media all and (min-width: 400px) {
+  .grid .cell {
+    width: 50%;
+  }
+}
+@media all and (min-width: 800px) {
+  .grid .cell {
+    width: 33.333%;
+  }
+}
+@media all and (min-width: 1200px) {
+  .grid .cell {
+    width: 25%;
+  }
+}
+@media all and (min-width: 1600px) {
+  .grid .cell {
+    width: 16.666%;
+  }
 }
 </style>

@@ -1,89 +1,95 @@
 <template>
-  <div
-    :id="'note-'+note._id"
-    class="note"
-    :class="'clr-' + note.color"
+  <div class="cell"
+    :class="{expanded: !isCollapsed}"
   >
     <div
-      v-if="!isEditing"
-      class=""
+      :id="'note-'+note._id"
+      class="note"
+      :class="'clr-' + note.color"
     >
       <div
-        class="actionable trans"
-        :class="{collapsed: isCollapsed}"
-        @click="toggleCollapse"
-        :style="{
-          maxHeight: maxNoteHeight,
-          'transition-duration': transitionDuration
-        }"
+        v-if="!isEditing"
+        class=""
       >
         <div
-          ref="content"
+          class="actionable trans"
+          :class="{collapsed: isCollapsed}"
+          @click="toggleCollapse"
+          :style="{
+            maxHeight: maxNoteHeight,
+            'transition-duration': transitionDuration
+          }"
         >
           <div
-            v-if="note.category"
-            class="category"
+            ref="content"
           >
-            {{ note.category }}
-          </div>
-          <div
-            v-else
-            class="category"
-          />
-          <div
-            v-html="textAsHtml"
-          />
-          <div class="action-row">
-            <button
-              class="action button"
-              title="edit"
-              @click="showForm"
+            <div
+              v-if="note.category"
+              class="category"
             >
-              <font-awesome-icon icon="edit" /> edit
-            </button>
-
-            <button
-              v-if="!isDeleteClicked"
-              class="action button"
-              title="delete"
-              @click="deleteNote(note)"
+              {{ note.category }}
+            </div>
+            <div
+              v-else
+              class="category"
+            />
+            <div
+              v-html="textAsHtml"
+            />
+            <div class="action-row"
+              :class="{hidden:isCollapsed}"
             >
-              <font-awesome-icon icon="trash-alt" /> delete
-            </button>
-            <transition name="fade">
-              <div
-                v-if="isDeleteClicked"
-                class="confirm"
+              <button
+                class="action button"
+                title="edit"
+                @click="showForm"
               >
-                Confirm Delete:
-                <button
-                  class="action button"
-                  title="delete"
-                  @click="deleteNote(note, true)"
+                <font-awesome-icon icon="edit" /> edit
+              </button>
+
+              <button
+                v-if="!isDeleteClicked"
+                class="action button"
+                title="delete"
+                @click="deleteNote(note)"
+              >
+                <font-awesome-icon icon="trash-alt" /> delete
+              </button>
+              <transition name="fade">
+                <div
+                  v-if="isDeleteClicked"
+                  class="confirm"
                 >
-                  <font-awesome-icon icon="trash-alt" /> yes!
-                </button>
-                <button
-                  class="action button"
-                  title="delete"
-                  @click="deleteNote(note, false)"
-                >
-                  <font-awesome-icon icon="ban" /> no
-                </button>
-              </div>
-            </transition>
+                  Confirm Delete:
+                  <button
+                    class="action button"
+                    title="delete"
+                    @click="deleteNote(note, true)"
+                  >
+                    <font-awesome-icon icon="trash-alt" /> yes!
+                  </button>
+                  <button
+                    class="action button"
+                    title="delete"
+                    @click="deleteNote(note, false)"
+                  >
+                    <font-awesome-icon icon="ban" /> no
+                  </button>
+                </div>
+              </transition>
+            </div>
           </div>
         </div>
       </div>
+      <edit-note
+        v-if="isEditing"
+        :note="note"
+        :categories="categories"
+        @edit-note="editNote"
+        @cancel-edit="cancelEdit"
+        @edit-note-warning="editNoteWarning"
+      />
     </div>
-    <edit-note
-      v-if="isEditing"
-      :note="note"
-      :categories="categories"
-      @edit-note="editNote"
-      @cancel-edit="cancelEdit"
-      @edit-note-warning="editNoteWarning"
-    />
   </div>
 </template>
 
@@ -213,7 +219,11 @@ export default {
   border: 1px solid #555;
   border-radius: 10px;
   padding: 5px;
-  margin-bottom: 5px;
+  margin-bottom: 0.2rem;
+}
+.grid .note {
+  margin: 0.2rem;
+  min-height: 15rem;
 }
 .category {
   float: right;
