@@ -35,7 +35,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     - [x] the logged-in user can access only their own notes
     - [x] when user logs out, their notes data are cleared from store
     - [x] changes in one browser are immediately reflected in another
-    - [ ] _nice to have beyond basic MVP:_
+    - [x] _nice to have beyond basic MVP:_
       - [x] has text, category and color properties
         - [x] support basic markdown-style formatting of note text
         - [x] support color-coding
@@ -47,7 +47,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
         - [x] support filtering by
           - [x] color
           - [x] category
-      - [ ] has list and grid mode
+      - [x] has list and grid mode
       - [x] implement vue-fontawesome icons
       - [x] implement basic css and vue-based transitions
   - [ ] add "remain logged in" option to extend 1-day jwt expiration
