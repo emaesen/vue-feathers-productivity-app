@@ -55,7 +55,12 @@
     <div v-if="loading" class="loading">
       loading...
     </div>
-    <div :class="{grid : displayGrid}" v-if="!loading">
+    <transition-group
+      v-if="!loading"
+      tag="div"
+      name="notes-list"
+      :class="{grid : displayGrid}"
+    >
       <note
         v-for="note in notes"
         :note="note"
@@ -64,7 +69,7 @@
         @delete-note="deleteNote"
         @edit-note="editNote"
       />
-    </div>
+    </transition-group>
   </section>
 </template>
 
@@ -277,7 +282,6 @@ h2.notes {
   position: relative;
   width: 33.333%;
   display: inline-block;
-  transition: width 1s ease-out;
 }
 .grid .cell.expanded {
   width: 100%;
@@ -288,6 +292,9 @@ h2.notes {
 }
 .grid pre {
   white-space: pre-wrap;
+}
+.notes-list-move {
+  transition: transform 1s;
 }
 .clr {
   cursor: pointer;
