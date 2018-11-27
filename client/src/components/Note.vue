@@ -5,6 +5,7 @@
       class="note"
       :class="'clr-' + note.color"
     >
+      <transition name="fade" mode="out-in">
       <div
         v-if="!isEditing"
         class="actionable trans"
@@ -42,15 +43,15 @@
               <font-awesome-icon icon="edit" /> edit
             </button>
 
-            <button
-              v-if="!isDeleteClicked"
-              class="action button"
-              title="delete"
-              @click="deleteNote(note)"
-            >
-              <font-awesome-icon icon="trash-alt" /> delete
-            </button>
-            <transition name="fade">
+            <transition name="fade" mode="out-in">
+              <button
+                v-if="!isDeleteClicked"
+                class="action button"
+                title="delete"
+                @click="deleteNote(note)"
+              >
+                <font-awesome-icon icon="trash-alt" /> delete
+              </button>
               <div
                 v-if="isDeleteClicked"
                 class="confirm"
@@ -83,6 +84,7 @@
         @cancel-edit="cancelEdit"
         @edit-note-warning="editNoteWarning"
       />
+      </transition>
     </div>
   </div>
 </template>
@@ -309,14 +311,14 @@ export default {
 }
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+  transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
   opacity: 1;
-  transform: scaleX(1);
+  transform: scaleY(1);
 }
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
-  transform: scaleX(0);
+  transform: scaleY(0);
 }
 .animate-transition-transform {
   transition: transform 0.3s;
