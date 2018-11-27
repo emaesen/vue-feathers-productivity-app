@@ -1,5 +1,5 @@
 <template>
-  <div class="cell">
+  <div class="cell notes-list-cell">
     <div
       :id="'note-'+note._id"
       class="note"

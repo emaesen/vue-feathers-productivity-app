@@ -293,13 +293,13 @@ h2.notes {
 .grid pre {
   white-space: pre-wrap;
 }
-.grid .cell {
+.notes-list-cell {
   transition: all 1s;
 }
 .notes-list-enter,
 .notes-list-leave-to {
   opacity: 0;
-  transform: translate(-1000px, 200px);
+  transform: translate(0, -100px);
 }
 .notes-list-leave-active {
   position: absolute;
