@@ -206,7 +206,7 @@ export default {
               cell.style.transform = '';
             }
           });
-
+          // eslint-disable-next-line
           function cleanup() {
             cell.removeEventListener('transitionend', cleanup);
             cell.classList.remove('animate-transition-' + transitionProp);
