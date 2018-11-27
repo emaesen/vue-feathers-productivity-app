@@ -1,7 +1,5 @@
 <template>
-  <div class="cell"
-    :class="{expanded: !isCollapsed}"
-  >
+  <div class="cell">
     <div
       :id="'note-'+note._id"
       class="note"
@@ -9,75 +7,71 @@
     >
       <div
         v-if="!isEditing"
-        class=""
+        class="actionable trans"
+        :class="{collapsed: isCollapsed}"
+        @click="toggleCollapse"
+        :style="{
+          maxHeight: maxNoteHeight,
+          'transition-duration': transitionDuration
+        }"
       >
         <div
-          class="actionable trans"
-          :class="{collapsed: isCollapsed}"
-          @click="toggleCollapse"
-          :style="{
-            maxHeight: maxNoteHeight,
-            'transition-duration': transitionDuration
-          }"
+          ref="content"
         >
           <div
-            ref="content"
+            v-if="note.category"
+            class="category"
           >
-            <div
-              v-if="note.category"
-              class="category"
+            {{ note.category }}
+          </div>
+          <div
+            v-else
+            class="category"
+          />
+          <div
+            v-html="textAsHtml"
+          />
+          <div class="action-row"
+            :class="{hidden:isCollapsed}"
+          >
+            <button
+              class="action button"
+              title="edit"
+              @click="showForm"
             >
-              {{ note.category }}
-            </div>
-            <div
-              v-else
-              class="category"
-            />
-            <div
-              v-html="textAsHtml"
-            />
-            <div class="action-row"
-              :class="{hidden:isCollapsed}"
-            >
-              <button
-                class="action button"
-                title="edit"
-                @click="showForm"
-              >
-                <font-awesome-icon icon="edit" /> edit
-              </button>
+              <font-awesome-icon icon="edit" /> edit
+            </button>
 
-              <button
-                v-if="!isDeleteClicked"
-                class="action button"
-                title="delete"
-                @click="deleteNote(note)"
+            <button
+              v-if="!isDeleteClicked"
+              class="action button"
+              title="delete"
+              @click="deleteNote(note)"
+            >
+              <font-awesome-icon icon="trash-alt" /> delete
+            </button>
+            <transition name="fade">
+              <div
+                v-if="isDeleteClicked"
+                class="confirm"
               >
-                <font-awesome-icon icon="trash-alt" /> delete
-              </button>
-              <transition name="fade">
-                <div
-                  v-if="isDeleteClicked"
-                  class="confirm"
+                Confirm Delete:
+                <button
+                  class="action button"
+                  title="delete"
+                  @click="deleteNote(note, true)"
                 >
-                  Confirm Delete:
-                  <button
-                    class="action button"
-                    title="delete"
-                    @click="deleteNote(note, true)"
-                  >
-                    <font-awesome-icon icon="trash-alt" /> yes!
-                  </button>
-                  <button
-                    class="action button"
-                    title="delete"
-                    @click="deleteNote(note, false)"
-                  >
-                    <font-awesome-icon icon="ban" /> no
-                  </button>
-                </div>
-              </transition>
-            </div>
+                  <font-awesome-icon icon="trash-alt" /> yes!
+                </button>
+                <button
+                  class="action button"
+                  title="delete"
+                  @click="deleteNote(note, false)"
+                >
+                  <font-awesome-icon icon="ban" /> no
+                </button>
+              </div>
+            </transition>
           </div>
         </div>
       </div>
@@ -118,10 +112,6 @@ export default {
     EditNote
   },
   props: {
-    index: {
-      type: Number,
-      default: 0
-    },
     note: {
       type: Object,
       default: function() {
@@ -138,6 +128,9 @@ export default {
     initCollapsed: {
       type: Boolean,
       default: true
+    },
+    isPlacedInGrid: {
+      type: Boolean
     }
   },
   data() {
@@ -171,11 +164,67 @@ export default {
       });
     },
     toggleCollapse(evt) {
-      let sel = window.getSelection && window.getSelection().toString();
       let elName = evt.target.localName;
+      let sel = window.getSelection && window.getSelection().toString();
+      let cell = this.$el;
       // collapse, unless user clicked a link, a button or made a selection
       if (elName !== "a" && elName !== "button" && !sel) {
-        this.isCollapsed = !this.isCollapsed;
+        if (this.isPlacedInGrid) {
+          // toggleCollapse for grid
+          // use "flip" animation approach to animate the grid repositioning
+          // https://aerotwist.com/blog/flip-your-animations/
+          // Get start position.
+          const start = cell.getBoundingClientRect();
+          // use width animation if the grid element is left-most in its row
+          let useWidthForTransition = start.left < 50;
+          let transitionProp = useWidthForTransition ? 'width' : 'transform';
+          // Now set the element to the last position.
+          this.isCollapsed = !this.isCollapsed;
+          if (this.isCollapsed) {
+            cell.classList.remove("expanded");
+          } else {
+            cell.classList.add("expanded");
+          }
+          // Get end position. This forces a sync layout, so be careful.
+          const end = cell.getBoundingClientRect();
+          // Invert.
+          if (useWidthForTransition) {
+            cell.style.width = (start.right - start.left) + 'px';
+          } else {
+            cell.style.transform = 'translate(' + (start.left - end.left) + 'px,' +
+            (start.top - end.top) + 'px)';
+          }
+          // Wait for the next frame so we know all the
+          // style changes have taken hold.
+          requestAnimationFrame(function() {
+            // Switch on animations.
+            cell.classList.add('animate-transition-' + transitionProp);
+            // go
+            if (useWidthForTransition) {
+              cell.style.width = (end.right - end.left) + 'px';
+            } else {
+              cell.style.transform = '';
+            }
+          });
+
+          function cleanup() {
+            cell.removeEventListener('transitionend', cleanup);
+            cell.classList.remove('animate-transition-' + transitionProp);
+            if (useWidthForTransition) {
+              cell.style.width = '';
+            }
+          }
+          // Capture the end with transitionend
+          cell.addEventListener('transitionend', cleanup);
+        } else {
+          // toggleCollapse for list
+          this.isCollapsed = !this.isCollapsed;
+          if (this.isCollapsed) {
+            cell.classList.remove("expanded");
+          } else {
+            cell.classList.add("expanded");
+          }
+        }
       }
       if (sel) {
         // write selection automically to clipboard if possible
@@ -260,7 +309,7 @@ export default {
 }
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 1s, transform 1s;
+  transition: opacity 1s ease-in-out, transform 1s ease-in-out;
   opacity: 1;
   transform: scaleX(1);
 }
@@ -268,5 +317,11 @@ export default {
 .fade-leave-to {
   opacity: 0;
   transform: scaleX(0);
+}
+.animate-transition-transform {
+  transition: transform 0.3s;
+}
+.animate-transition-width {
+  transition: width 0.6s ease-in-out;
 }
 </style>

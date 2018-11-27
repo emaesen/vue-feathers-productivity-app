@@ -66,6 +66,7 @@
         :note="note"
         :key="note._id"
         :categories="categories"
+        :isPlacedInGrid="displayGrid"
         @delete-note="deleteNote"
         @edit-note="editNote"
       />
