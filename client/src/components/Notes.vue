@@ -6,7 +6,7 @@
         @click="displayGrid=!displayGrid"
         class="action button"
       >
-        <font-awesome-icon :icon="displayGrid? 'th' : 'align-justify'" />
+        <font-awesome-icon :icon="displayGrid? 'align-justify' : 'th'" />
       </button>
       <button
         v-if="sortType==='color' || sortType==='category'"
@@ -59,7 +59,7 @@
       v-if="!loading"
       tag="div"
       name="notes-list"
-      :class="{grid : displayGrid}"
+      :class="{grid : displayGrid, 'grid-list' : !displayGrid}"
     >
       <note
         v-for="note in notes"
@@ -97,7 +97,7 @@ export default {
       colors: ['red', 'yellow', 'purple', 'blue', 'green', ''],
       categories: [],
       types: ['color', 'category', 'date created', 'date modified'],
-      sortType: 'color',
+      sortType: 'category',
       filter: {colors:[], categories:[]},
       showFilters: false,
       sortDateAsc: false,
@@ -278,6 +278,9 @@ h2.notes {
 *::after,
 *::before {
   box-sizing: inherit;
+}
+.grid-list .cell {
+  width: 100%;
 }
 .grid .cell {
   width: 33.333%;
