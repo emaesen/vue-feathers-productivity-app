@@ -171,61 +171,11 @@ export default {
       let cell = this.$el;
       // collapse, unless user clicked a link, a button or made a selection
       if (elName !== "a" && elName !== "button" && !sel) {
-        if (this.isPlacedInGrid) {
-          // toggleCollapse for grid
-          // use "flip" animation approach to animate the grid repositioning
-          // https://aerotwist.com/blog/flip-your-animations/
-          // Get start position.
-          const start = cell.getBoundingClientRect();
-          // use width animation if the grid element is left-most in its row
-          let useWidthForTransition = start.left < 50;
-          let transitionProp = useWidthForTransition ? 'width' : 'transform';
-          // Now set the element to the last position.
-          this.isCollapsed = !this.isCollapsed;
-          if (this.isCollapsed) {
-            cell.classList.remove("expanded");
-          } else {
-            cell.classList.add("expanded");
-          }
-          // Get end position. This forces a sync layout, so be careful.
-          const end = cell.getBoundingClientRect();
-          // Invert.
-          if (useWidthForTransition) {
-            cell.style.width = (start.right - start.left) + 'px';
-          } else {
-            cell.style.transform = 'translate(' + (start.left - end.left) + 'px,' +
-            (start.top - end.top) + 'px)';
-          }
-          // Wait for the next frame so we know all the
-          // style changes have taken hold.
-          requestAnimationFrame(function() {
-            // Switch on animations.
-            cell.classList.add('animate-transition-' + transitionProp);
-            // go
-            if (useWidthForTransition) {
-              cell.style.width = (end.right - end.left) + 'px';
-            } else {
-              cell.style.transform = '';
-            }
-          });
-          // eslint-disable-next-line
-          function cleanup() {
-            cell.removeEventListener('transitionend', cleanup);
-            cell.classList.remove('animate-transition-' + transitionProp);
-            if (useWidthForTransition) {
-              cell.style.width = '';
-            }
-          }
-          // Capture the end with transitionend
-          cell.addEventListener('transitionend', cleanup);
+        this.isCollapsed = !this.isCollapsed;
+        if (this.isCollapsed) {
+          cell.classList.remove("expanded");
         } else {
-          // toggleCollapse for list
-          this.isCollapsed = !this.isCollapsed;
-          if (this.isCollapsed) {
-            cell.classList.remove("expanded");
-          } else {
-            cell.classList.add("expanded");
-          }
+          cell.classList.add("expanded");
         }
       }
       if (sel) {
