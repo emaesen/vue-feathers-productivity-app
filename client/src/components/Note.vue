@@ -166,22 +166,27 @@ export default {
       });
     },
     toggleCollapse(evt) {
-      let elName = evt.target.localName;
-      let sel = window.getSelection && window.getSelection().toString();
-      let cell = this.$el;
-      // collapse, unless user clicked a link, a button or made a selection
-      if (elName !== "a" && elName !== "button" && !sel) {
-        this.isCollapsed = !this.isCollapsed;
-        if (this.isCollapsed) {
-          cell.classList.remove("expanded");
-        } else {
-          cell.classList.add("expanded");
+      // Need to use $forceUpdate and $nextTick to ensure classes
+      // are set properly in the DOM after a filter action
+      this.$forceUpdate();
+      this.$nextTick(function() {
+        let elName = evt.target.localName;
+        let sel = window.getSelection && window.getSelection().toString();
+        let cell = this.$el;
+        // collapse, unless user clicked a link, a button or made a selection
+        if (elName !== "a" && elName !== "button" && !sel) {
+          this.isCollapsed = !this.isCollapsed;
+          if (this.isCollapsed) {
+            cell.classList.remove("expanded");
+          } else {
+            cell.classList.add("expanded");
+          }
         }
-      }
-      if (sel) {
-        // write selection automically to clipboard if possible
-        navigator.clipboard && navigator.clipboard.writeText(sel);
-      }
+        if (sel) {
+          // write selection automically to clipboard if possible
+          navigator.clipboard && navigator.clipboard.writeText(sel);
+        }
+      });
     },
     deleteNote(note, isConfirmed) {
       if (typeof isConfirmed === "undefined") {
