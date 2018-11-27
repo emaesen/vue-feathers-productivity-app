@@ -3,7 +3,9 @@
     <div id="nav">
       <div v-if="user" class="nav-item">
         <span class="info">
-          <font-awesome-icon icon="user-check" /> {{ userName }}
+          <font-awesome-icon icon="user-check" />
+          <span class="remove-on-small-device"> Logged in as</span>
+          {{ userName }}
         </span>
         <button @click="logout" class="action button"><font-awesome-icon icon="sign-out-alt" /> Logout</button>
       </div>
@@ -25,7 +27,7 @@ export default {
     ...mapState("auth", { user: "user" }),
     userName() {
       console.log({ user: this.user });
-      return "Logged in as “" + this.user.username + "” ➔ ";
+      return "“" + this.user.username + "” ➔ ";
     }
   },
   methods: {
@@ -205,5 +207,13 @@ button,
 }
 .svg-inline--fa {
   color: #cec0a1;
+}
+@media all and (max-width: 600px) {
+  .remove-on-small-device {
+    display: none !important;
+  }
+  .convert-to-block-on-small-device {
+    display: block !important;
+  }
 }
 </style>

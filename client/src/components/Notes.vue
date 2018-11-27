@@ -1,7 +1,7 @@
 <template>
   <section id="notes">
     <h2 class="notes"><font-awesome-icon icon="sticky-note" /> Notes</h2>
-    <div class="controls">
+    <div class="controls convert-to-block-on-small-device">
       <button
         @click="displayGrid=!displayGrid"
         class="action button"
