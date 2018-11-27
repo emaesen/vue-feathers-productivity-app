@@ -280,7 +280,6 @@ h2.notes {
   box-sizing: inherit;
 }
 .grid .cell {
-  position: relative;
   width: 33.333%;
   display: inline-block;
 }
@@ -294,8 +293,16 @@ h2.notes {
 .grid pre {
   white-space: pre-wrap;
 }
-.notes-list-move {
-  transition: transform 1s;
+.grid .cell {
+  transition: all 1s;
+}
+.notes-list-enter,
+.notes-list-leave-to {
+  opacity: 0;
+  transform: translate(-1000px, 200px);
+}
+.notes-list-leave-active {
+  position: absolute;
 }
 .clr {
   cursor: pointer;
