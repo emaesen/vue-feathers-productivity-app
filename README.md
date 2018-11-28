@@ -9,6 +9,14 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
   - uses feathers-vuex for authentication.
   - uses NeDB as database.
     - Sufficient for small scale applications - if need be can be swapped easily for MongoDB or other more robust DB solution.
+- **_v0.2_**: _Functional single service app_
+  - extends v0.1.
+  - uses feathers-vuex service to store notes.
+  - logged in user can access own notes only.
+  - implements create, read, edit, delete.
+  - implements client-side sorting and filtering.
+  - has several types of animation: vue-based as well as plain css.
+  - changes in one browser are immediately reflected in another.
 
 ## _--WORK IN PROGRESS--_
 
@@ -23,7 +31,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
   - [x] basic dashboard page
     - [x] dashboard is not accessible when not logged in
       - [x] if not logged in: redirect to login
-- [ ] _Minimum Viable Product_ - **service (v0.2)**
+- [x] _Minimum Viable Product_ - **service (v0.2)**
   - [x] add notes service
     - [x] CRUD operations
       - [x] Create
@@ -50,7 +58,6 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       - [x] has list and grid mode
       - [x] implement vue-fontawesome icons
       - [x] implement basic css and vue-based transitions
-  - [ ] add "remain logged in" option to extend 1-day jwt expiration
 - [ ] _Minimum Viable Product_ - **deployed (v0.3)**
   - [ ] app is deployed on "cloud" service
   - [ ] app is accessible on desktop and mobile device
@@ -70,6 +77,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     - [ ] can be associated to Notes, Lists and ToDos
   - [ ] Calendar service
   - [ ] Bookmarks service
+- [ ] add "remain logged in" option to extend 1-day jwt expiration
 - [x] Page flow:
 
 ```pseudo
@@ -100,7 +108,7 @@ if valid entry -> login
 
 ## Setup
 
-First clone this repo.
+Clone or download this repo.
 
 ```bash
 # cd to vue-feathers-productivity repo directory
