@@ -80,6 +80,11 @@ const router = new Router({
       meta: {
         title: "Dashboard"
       }
+    },
+    {
+      // catch all not previously defined, and redirect to root path
+      path: "*",
+      redirect: "/"
     }
   ]
 });
