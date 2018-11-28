@@ -99,6 +99,7 @@ function simpleFormat(inp) {
     inp
       .replace(/</g, "&lt;")
       .replace(/\n *\* /g, "\n⊛ ")
+      .replace(/----+\n/g, "<hr>")
       .replace(/```\n([^`]+)\n```\n/g, "<pre>$1</pre>")
       .replace(/`([^`]+)`/g, "<code>$1</code>")
       .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")

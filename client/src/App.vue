@@ -64,6 +64,10 @@ section {
   border-radius: 5px;
   position: relative;
 }
+hr {
+  border-color: #aca0a072;
+  margin: 0.5em 0 0.3em;
+}
 fieldset {
   border: 1px solid #555;
   border-radius: 10px;
