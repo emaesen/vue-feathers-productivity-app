@@ -2,7 +2,13 @@
   <transition name="slidefade">
   <div class="filters">
     <div class="filter-group">
-      Colors: 
+      <span class="filter-type">Colors:</span>
+      <span
+        class="action button cntr clear clr-none"
+        :class="{checked: noColorFiltered}"
+        @click="clearColorFilter"
+      >none</span>
+      ➔
       <div class="filter"
         v-for="color in colors"
         :key="color"
@@ -20,7 +26,13 @@
       </div>
     </div>
     <div class="filter-group">
-      Categories:
+      <span class="filter-type">Categories:</span>
+      <span
+        class="action button cntr clear cat-none"
+        :class="{checked: noCategoryFiltered}"
+        @click="clearCategoryFilter"
+      >none</span>
+      ➔
       <div class="filter"
         v-for="category in categories"
         :key="category"
@@ -67,9 +79,9 @@ export default {
     'filterMeta'
   ],
   mounted() {
-    console.log({filterMeta:this.filterMeta});
-    console.log({colorsCount:this.colorsCount});
-    console.log({categoriesCount:this.categoriesCount});
+    // console.log({filterMeta:this.filterMeta});
+    // console.log({colorsCount:this.colorsCount});
+    // console.log({categoriesCount:this.categoriesCount});
   },
   methods: {
     metaCounter(type, attr, pre) {
@@ -84,6 +96,14 @@ export default {
         metas = {...metas, ...meta};
       }
       return metas;
+    },
+    clearColorFilter() {
+      // clear the colors filter array by removing all elements
+      this.filter.colors.splice(0);
+    },
+    clearCategoryFilter() {
+      // clear the categories filter array by removing all elements
+      this.filter.categories.splice(0);
     }
   },
   computed: {
@@ -92,6 +112,12 @@ export default {
     },
     categoriesCount() {
       return this.metaCounter(this.categories, 'category', 'cat-');
+    },
+    noColorFiltered() {
+      return this.filter.colors.length===0;
+    },
+    noCategoryFiltered() {
+      return this.filter.categories.length===0;
     }
   }
 }
@@ -106,10 +132,19 @@ input[type="checkbox"] {
   visibility: hidden;
   width: 1em;
 }
+span.clear.checked::before,
 input[type="checkbox"]:checked + label::before {
   content: "✓ ";
   margin-left: -1.2em;
   color: #29dc58;
+}
+.clear {
+  margin-left: 0.9em;
+}
+label.action.button {
+  vertical-align: initial;
+  margin-left: -0.5em;
+  margin-right: 0.3em;
 }
 label {
   margin-left: -0.2em;
@@ -123,6 +158,10 @@ label {
 }
 .none {
   color: #948972;
+}
+.filter-type {
+  display: inline-block;
+  min-width: 4.5rem;
 }
 .clr {
   margin: 0;
