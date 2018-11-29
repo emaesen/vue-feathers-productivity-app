@@ -36,6 +36,7 @@
               <textarea
                 v-model="text"
                 :class="'clr-' + color"
+                :style="{height: textAreaHeight + 'px'}"
               />
             </div>
             <div class="clr-selector">
@@ -96,12 +97,15 @@ export default {
   props: {
     note: {
       type: Object,
-      default: function() {
+      default() {
         return {};
       }
     },
     categories: {
       type: Array
+    },
+    contentHeight: {
+      type: Number
     }
   },
   data() {
@@ -115,11 +119,15 @@ export default {
     };
   },
   computed: {
-    isEdit: function() {
+    isEdit() {
       return !!(this.note && this.note.text);
     },
-    isValid: function() {
+    isValid() {
       return this.text;
+    },
+    textAreaHeight() {
+      const minHeight = 150;
+      return this.contentHeight > minHeight ? this.contentHeight : minHeight;
     }
   },
   methods: {

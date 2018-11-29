@@ -5,15 +5,17 @@
       class="note"
       :class="'clr-' + note.color"
     >
-      <transition name="fade" mode="out-in">
+      <transition name="fade" mode="out-in"
+         @after-enter="editTransitionComplete"
+      >
       <div
         v-if="!isEditing"
         class="actionable trans"
         :class="{collapsed: isCollapsed}"
         @click="toggleCollapse"
         :style="{
-          maxHeight: maxNoteHeight,
-          'transition-duration': transitionDuration
+          maxHeight: maxNoteHeight + 'px',
+          'transition-duration': transitionDuration + 's'
         }"
       >
         <div
@@ -80,6 +82,7 @@
         v-if="isEditing"
         :note="note"
         :categories="categories"
+        :contentHeight="maxNoteHeight"
         @edit-note="editNote"
         @cancel-edit="cancelEdit"
         @edit-note-warning="editNoteWarning"
@@ -139,15 +142,16 @@ export default {
   data() {
     return {
       isEditing: false,
+      resetStyle: false,
       isCollapsed: !!this.initCollapsed && true,
       nrOfCharsWhenCollapsed: 15,
-      maxNoteHeight: "10px",
-      transitionDuration: "1s",
+      maxNoteHeight: "100",
+      transitionDuration: "1",
       isDeleteClicked: false
     };
   },
   mounted: function() {
-    this.setStyleProps();
+    this.setContentStyleProps();
   },
   computed: {
     textAsHtml() {
@@ -155,15 +159,21 @@ export default {
     }
   },
   methods: {
-    setStyleProps() {
+    editTransitionComplete() {
+      if (this.resetStyle) {
+        this.setContentStyleProps();
+        this.resetStyle = false;
+      }
+    },
+    setContentStyleProps() {
       this.$nextTick(function() {
         let elHeight = this.$refs.content.offsetHeight;
         // set max-height to actual height
         // (to allow for non-delay smooth open/close transition)
-        this.maxNoteHeight = elHeight + "px";
+        this.maxNoteHeight = elHeight;
         // calculate transition duration such that the transition speed
-        // is fairly consistent for various note heights.
-        this.transitionDuration = 0.3 + elHeight / 500 + "s";
+        // is fairly consistent for various note heights. (in seconds)
+        this.transitionDuration = 0.3 + elHeight / 500;
       });
     },
     toggleCollapse(evt) {
@@ -182,6 +192,11 @@ export default {
           } else {
             cell.classList.add("expanded");
           }
+          // Recalculate the content height after the animation ends.
+          // Mostly relevant in grid-view since the note width there
+          // increases from a column width to 100% when expanded. Thus the
+          // height decreases.
+          setTimeout(this.setContentStyleProps, 1000 * this.transitionDuration);
         }
         if (sel) {
           // write selection automically to clipboard if possible
@@ -207,7 +222,7 @@ export default {
     editNote(mod) {
       this.isEditing = false;
       this.$emit("edit-note", { note: this.note, mod: mod });
-      this.setStyleProps();
+      this.resetStyle = true;
     },
     cancelEdit() {
       this.note.text = this.origNote.text;
@@ -275,11 +290,5 @@ export default {
 .fade-leave-to {
   opacity: 0;
   transform: scaleY(0);
-}
-.animate-transition-transform {
-  transition: transform 0.3s;
-}
-.animate-transition-width {
-  transition: width 0.6s ease-in-out;
 }
 </style>
