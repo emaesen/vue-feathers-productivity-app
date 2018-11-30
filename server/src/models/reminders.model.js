@@ -9,5 +9,19 @@ module.exports = function(app) {
     autoload: true
   });
 
+  // schema:
+  /*
+  reminder: {
+    _id: '',
+    ownerId: user._id,
+    noteId: note._id,
+    text: '',
+    date: '',
+    time: '',
+    snooze: '',
+    createdAt: {},
+    updatedAt: {}
+  }
+  */
   return Model;
 };
