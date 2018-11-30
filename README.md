@@ -20,7 +20,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
 
 ## _--WORK IN PROGRESS--_
 
-- [x] **authentication (v0.1)**
+- [x] **Authentication (v0.1)**
   - [x] functional registration page
     - [x] on success: redirect to login
       - [x] user is created in db
@@ -31,8 +31,8 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
   - [x] basic dashboard page
     - [x] dashboard is not accessible when not logged in
       - [x] if not logged in: redirect to login
-- [x] **notes service (v0.2)**
-  - [x] add notes service
+- [x] **Notes service (v0.2)**
+  - [x] add Notes service
     - [x] CRUD operations
       - [x] Create
       - [x] Read
@@ -55,22 +55,34 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
         - [x] color
         - [x] category
     - [x] has list and grid mode
-    - [x] implement vue-fontawesome icons
-    - [x] implement basic css and vue-based transitions
+    - [x] implement pure css animations as well as vue-based transitions
+- [ ] **Reminders service**
+  - [ ] add Reminders service
+    - [ ] CRUD operations
+      - [ ] Create
+      - [ ] Read
+      - [ ] Update
+      - [ ] Delete
+    - [ ] the logged-in user can access only their own reminders
+    - [ ] when user logs out, their reminders data are cleared from store
+    - [ ] changes in one browser are immediately reflected in another
+    - [ ] a reminder has date, time, recurring properties
+      - [ ] has countdown when end time is close
 - [ ] **services**
   - [ ] > Reminders service
   - [ ] > ToDos service
-  - [ ] > Notes service
+  - [x] > Notes service
   - [ ] > Bookmarks service
   - [ ] > Calendar service
     - [ ] > Events service
   - [ ] > Archive service
+  - [x] import vue-fontawesome icons
   - [ ] Each service has a dedicated view page.
-  - [ ] Each service has a summary view on the Dashboard page.
-    - [ ] Dashboard page from top to bottom: Reminders, ToDos, Notes, Bookmarks, Calendar, Archive.
-    - [ ] Reminders has small strip on top of Dashboard page with upcoming reminder.
-    - [ ] Reminders has countdown when next reminder is close.
-  - [ ] Services can be associated with each other.
+  - [ ] Each service has a summary view on the Dashboard page
+    - [ ] Dashboard page from top to bottom: Reminders, ToDos, Notes, Bookmarks, Calendar, Archive
+    - [ ] Reminders has small strip on top of Dashboard page with upcoming reminder
+    - [ ] Reminders has countdown when next reminder is close
+  - [ ] Services can be associated with each other
   - [ ] Services can be archived
 - [ ] **progressive web app**
   - [ ] app is operational when offline
