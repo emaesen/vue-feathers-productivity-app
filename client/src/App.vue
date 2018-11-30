@@ -68,6 +68,18 @@ hr {
   border-color: #aca0a072;
   margin: 0.5em 0 0.3em;
 }
+ul {
+  padding-inline-start: 0;
+  margin-block-start: 0.5em;
+}
+ul ul {
+  padding-inline-start: 1em;
+  margin-block-start: 0;
+  margin-block-end: 0.2em;
+}
+li {
+  list-style-type: none;
+}
 fieldset {
   border: 1px solid #555;
   border-radius: 10px;

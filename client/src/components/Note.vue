@@ -100,14 +100,32 @@ function simpleFormat(inp) {
   return (
     inp &&
     inp
+      .replace(/\r/, "")
       .replace(/</g, "&lt;")
-      .replace(/\n *\* /g, "\n⊛ ")
+      .replace(/\n *\* /g, "\n⩺ ")
       .replace(/----+\n/g, "<hr>")
       .replace(/```\n([^`]+)\n```\n/g, "<pre>$1</pre>")
       .replace(/`([^`]+)`/g, "<code>$1</code>")
       .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
       .replace(/\*([^*]+)\*/g, "<i>$1</i>")
       .replace(/(http.+\b)/g, '<a href="$1" target="_blank">$1</a>')
+      .replace(/ {2}-/g, "⋯-")
+      .replace(/(⋯?)- (.*)\n/g, "$1⋞$2\n")
+      .replace(/^([^⋞]*\n)⋞/gm, "$1⋐\n⋞")
+      .replace(/^(⋞.+\n)⋯⋞/gm, "$1⋯⋐\n⋯⋞")
+      .replace(/^(⋯⋞.+\n)⋞/gm, "$1⋯⋑\n⋟\n⋞")
+      .replace(/^(⋯?⋞.+[^⋟])(\n⋯(⋑|⋞))/gm, "$1⋟$2")
+      .replace(/^(⋯?⋞.+[^⋟])(\n(⋑|⋞))/gm, "$1⋟$2")
+      .replace(/^(⋯?⋞.+[^⋟])(\n⋯(⋑|⋞))/gm, "$1⋟$2")
+      .replace(/^(⋯?⋞.+[^⋟])(\n(⋑|⋞))/gm, "$1⋟$2")
+      .replace(/^(⋞.+)\n\n/gm, "$1⋟\n⋑\n\n")
+      .replace(/⋯/g, "")
+      .replace(/⋞/g, "<li>")
+      .replace(/\n*⋟\n*/gm, "</li>")
+      .replace(/\n*⋐\n*/gm, '<ul class="checklist">')
+      .replace(/⋑\n?/gm, "</ul>")
+      .replace(/\[ \]/g, "☐")
+      .replace(/\[x\]/g, "☑")
       .replace(/\n/g, "<br>")
   );
 }
