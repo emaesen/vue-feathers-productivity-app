@@ -33,7 +33,9 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       - [x] if not logged in: redirect to login
 - [x] **Notes service (v0.2)**
   - [x] add Notes service
-    - [x] generate feathers service
+    - [x] enable server side
+      - [x] generate feathers service
+      - [x] add authentication hooks
     - [x] CRUD operations
       - [x] Create
       - [x] Read
@@ -59,7 +61,12 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     - [x] implement pure css animations as well as vue-based transitions
 - [ ] **Reminders service**
   - [ ] add Reminders service
-    - [x] generate feathers service
+    - [x] prepare server side
+      - [x] generate feathers service
+      - [x] add authentication hooks
+    - [x] prepare client side
+      - [x] add reminders service to the store
+      - [x] add reminders service scaffold to the app
     - [ ] CRUD operations
       - [ ] Create
       - [ ] Read

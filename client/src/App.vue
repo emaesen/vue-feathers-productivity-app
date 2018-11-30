@@ -63,6 +63,7 @@ section {
   border: 1px solid #2c2b31;
   border-radius: 5px;
   position: relative;
+  margin-bottom: 1em;
 }
 hr {
   border-color: #aca0a072;

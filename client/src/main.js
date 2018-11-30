@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
   faAlignJustify, // list layout
   faBan, // cancel
+  faBell, // reminders
   faCheck, // check
   faCheckCircle, // save, ok
   faEdit, // edit
@@ -31,6 +32,7 @@ import "./registerServiceWorker";
 library.add(
   faAlignJustify,
   faBan,
+  faBell,
   faCheck,
   faCheckCircle,
   faEdit,
