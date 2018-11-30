@@ -224,6 +224,19 @@ button,
 .svg-inline--fa {
   color: #cec0a1;
 }
+::-webkit-scrollbar {
+  background-color: #3d3b4a;
+  width: 6px;
+  height: 6px;
+  border-radius: 6px;
+}
+::-webkit-scrollbar-track {
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #ada0a0;
+  border-radius: 6px;
+}
 @media all and (max-width: 600px) {
   .remove-on-small-device {
     display: none !important;

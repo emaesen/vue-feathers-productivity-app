@@ -332,19 +332,6 @@ h2.notes {
 .clr-purple {
   background-color: #c114f936;
 }
-::-webkit-scrollbar {
-  background-color: #3d3b4a;
-  width: 6px;
-  height: 6px;
-  border-radius: 6px;
-}
-::-webkit-scrollbar-track {
-  border-radius: 6px;
-}
-::-webkit-scrollbar-thumb {
-  background-color: #ada0a0;
-  border-radius: 6px;
-}
 @media all and (max-width: 400px) {
   .grid .cell {
     width: 100%;
