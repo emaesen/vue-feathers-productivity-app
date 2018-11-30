@@ -1,7 +1,7 @@
 const NeDB = require('nedb');
 const path = require('path');
 
-module.exports = function (app) {
+module.exports = function(app) {
   const dbPath = app.get('nedb');
   const Model = new NeDB({
     filename: path.join(dbPath, 'notes.db'),
@@ -16,6 +16,7 @@ module.exports = function (app) {
     ownerId: user._id,
     text: '',
     category: '',
+    color: '',
     createdAt: {},
     updatedAt: {}
   }
