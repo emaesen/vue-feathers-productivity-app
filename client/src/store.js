@@ -24,7 +24,8 @@ export default new Vuex.Store({
     service("notes", {
       instanceDefaults: {
         text: "",
-        category: ""
+        category: "",
+        color: ""
       }
     }),
     // Setup the auth plugin.
