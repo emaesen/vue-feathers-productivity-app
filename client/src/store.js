@@ -28,6 +28,14 @@ export default new Vuex.Store({
         color: ""
       }
     }),
+    service("reminders", {
+      instanceDefaults: {
+        text: "",
+        date: "",
+        time: "",
+        snooze: ""
+      }
+    }),
     // Setup the auth plugin.
     auth({ userService: "users" })
   ]
