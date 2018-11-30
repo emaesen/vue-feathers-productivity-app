@@ -19,7 +19,7 @@
         <div class="">
           <div class="">
             <div class="">
-              <label>Content
+              <label for="text">Content
                 <span
                   v-if="!showError && !isValid"
                   class="req"
@@ -34,6 +34,8 @@
                 </span>
               </label>
               <textarea
+                id="text"
+                name="text"
                 v-model="text"
                 :class="'clr-' + color"
                 :style="{height: textAreaHeight + 'px'}"
@@ -50,8 +52,10 @@
               >&nbsp;</span>
             </div>
             <div class="">
-              <label>Category</label>
+              <label for="category">Category</label>
               <input
+                id="category"
+                name="category"
                 v-model="category"
                 placeholder="type new or select below"
               />
