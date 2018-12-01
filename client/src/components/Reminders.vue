@@ -1,16 +1,34 @@
 <template>
   <section id="reminders">
     <h2 class="reminders"><font-awesome-icon icon="bell" /> Reminders</h2>
+    <div class="controls convert-to-block-on-small-device">
+      <button
+        @click="displayOnlyOne=!displayOnlyOne"
+        class="action button"
+      >
+        <font-awesome-icon :icon="displayOnlyOne? 'align-justify' : ['far','window-minimize']" />
+      </button>
+    </div>
     <div class="">
       <create-reminder
         @create-reminder="createReminder"
       />
-      <reminder
-        :reminder="reminder"
-        :key="reminder._id"
-        @delete-reminder="deleteReminder"
-        @edit-reminder="editReminder"
-      />
+      <div v-if="loading" class="loading">
+        loading...
+      </div>
+      <transition-group
+        v-if="!loading"
+        tag="div"
+        name="reminders-list"
+      >
+        <reminder
+          v-for="reminder in reminders"
+          :reminder="reminder"
+          :key="reminder._id"
+          @delete-reminder="deleteReminder"
+          @edit-reminder="editReminder"
+        />
+      </transition-group>
     </div>
   </section>
 </template>
@@ -30,9 +48,12 @@ export default {
     Reminder,
     CreateReminder
   },
-  props: {},
+  props: {
+     onDashboard: false
+  },
   data() {
     return {
+      displayOnlyOne: this.onDashboard
     }
   },
   created() {
@@ -69,8 +90,8 @@ export default {
       });
     },
     sortByDate(a,b) {
-      let dateTimeDiff
-      dateTimeDiff = new Date(b.date) - new Date(a.date) 
+      let dateTimeDiff;
+      dateTimeDiff = new Date(a.date) - new Date(b.date);
       return dateTimeDiff;
     },
     uiFilter(reminder) {
@@ -99,19 +120,19 @@ export default {
       return query;
     },
     reminders() {
-      return this.remindersUnfiltered
-          .filter(this.uiFilter)
-          .sort(this.sortByDate);
+      if (this.displayOnlyOne) {
+        return [this.remindersUnfiltered[0]];
+      } else {
+        return this.remindersUnfiltered
+            .filter(this.uiFilter);
+      }
     },
     remindersUnfiltered() {
       return this.user
         ? this.findRemindersInStore({
             query: this.query
-          }).data
+          }).data.sort(this.sortByDate)
         : [];
-    },
-    reminder() {
-      return this.reminders[0] || {};
     }
   }
 };
@@ -122,5 +143,37 @@ h2.reminders {
   display: inline-block;
   margin-right: 1em;
   vertical-align: top;
+}
+#reminders .controls {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  top: -5px;
+}
+.reminders-list-cell {
+  transition: all 1s;
+}
+.reminders-list-enter,
+.reminders-list-leave-to {
+  opacity: 0;
+  transform: translate(0, -100px);
+}
+.reminders-list-leave-active {
+  position: absolute;
+}
+.clr-red {
+  background-color: #f9141436;
+}
+.clr-blue {
+  background-color: #141bf936;
+}
+.clr-green {
+  background-color: #14f92627;
+}
+.clr-yellow {
+  background-color: #ffea0245;
+}
+.clr-purple {
+  background-color: #c114f936;
 }
 </style>
