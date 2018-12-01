@@ -21,5 +21,7 @@
     "url": "https://github.com/emaesen/vue-feathers-productivity-app/issues"
   },
   "homepage": "https://github.com/emaesen/vue-feathers-productivity-app#readme",
-  "dependencies": {}
+  "dependencies": {
+    "@fortawesome/free-regular-svg-icons": "^5.5.0"
+  }
 }
