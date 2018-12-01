@@ -49,7 +49,10 @@ export default {
     CreateReminder
   },
   props: {
-     onDashboard: false
+     onDashboard: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {

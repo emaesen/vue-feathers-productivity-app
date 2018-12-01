@@ -91,7 +91,10 @@ export default {
     FilterControl
   },
   props: {
-    onDashboard: false
+    onDashboard: {
+      type: Boolean,
+      default: false
+    }
   },
   data() {
     return {
