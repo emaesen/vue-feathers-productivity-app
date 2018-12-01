@@ -90,7 +90,9 @@ export default {
     CreateNote,
     FilterControl
   },
-  props: {},
+  props: {
+    onDashboard: false
+  },
   data() {
     return {
       sortAsc: true,
@@ -102,7 +104,7 @@ export default {
       showFilters: false,
       sortDateAsc: false,
       sortNoCatLast: true,
-      displayGrid: true
+      displayGrid: !this.onDashboard
     }
   },
   created() {

@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1><font-awesome-icon icon="tachometer-alt" /> Dashboard</h1>
-    <Reminders view="dashboard"/>
-    <Notes view="dashboard"/>
+    <Reminders view="dashboard" :onDashboard="true"/>
+    <Notes view="dashboard" :onDashboard="true"/>
   </div>
 </template>
 
@@ -23,3 +23,6 @@ export default {
   }
 };
 </script>
+
+<style>
+</style>
