@@ -18,7 +18,7 @@
       >
         <div class="">
           <div class="">
-            <label for="text">Task or event
+            <label for="text">Task or event description
               <span
               v-if="!showError && !isValid"
               class="req"
@@ -29,13 +29,14 @@
               v-if="showError"
               class="error"
               >
-              Please provide some content
+              Please provide a description
               </span>
             </label>
             <input
-              id="text"
-              name="text"
+              id="description"
+              name="description"
               type="text"
+              maxlength="108"
               v-model="text"
             />
           </div>
@@ -174,6 +175,9 @@ export default {
 </script>
 
 <style scoped>
+input#description {
+  width: 80%;
+}
 .form {
   background-color: #212027;
   border: 1px solid #212027;
