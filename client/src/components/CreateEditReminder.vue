@@ -18,7 +18,7 @@
       >
         <div class="">
           <div class="">
-            <label>Task or event
+            <label for="text">Task or event
               <span
               v-if="!showError && !isValid"
               class="req"
@@ -33,6 +33,9 @@
               </span>
             </label>
             <input
+              id="text"
+              name="text"
+              type="text"
               v-model="text"
             />
           </div>
@@ -47,12 +50,16 @@
             >&nbsp;</span>
           </div>
           <div class="">
-            <label>Due date</label>
+            <label for="date">Due date</label>
             <input
+              id="date"
+              name="date"
               v-model="date"
               type="date"
             />
             <input
+              id="time"
+              name="time"
               v-model="time"
               type="time"
             />
