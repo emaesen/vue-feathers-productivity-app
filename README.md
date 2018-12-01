@@ -185,6 +185,7 @@ You can view the client app at <http://localhost:8289/> (local) or <http://192.1
 - feathers-vuex
 - @fortawesome/vue-fontawesome
 - @fortawesome/fontawesome-svg-core
+- @fortawesome/free-regular-svg-icons
 - @fortawesome/free-solid-svg-icons
 - register-service-worker
 - socket.io-client

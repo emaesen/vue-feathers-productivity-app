@@ -23,8 +23,12 @@ import {
   faTh, // grid layout
   faTrashAlt, // delete
   faUserCheck, // logged-in user
-  faUserPlus // register new user
+  faUserPlus, // register new user
+  faWindowMinimize // single list item
 } from "@fortawesome/free-solid-svg-icons";
+import {
+  faWindowMinimize as farWindowMinimize // single list item
+} from "@fortawesome/free-regular-svg-icons";
 import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
@@ -50,7 +54,9 @@ library.add(
   faTh,
   faTrashAlt,
   faUserCheck,
-  faUserPlus
+  faUserPlus,
+  faWindowMinimize,
+  farWindowMinimize
 );
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
