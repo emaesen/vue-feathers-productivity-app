@@ -123,6 +123,9 @@ button:focus {
   outline-color: #888;
   outline-width: 1px;
 }
+input[type="number"] {
+  width: 5rem;
+}
 input[type="submit"] {
   cursor: pointer;
 }
@@ -197,6 +200,12 @@ button,
 }
 .info {
   color: #e9e4f272;
+}
+/* "clearfix" */
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 .float {
   float: left;
