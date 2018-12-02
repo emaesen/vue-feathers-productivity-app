@@ -218,6 +218,7 @@ export default {
       this.reminder.text = this.origReminder.text;
       this.reminder.date = this.origReminder.date;
       this.reminder.time = this.origReminder.time;
+      this.reminder.window = this.origReminder.window;
       this.isEditing = false;
     },
     editReminderWarning(warning) {

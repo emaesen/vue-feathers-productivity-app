@@ -8,6 +8,9 @@
       >
         <font-awesome-icon :icon="displayOnlyOne? 'align-justify' : ['far','window-minimize']" />
       </button>
+      <span class="now">
+        {{ Date() }}
+      </span>
     </div>
     <div class="">
       <create-reminder
@@ -87,6 +90,7 @@ export default {
       props.reminder.text = props.mod.text;
       props.reminder.date = props.mod.date;
       props.reminder.time = props.mod.time;
+      props.reminder.window = props.mod.window;
       props.reminder.snooze = props.mod.snooze;
       props.reminder.update().then(reminder => {
         console.log("edit succesful", reminder);
