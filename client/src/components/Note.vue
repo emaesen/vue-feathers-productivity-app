@@ -108,7 +108,6 @@ function simpleFormat(inp) {
       .replace(/`([^`]+)`/g, "<code>$1</code>")
       .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
       .replace(/\*([^*]+)\*/g, "<i>$1</i>")
-      .replace(/(http[^ ]+)/g, '<a href="$1" target="_blank">$1</a>')
       .replace(/ {2}-/g, "⋯-")
       .replace(/(⋯?)- (.*)\n/g, "$1⋞$2\n")
       .replace(/^([^⋞]*\n)⋞/gm, "$1⋐\n⋞")
@@ -126,6 +125,7 @@ function simpleFormat(inp) {
       .replace(/⋑\n?/gm, "</ul>")
       .replace(/\[ \]/g, "☐")
       .replace(/\[x\]/g, "☑")
+      .replace(/(http[^ ]+)/g, '<a href="$1" target="_blank">$1</a>')
       .replace(/\n/g, "<br>")
   );
 }
