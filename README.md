@@ -67,16 +67,16 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     - [x] prepare client side
       - [x] add reminders service to the store
       - [x] add reminders service scaffold to the app
-    - [ ] CRUD operations
-      - [ ] Create
-      - [ ] Read
-      - [ ] Update
-      - [ ] Delete
+    - [x] CRUD operations
+      - [x] Create
+      - [x] Read
+      - [x] Update
+      - [x] Delete
     - [ ] the logged-in user can access only their own reminders
     - [ ] when user logs out, their reminders data are cleared from store
     - [ ] changes in one browser are immediately reflected in another
-    - [ ] a reminder has text, date, time, recurring properties
-      - [ ] has countdown when end time is close
+    - [ ] reminder has text, date, time, window, recurring properties
+    - [ ] reminder has countdown when end time is close
 - [ ] **services**
   - [ ] > Reminders service
   - [ ] > ToDos service
