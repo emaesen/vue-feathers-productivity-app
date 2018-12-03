@@ -125,7 +125,7 @@ function simpleFormat(inp) {
       .replace(/⋑\n?/gm, "</ul>")
       .replace(/\[ \]/g, "☐")
       .replace(/\[x\]/g, "☑")
-      .replace(/(http[^ ]+)/g, '<a href="$1" target="_blank">$1</a>')
+      .replace(/(http[^ \n)]+)/g, '<a href="$1" target="_blank">$1</a>')
       .replace(/\n/g, "<br>")
   );
 }
