@@ -13,7 +13,7 @@
       </span>
     </div>
     <div class="">
-      <create-reminder
+      <pa-create-reminder
         @create-reminder="createReminder"
       />
       <div v-if="loading" class="loading">
@@ -24,7 +24,7 @@
         tag="div"
         name="reminders-list"
       >
-        <reminder
+        <pa-reminder
           v-for="reminder in reminders"
           :reminder="reminder"
           :key="reminder._id"
@@ -48,8 +48,8 @@ import { mapState, mapGetters, mapActions } from "vuex";
 export default {
   name: "Reminders",
   components: {
-    Reminder,
-    CreateReminder
+    'pa-reminder': Reminder,
+    'pa-create-reminder': CreateReminder
   },
   props: {
      onDashboard: {

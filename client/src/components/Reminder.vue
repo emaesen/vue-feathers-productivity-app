@@ -78,7 +78,7 @@
           </div>
         </div>
       </div>
-      <edit-reminder
+      <pa-edit-reminder
         v-if="isEditing"
         :reminder="reminder"
         :categories="categories"
@@ -111,7 +111,7 @@ function simpleFormat(inp) {
 export default {
   name: "Reminder",
   components: {
-    EditReminder
+    'pa-edit-reminder': EditReminder
   },
   props: {
     reminder: {

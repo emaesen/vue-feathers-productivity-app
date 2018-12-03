@@ -78,7 +78,7 @@
           </div>
         </div>
       </div>
-      <edit-note
+      <pa-edit-note
         v-if="isEditing"
         :note="note"
         :categories="categories"
@@ -133,7 +133,7 @@ function simpleFormat(inp) {
 export default {
   name: "Note",
   components: {
-    EditNote
+    'pa-edit-note': EditNote
   },
   props: {
     note: {

@@ -41,14 +41,14 @@
         ({{ nrFiltersApplied }})
       </button>
     </div>
-    <filter-control
+    <pa-filter-control
       v-show="showFilters"
       :colors="colors"
       :categories="categories"
       :filter="filter"
       :filterMeta="notesFilterMeta"
     />
-    <create-note
+    <pa-create-note
       @create-note="createNote"
       :categories="categories"
     />
@@ -61,7 +61,7 @@
       name="notes-list"
       :class="{grid : displayGrid, 'grid-list' : !displayGrid}"
     >
-      <note
+      <pa-note
         v-for="note in notes"
         :note="note"
         :key="note._id"
@@ -86,9 +86,9 @@ import { mapState, mapGetters, mapActions } from "vuex";
 export default {
   name: "Notes",
   components: {
-    Note,
-    CreateNote,
-    FilterControl
+    'pa-note': Note,
+    'pa-create-note': CreateNote,
+    'pa-filter-control': FilterControl
   },
   props: {
     onDashboard: {
