@@ -82,7 +82,7 @@ export default {
 
 <style scoped>
 .clock {
-  margin: 0em 1em;
+  margin: 0em 2em;
   display: inline-block;
   font-family: monospace;
   color: #ffffff;
