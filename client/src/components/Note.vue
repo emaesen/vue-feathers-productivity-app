@@ -225,14 +225,13 @@ export default {
 
 <style scoped>
 .note {
-  border: 1px solid rgb(133, 133, 133);
+  border: 1px dashed #454545;
   border-left: 0;
   border-right: 0;
   padding: 5px;
-  margin-bottom: -1px;
 }
 .grid .note {
-  border: 1px solid rgb(133, 133, 133);
+  border: 1px dashed #454545;
   margin: 0.2rem;
   min-height: 15rem;
 }

@@ -203,13 +203,11 @@ export default {
 
 <style scoped>
 .reminder {
-  border: 1px solid #555;
+  border: 1px solid #1e1d21;
+  border-left: 0;
+  border-right: 0;
   padding: 5px;
   margin-bottom: -1px;
-}
-.grid .reminder {
-  margin: 0.2rem;
-  min-height: 15rem;
 }
 .category {
   float: right;
