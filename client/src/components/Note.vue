@@ -225,14 +225,19 @@ export default {
 
 <style scoped>
 .note {
-  border: 1px solid #555;
-  border-radius: 10px;
+  border: 1px solid rgb(133, 133, 133);
+  border-left: 0;
+  border-right: 0;
   padding: 5px;
-  margin-bottom: 0.2rem;
+  margin-bottom: -1px;
 }
 .grid .note {
+  border: 1px solid rgb(133, 133, 133);
   margin: 0.2rem;
   min-height: 15rem;
+}
+.note hr {
+  border-style: groove;
 }
 .category {
   float: right;
@@ -256,12 +261,7 @@ export default {
   overflow: auto;
 }
 .action-row {
-  display: inline-block;
-  background-color: #8a8a8a63;
-  border: 1px solid #212027a3;
-  border-radius: 10px;
   margin-top: 0.5em;
-  padding: 0.2em 0.5em;
 }
 .confirm {
   margin-left: 1em;
