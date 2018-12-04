@@ -252,6 +252,9 @@ button,
 .right {
   right: 0;
 }
+.right.spaced {
+  right: 5px;
+}
 .nav-item {
   display: inline;
 }

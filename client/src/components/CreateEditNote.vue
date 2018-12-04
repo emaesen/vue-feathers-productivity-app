@@ -3,7 +3,7 @@
     <transition name="fade">
       <button
         v-if="!showForm && !isEdit"
-        class="action button absolute top right"
+        class="action button absolute top right spaced"
         @click="openNoteForm"
       >
         <font-awesome-icon icon="plus-circle"/>add note
