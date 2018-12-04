@@ -64,12 +64,24 @@ button {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 14px;
 }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #fffef5;
+}
 h2 {
   margin: 0 0 0.5em 0.2em;
 }
 #header {
   font-family: monospace;
   text-align: center;
+  color: #fffef5;
 }
 #header .date,
 #header .time {
