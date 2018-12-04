@@ -70,8 +70,6 @@ h2 {
 #header {
   font-family: monospace;
   text-align: center;
-  color: #daf6ff;
-  text-shadow: 0 0 10px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0.5);
 }
 #header .date,
 #header .time {
