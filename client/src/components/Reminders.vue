@@ -1,27 +1,18 @@
 <template>
   <section id="reminders">
-    <h2 class="reminders"><font-awesome-icon icon="bell" /> Reminders</h2>
+    <h2 class="reminders">
+      <font-awesome-icon icon="bell"/>Reminders
+    </h2>
     <div class="controls convert-to-block-on-small-device">
-      <button
-        @click="displayOnlyOne=!displayOnlyOne"
-        class="action button"
-      >
-        <font-awesome-icon :icon="displayOnlyOne? 'align-justify' : ['far','window-minimize']" />
+      <button @click="displayOnlyOne=!displayOnlyOne" class="action button">
+        <font-awesome-icon :icon="displayOnlyOne? 'align-justify' : ['far','window-minimize']"/>
       </button>
       <pa-clock/>
     </div>
-    <div class="">
-      <pa-create-reminder
-        @create-reminder="createReminder"
-      />
-      <div v-if="loading" class="loading">
-        loading...
-      </div>
-      <transition-group
-        v-if="!loading"
-        tag="div"
-        name="reminders-list"
-      >
+    <div class>
+      <pa-create-reminder @create-reminder="createReminder"/>
+      <div v-if="loading" class="loading">loading...</div>
+      <transition-group v-if="!loading" tag="div" name="reminders-list">
         <pa-reminder
           v-for="reminder in reminders"
           :reminder="reminder"
@@ -46,12 +37,12 @@ import { mapState, mapGetters, mapActions } from "vuex";
 export default {
   name: "Reminders",
   components: {
-    'pa-reminder': Reminder,
-    'pa-create-reminder': CreateReminder,
-    'pa-clock': Clock
+    "pa-reminder": Reminder,
+    "pa-create-reminder": CreateReminder,
+    "pa-clock": Clock
   },
   props: {
-     onDashboard: {
+    onDashboard: {
       type: Boolean,
       default: false
     }
@@ -59,7 +50,7 @@ export default {
   data() {
     return {
       displayOnlyOne: this.onDashboard
-    }
+    };
   },
   created() {
     // Find all reminders from server. We'll filter/sort on the client.
@@ -95,7 +86,7 @@ export default {
         console.log("edit succesful", reminder);
       });
     },
-    sortByDate(a,b) {
+    sortByDate(a, b) {
       let dateTimeDiff;
       dateTimeDiff = new Date(a.date) - new Date(b.date);
       return dateTimeDiff;
@@ -129,8 +120,7 @@ export default {
       if (this.displayOnlyOne) {
         return [this.remindersUnfiltered[0]];
       } else {
-        return this.remindersUnfiltered
-            .filter(this.uiFilter);
+        return this.remindersUnfiltered.filter(this.uiFilter);
       }
     },
     remindersUnfiltered() {

@@ -1,92 +1,61 @@
 <template>
   <div class="cell notes-list-cell">
-    <div
-      :id="'note-'+note._id"
-      class="note"
-      :class="'clr-' + note.color"
-    >
-      <transition name="fade" mode="out-in"
-         @after-enter="editTransitionComplete"
-      >
-      <div
-        v-if="!isEditing"
-        class="actionable trans"
-        :class="{collapsed: isCollapsed}"
-        @click="toggleCollapse"
-        :style="{
+    <div :id="'note-'+note._id" class="note" :class="'clr-' + note.color">
+      <transition name="fade" mode="out-in" @after-enter="editTransitionComplete">
+        <div
+          v-if="!isEditing"
+          class="actionable trans"
+          :class="{collapsed: isCollapsed}"
+          @click="toggleCollapse"
+          :style="{
           maxHeight: maxNoteHeight + 'px',
           'transition-duration': transitionDuration + 's'
         }"
-      >
-        <div
-          ref="content"
         >
-          <div
-            v-if="note.category"
-            class="category"
-          >
-            {{ note.category }}
-          </div>
-          <div
-            v-else
-            class="category"
-          />
-          <div
-            v-html="textAsHtml"
-          />
-          <div class="action-row"
-            :class="{hidden:isCollapsed}"
-          >
-            <button
-              class="action button"
-              title="edit"
-              @click="showForm"
-            >
-              <font-awesome-icon icon="edit" /> edit
-            </button>
-
-            <transition name="fade" mode="out-in">
-              <button
-                v-if="!isDeleteClicked"
-                class="action button"
-                title="delete"
-                @click="deleteNote(note)"
-              >
-                <font-awesome-icon icon="trash-alt" /> delete
+          <div ref="content">
+            <div v-if="note.category" class="category">{{ note.category }}</div>
+            <div v-else class="category"/>
+            <div v-html="textAsHtml"/>
+            <div class="action-row" :class="{hidden:isCollapsed}">
+              <button class="action button" title="edit" @click="showForm">
+                <font-awesome-icon icon="edit"/>edit
               </button>
-              <div
-                v-if="isDeleteClicked"
-                class="confirm"
-              >
-                Confirm Delete:
+
+              <transition name="fade" mode="out-in">
                 <button
+                  v-if="!isDeleteClicked"
                   class="action button"
                   title="delete"
-                  @click="deleteNote(note, true)"
+                  @click="deleteNote(note)"
                 >
-                  <font-awesome-icon icon="trash-alt" /> yes!
+                  <font-awesome-icon icon="trash-alt"/>delete
                 </button>
-                <button
-                  class="action button"
-                  title="delete"
-                  @click="deleteNote(note, false)"
-                >
-                  <font-awesome-icon icon="ban" /> no
-                </button>
-              </div>
-            </transition>
+                <div v-if="isDeleteClicked" class="confirm">
+                  Confirm Delete:
+                  <button
+                    class="action button"
+                    title="delete"
+                    @click="deleteNote(note, true)"
+                  >
+                    <font-awesome-icon icon="trash-alt"/>yes!
+                  </button>
+                  <button class="action button" title="delete" @click="deleteNote(note, false)">
+                    <font-awesome-icon icon="ban"/>no
+                  </button>
+                </div>
+              </transition>
+            </div>
           </div>
         </div>
-      </div>
-      <pa-edit-note
-        v-if="isEditing"
-        :note="note"
-        :categories="categories"
-        :contentHeight="maxNoteHeight"
-        @edit-note="editNote"
-        @cancel-edit="cancelEdit"
-        @edit-note-warning="editNoteWarning"
-      />
+        <pa-edit-note
+          v-if="isEditing"
+          :note="note"
+          :categories="categories"
+          :contentHeight="maxNoteHeight"
+          @edit-note="editNote"
+          @cancel-edit="cancelEdit"
+          @edit-note-warning="editNoteWarning"
+        />
       </transition>
     </div>
   </div>
@@ -133,7 +102,7 @@ function simpleFormat(inp) {
 export default {
   name: "Note",
   components: {
-    'pa-edit-note': EditNote
+    "pa-edit-note": EditNote
   },
   props: {
     note: {

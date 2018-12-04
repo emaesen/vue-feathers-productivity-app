@@ -1,9 +1,7 @@
 <template>
   <form @submit.prevent="login" novalidate="true">
     <fieldset>
-      <legend>
-        Login
-      </legend>
+      <legend>Login</legend>
       <div v-if="errors.length" class="errors">
         <b>Please correct the following error(s):</b>
         <ul>
@@ -21,8 +19,8 @@
           @change="clearError"
           type="text"
           pattern="[0-9A-Za-z][0-9A-Za-z ]{0,16}[0-9A-Za-z]"
-          placeholder=""
-        />
+          placeholder
+        >
         <span class="icon"></span>
         <span class="validation">Acceptable</span>
       </div>
@@ -36,38 +34,23 @@
           @change="clearError"
           type="password"
           pattern=".{4,18}"
-          placeholder=""
-        />
+          placeholder
+        >
         <span class="icon"></span>
         <span class="validation">Acceptable</span>
       </div>
-      <div class="">
-        <button
-          v-if="!loading"
-          :disabled="!isValid"
-        >
-          <font-awesome-icon icon="sign-in-alt" /> Login
+      <div class>
+        <button v-if="!loading" :disabled="!isValid">
+          <font-awesome-icon icon="sign-in-alt"/>Login
         </button>
-        <input
-          v-if="loading"
-          class="button loading"
-          type="submit"
-          value="in progress..."
-          disabled
-        />
-         <span class="register">
-           -or- &nbsp;
-           <router-link to="/register">
-             <font-awesome-icon icon="user-plus" /> Register
-           </router-link>
-         </span>
+        <input v-if="loading" class="button loading" type="submit" value="in progress..." disabled>
+        <span class="register">-or- &nbsp;
+          <router-link to="/register">
+            <font-awesome-icon icon="user-plus"/>Register
+          </router-link>
+        </span>
       </div>
-      <div
-        v-if="authError"
-        class="auth-error"
-        >
-        {{ authError }}
-      </div>
+      <div v-if="authError" class="auth-error">{{ authError }}</div>
     </fieldset>
   </form>
 </template>

@@ -1,83 +1,55 @@
 <template>
   <transition name="slidefade">
-  <div class="filters">
-    <div class="filter-group">
-      <span class="filter-type">Colors:</span>
-      <span
-        class="action button cntr clear clr-none"
-        :class="{checked: noColorFiltered}"
-        @click="clearColorFilter"
-      >none</span>
-      ➔
-      <div class="filter"
-        v-for="color in colors"
-        :key="color"
-      >
-        <input type="checkbox"
-          :id="'clr-' + color"
-          :value="color"
-          v-model="filter.colors">
-        <label :for="'clr-' + color">
-          <span
-            class="clr cntr"
-            :class="'clr-' + color"
-          >({{ colorsCount['clr-'+color] }})</span>
-        </label>
-      </div>
-    </div>
-    <div class="filter-group">
-      <span class="filter-type">Categories:</span>
-      <span
-        class="action button cntr clear cat-none"
-        :class="{checked: noCategoryFiltered}"
-        @click="clearCategoryFilter"
-      >none</span>
-      ➔
-      <div class="filter"
-        v-for="category in categories"
-        :key="category"
-      >
-        <div
-          v-if="category.length>0"
-        >
-          <input type="checkbox"
-            :id="category"
-            :value="category"
-            v-model="filter.categories"
-          >
-          <label :for="category" class="action button">
-            {{ category }}
-            <span class="cntr">({{ categoriesCount['cat-'+category] }})</span>
+    <div class="filters">
+      <div class="filter-group">
+        <span class="filter-type">Colors:</span>
+        <span
+          class="action button cntr clear clr-none"
+          :class="{checked: noColorFiltered}"
+          @click="clearColorFilter"
+        >none</span>
+        ➔
+        <div class="filter" v-for="color in colors" :key="color">
+          <input type="checkbox" :id="'clr-' + color" :value="color" v-model="filter.colors">
+          <label :for="'clr-' + color">
+            <span class="clr cntr" :class="'clr-' + color">({{ colorsCount['clr-'+color] }})</span>
           </label>
         </div>
       </div>
-      <div class="filter">
-        <div
-          v-if="categoriesCount['cat-']!==undefined"
-        >
-          <input type="checkbox" id="none"
-            :value="''"
-            v-model="filter.categories"
-          >
-          <label for="none" class="action button none">
-            ✗
-            <span class="cntr">({{ categoriesCount['cat-'] }})</span>
-          </label>
+      <div class="filter-group">
+        <span class="filter-type">Categories:</span>
+        <span
+          class="action button cntr clear cat-none"
+          :class="{checked: noCategoryFiltered}"
+          @click="clearCategoryFilter"
+        >none</span>
+        ➔
+        <div class="filter" v-for="category in categories" :key="category">
+          <div v-if="category.length>0">
+            <input type="checkbox" :id="category" :value="category" v-model="filter.categories">
+            <label :for="category" class="action button">
+              {{ category }}
+              <span class="cntr">({{ categoriesCount['cat-'+category] }})</span>
+            </label>
+          </div>
+        </div>
+        <div class="filter">
+          <div v-if="categoriesCount['cat-']!==undefined">
+            <input type="checkbox" id="none" :value="''" v-model="filter.categories">
+            <label for="none" class="action button none">
+              ✗
+              <span class="cntr">({{ categoriesCount['cat-'] }})</span>
+            </label>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   </transition>
 </template>
 
 <script>
 export default {
-  props: [
-    'filter',
-    'colors',
-    'categories',
-    'filterMeta'
-  ],
+  props: ["filter", "colors", "categories", "filterMeta"],
   mounted() {
     // console.log({filterMeta:this.filterMeta});
     // console.log({colorsCount:this.colorsCount});
@@ -86,14 +58,16 @@ export default {
   methods: {
     metaCounter(type, attr, pre) {
       let metas = {};
-      let metasItr = type.map(c => {
-        const reducer = (acc,cur) => (cur[attr]===c? acc+1 : acc);
-        let nr = this.filterMeta.reduce(reducer, 0);
-        let key = pre+c;
-        return {[key]:nr};
-      }).values();
+      let metasItr = type
+        .map(c => {
+          const reducer = (acc, cur) => (cur[attr] === c ? acc + 1 : acc);
+          let nr = this.filterMeta.reduce(reducer, 0);
+          let key = pre + c;
+          return { [key]: nr };
+        })
+        .values();
       for (const meta of metasItr) {
-        metas = {...metas, ...meta};
+        metas = { ...metas, ...meta };
       }
       return metas;
     },
@@ -108,19 +82,19 @@ export default {
   },
   computed: {
     colorsCount() {
-      return this.metaCounter(this.colors, 'color', 'clr-');
+      return this.metaCounter(this.colors, "color", "clr-");
     },
     categoriesCount() {
-      return this.metaCounter(this.categories, 'category', 'cat-');
+      return this.metaCounter(this.categories, "category", "cat-");
     },
     noColorFiltered() {
-      return this.filter.colors.length===0;
+      return this.filter.colors.length === 0;
     },
     noCategoryFiltered() {
-      return this.filter.categories.length===0;
+      return this.filter.categories.length === 0;
     }
   }
-}
+};
 </script>
 
 <style scoped>

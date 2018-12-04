@@ -1,9 +1,7 @@
 <template>
   <form @submit.prevent="register">
     <fieldset>
-      <legend>
-        Register
-      </legend>
+      <legend>Register</legend>
       <div v-if="errors.length" class="errors">
         <b>Please correct the following error(s):</b>
         <ul>
@@ -20,8 +18,8 @@
           v-model="user.username"
           type="text"
           pattern="[0-9A-Za-z][0-9A-Za-z ]{0,16}[0-9A-Za-z]"
-          placeholder=""
-        />
+          placeholder
+        >
         <span class="icon"></span>
         <span class="warning">2 to 18 letters, numbers or spaces</span>
       </div>
@@ -34,8 +32,8 @@
           v-model="user.password"
           type="password"
           pattern=".{4,18}"
-          placeholder=""
-        />
+          placeholder
+        >
         <span class="icon"></span>
         <span class="warning">4 to 18 characters</span>
       </div>
@@ -48,25 +46,16 @@
           v-model="confirmPassword"
           type="password"
           :pattern="user.password"
-          placeholder=""
-        />
+          placeholder
+        >
         <span class="icon"></span>
         <span class="warning">Match password</span>
       </div>
-      <div class="">
-        <button
-          v-if="!loading"
-          :disabled="!isValid"
-        >
-          <font-awesome-icon icon="user-plus" /> Register
+      <div class>
+        <button v-if="!loading" :disabled="!isValid">
+          <font-awesome-icon icon="user-plus"/>Register
         </button>
-        <input
-          v-if="loading"
-          class="button loading"
-          type="submit"
-          value="in progress..."
-          disabled
-        />
+        <input v-if="loading" class="button loading" type="submit" value="in progress..." disabled>
       </div>
     </fieldset>
   </form>

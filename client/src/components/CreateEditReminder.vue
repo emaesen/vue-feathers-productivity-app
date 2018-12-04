@@ -1,37 +1,22 @@
 <template>
-  <div
-    :class="[{form: showForm}, {border: showForm && !isEdit}]"
-  >
+  <div :class="[{form: showForm}, {border: showForm && !isEdit}]">
     <transition name="fade">
       <button
         v-if="!showForm && !isEdit"
         class="action button absolute top right"
         @click="openReminderForm"
       >
-        <font-awesome-icon icon="plus-circle" /> add reminder
+        <font-awesome-icon icon="plus-circle"/>add reminder
       </button>
     </transition>
     <transition name="slidefade">
-      <div
-        v-if="showForm"
-        class=""
-      >
-        <div class="">
-          <div class="">
+      <div v-if="showForm" class>
+        <div class>
+          <div class>
             <label for="text">
               Task or event description
-              <span
-              v-if="!showError && !isValid"
-              class="req"
-              >
-              (required)
-              </span>
-              <span
-              v-if="showError"
-              class="error"
-              >
-              Please provide a description
-              </span>
+              <span v-if="!showError && !isValid" class="req">(required)</span>
+              <span v-if="showError" class="error">Please provide a description</span>
             </label>
             <input
               id="description"
@@ -40,7 +25,7 @@
               maxlength="108"
               v-model="text"
               required
-            />
+            >
           </div>
           <!--
           <div class="clr-selector">
@@ -54,21 +39,11 @@
             >&nbsp;</span>
           </div>
           -->
-          <div class="">
+          <div class>
             <label for="date">
               Due date &amp; time
-              <span
-              v-if="!showError && !isValid"
-              class="req"
-              >
-              (required)
-              </span>
-              <span
-              v-if="showError"
-              class="error"
-              >
-              Please provide a due date
-              </span>
+              <span v-if="!showError && !isValid" class="req">(required)</span>
+              <span v-if="showError" class="error">Please provide a due date</span>
             </label>
             <input
               id="date"
@@ -78,18 +53,13 @@
               pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"
               min="new Date()"
               required
-            />
-            <input
-              id="time"
-              name="time"
-              v-model="time"
-              type="time"
-            />
+            >
+            <input id="time" name="time" v-model="time" type="time">
           </div>
           <div class="group three">
             <div class="cell">
               <!-- Time period to show the reminder
-                   *before* the due date -->
+              *before* the due date-->
               <label for="previewWindowDays">Preview window (d)</label>
               <input
                 id="previewWindowDays"
@@ -98,11 +68,11 @@
                 type="number"
                 placeholder="days"
                 min="0"
-              />
+              >
             </div>
             <div class="cell">
               <!-- Time period to show a count-down alert
-                   *before* the due time -->
+              *before* the due time-->
               <label for="alertWindowHours">Alert window (h&amp;m)</label>
               <input
                 id="alertWindowHours"
@@ -111,20 +81,21 @@
                 type="number"
                 placeholder="hours"
                 min="0"
-              />
+              >
               <input
                 id="alertWindowMinutes"
                 name="alertWindowMinutes"
                 v-model="window[2]"
                 type="number"
                 placeholder="minutes"
-                min="0" max="59"
+                min="0"
+                max="59"
                 step="5"
-              />
+              >
             </div>
             <div class="cell">
               <!-- Time period to keep showing the reminder (plus time elapsed)
-                   *after* the due time -->
+              *after* the due time-->
               <label for="reminderWindowDays">Display window (d&amp;h&amp;m)</label>
               <input
                 id="reminderWindowDays"
@@ -133,7 +104,7 @@
                 type="number"
                 placeholder="days"
                 min="0"
-              />
+              >
               <input
                 id="reminderWindowHours"
                 name="reminderWindowHours"
@@ -141,31 +112,25 @@
                 type="number"
                 placeholder="hours"
                 min="0"
-              />
+              >
               <input
                 id="reminderWindowMinutes"
                 name="reminderWindowMinutes"
                 v-model="window[5]"
                 type="number"
                 placeholder="minutes"
-                min="0" max="59"
+                min="0"
+                max="59"
                 step="15"
-              />
+              >
             </div>
           </div>
-          <div class="">
-            <button
-              class="action button"
-              @click="save"
-              :disabled="!isValid"
-            >
-              <font-awesome-icon icon="check-circle" /> save
+          <div class>
+            <button class="action button" @click="save" :disabled="!isValid">
+              <font-awesome-icon icon="check-circle"/>save
             </button>
-            <button
-              class="action button"
-              @click="cancel"
-            >
-              <font-awesome-icon icon="ban" /> cancel
+            <button class="action button" @click="cancel">
+              <font-awesome-icon icon="ban"/>cancel
             </button>
           </div>
         </div>
@@ -195,7 +160,13 @@ export default {
       text: (this.reminder && this.reminder.text) || "",
       date: (this.reminder && this.reminder.date) || "",
       time: (this.reminder && this.reminder.time) || "",
-      window: (this.reminder && this.reminder.window) || [null,null,null,null,null],
+      window: (this.reminder && this.reminder.window) || [
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
       showForm: !!(this.reminder && this.reminder.text),
       showError: false,
       colors: ["", "red", "blue", "green", "yellow", "purple"]
@@ -244,7 +215,7 @@ export default {
       this.text = "";
       this.date = "";
       this.time = "";
-      this.window = [null,null,null,null,null];
+      this.window = [null, null, null, null, null];
       this.showForm = false;
     },
     save() {

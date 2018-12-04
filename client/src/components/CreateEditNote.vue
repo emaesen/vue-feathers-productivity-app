@@ -1,37 +1,23 @@
 <template>
-  <div
-    :class="[{form: showForm}, {border: showForm && !isEdit}]"
-  >
+  <div :class="[{form: showForm}, {border: showForm && !isEdit}]">
     <transition name="fade">
       <button
         v-if="!showForm && !isEdit"
         class="action button absolute top right"
         @click="openNoteForm"
       >
-        <font-awesome-icon icon="plus-circle" /> add note
+        <font-awesome-icon icon="plus-circle"/>add note
       </button>
     </transition>
     <transition name="slidefade">
-      <div
-        v-if="showForm"
-        class=""
-      >
-        <div class="">
-          <div class="">
-            <div class="">
-              <label for="text">Content
-                <span
-                  v-if="!showError && !isValid"
-                  class="req"
-                >
-                  (required)
-                </span>
-                <span
-                  v-if="showError"
-                  class="error"
-                >
-                  Please provide some content text
-                </span>
+      <div v-if="showForm" class>
+        <div class>
+          <div class>
+            <div class>
+              <label for="text">
+                Content
+                <span v-if="!showError && !isValid" class="req">(required)</span>
+                <span v-if="showError" class="error">Please provide some content text</span>
               </label>
               <textarea
                 id="text"
@@ -51,42 +37,27 @@
                 @click="selectClr(clr)"
               >&nbsp;</span>
             </div>
-            <div class="">
+            <div class>
               <label for="category">Category</label>
               <input
                 id="category"
                 name="category"
                 v-model="category"
                 placeholder="type new or select below"
-              />
+              >
               <div class="categories">
                 <span class="expl">└ select ➔</span>
-                <div class="category"
-                  v-for="cat in categories"
-                  :key="cat"
-                >
-                  <button class="action"
-                    v-if="cat.length>0"
-                    @click="category=cat"
-                  >
-                    {{ cat }}
-                  </button>
+                <div class="category" v-for="cat in categories" :key="cat">
+                  <button class="action" v-if="cat.length>0" @click="category=cat">{{ cat }}</button>
                 </div>
               </div>
             </div>
-            <div class="">
-              <button
-                class="action button"
-                @click="save"
-                :disabled="!isValid"
-              >
-                <font-awesome-icon icon="check-circle" /> save
+            <div class>
+              <button class="action button" @click="save" :disabled="!isValid">
+                <font-awesome-icon icon="check-circle"/>save
               </button>
-              <button
-                class="action button"
-                @click="cancel"
-              >
-                <font-awesome-icon icon="ban" /> cancel
+              <button class="action button" @click="cancel">
+                <font-awesome-icon icon="ban"/>cancel
               </button>
             </div>
           </div>

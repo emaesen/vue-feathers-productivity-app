@@ -1,7 +1,5 @@
 <template>
-  <div class="home">
-    ... checking authentication ...
-  </div>
+  <div class="home">... checking authentication ...</div>
 </template>
 
 <script>

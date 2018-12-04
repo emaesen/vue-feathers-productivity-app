@@ -1,92 +1,65 @@
 <template>
   <div class="cell reminders-list-cell">
-    <div
-      :id="'reminder-'+reminder._id"
-      class="reminder"
-      :class="'clr-' + reminder.color"
-    >
-      <transition name="fade" mode="out-in"
-         @after-enter="editTransitionComplete"
-      >
-      <div
-        v-if="!isEditing"
-        class="actionable trans"
-        :class="{collapsed: isCollapsed}"
-        @click="toggleCollapse"
-        :style="{
+    <div :id="'reminder-'+reminder._id" class="reminder" :class="'clr-' + reminder.color">
+      <transition name="fade" mode="out-in" @after-enter="editTransitionComplete">
+        <div
+          v-if="!isEditing"
+          class="actionable trans"
+          :class="{collapsed: isCollapsed}"
+          @click="toggleCollapse"
+          :style="{
           maxHeight: maxReminderHeight + 'px',
           'transition-duration': transitionDuration + 's'
         }"
-      >
-        <div
-          ref="content"
         >
-          <div
-            v-if="reminder.category"
-            class="category"
-          >
-            {{ reminder.category }}
-          </div>
-          <div
-            v-else
-            class="category"
-          />
-          <div
-            v-html="textAsHtml"
-          />
-          <div class="action-row"
-            :class="{hidden:isCollapsed}"
-          >
-            <button
-              class="action button"
-              title="edit"
-              @click="showForm"
-            >
-              <font-awesome-icon icon="edit" /> edit
-            </button>
-
-            <transition name="fade" mode="out-in">
-              <button
-                v-if="!isDeleteClicked"
-                class="action button"
-                title="delete"
-                @click="deleteReminder(reminder)"
-              >
-                <font-awesome-icon icon="trash-alt" /> delete
+          <div ref="content">
+            <div v-if="reminder.category" class="category">{{ reminder.category }}</div>
+            <div v-else class="category"/>
+            <div v-html="textAsHtml"/>
+            <div class="action-row" :class="{hidden:isCollapsed}">
+              <button class="action button" title="edit" @click="showForm">
+                <font-awesome-icon icon="edit"/>edit
               </button>
-              <div
-                v-if="isDeleteClicked"
-                class="confirm"
-              >
-                Confirm Delete:
+
+              <transition name="fade" mode="out-in">
                 <button
+                  v-if="!isDeleteClicked"
                   class="action button"
                   title="delete"
-                  @click="deleteReminder(reminder, true)"
+                  @click="deleteReminder(reminder)"
                 >
-                  <font-awesome-icon icon="trash-alt" /> yes!
+                  <font-awesome-icon icon="trash-alt"/>delete
                 </button>
-                <button
-                  class="action button"
-                  title="delete"
-                  @click="deleteReminder(reminder, false)"
-                >
-                  <font-awesome-icon icon="ban" /> no
-                </button>
-              </div>
-            </transition>
+                <div v-if="isDeleteClicked" class="confirm">
+                  Confirm Delete:
+                  <button
+                    class="action button"
+                    title="delete"
+                    @click="deleteReminder(reminder, true)"
+                  >
+                    <font-awesome-icon icon="trash-alt"/>yes!
+                  </button>
+                  <button
+                    class="action button"
+                    title="delete"
+                    @click="deleteReminder(reminder, false)"
+                  >
+                    <font-awesome-icon icon="ban"/>no
+                  </button>
+                </div>
+              </transition>
+            </div>
           </div>
         </div>
-      </div>
-      <pa-edit-reminder
-        v-if="isEditing"
-        :reminder="reminder"
-        :categories="categories"
-        :contentHeight="maxReminderHeight"
-        @edit-reminder="editReminder"
-        @cancel-edit="cancelEdit"
-        @edit-reminder-warning="editReminderWarning"
-      />
+        <pa-edit-reminder
+          v-if="isEditing"
+          :reminder="reminder"
+          :categories="categories"
+          :contentHeight="maxReminderHeight"
+          @edit-reminder="editReminder"
+          @cancel-edit="cancelEdit"
+          @edit-reminder-warning="editReminderWarning"
+        />
       </transition>
     </div>
   </div>
@@ -111,7 +84,7 @@ function simpleFormat(inp) {
 export default {
   name: "Reminder",
   components: {
-    'pa-edit-reminder': EditReminder
+    "pa-edit-reminder": EditReminder
   },
   props: {
     reminder: {

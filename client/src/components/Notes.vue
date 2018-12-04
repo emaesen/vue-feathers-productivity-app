@@ -1,43 +1,30 @@
 <template>
   <section id="notes">
-    <h2 class="notes"><font-awesome-icon icon="sticky-note" /> Notes</h2>
+    <h2 class="notes">
+      <font-awesome-icon icon="sticky-note"/>Notes
+    </h2>
     <div class="controls convert-to-block-on-small-device">
-      <button
-        @click="displayGrid=!displayGrid"
-        class="action button"
-      >
-        <font-awesome-icon :icon="displayGrid? 'align-justify' : 'th'" />
+      <button @click="displayGrid=!displayGrid" class="action button">
+        <font-awesome-icon :icon="displayGrid? 'align-justify' : 'th'"/>
       </button>
       <button
         v-if="sortType==='color' || sortType==='category'"
         @click="sortAsc = !sortAsc"
         class="action button"
-      >
-        sort
-        <font-awesome-icon :icon="sortAsc? 'sort-amount-down' : 'sort-amount-up'" />
+      >sort
+        <font-awesome-icon :icon="sortAsc? 'sort-amount-down' : 'sort-amount-up'"/>
       </button>
-      <button
-        v-else
-        @click="sortDateAsc = !sortDateAsc"
-        class="action button"
-      >
-        sort
-        <font-awesome-icon :icon="sortDateAsc? 'sort-amount-down' : 'sort-amount-up'" />
+      <button v-else @click="sortDateAsc = !sortDateAsc" class="action button">sort
+        <font-awesome-icon :icon="sortDateAsc? 'sort-amount-down' : 'sort-amount-up'"/>
       </button>
-      <button
-        @click="cycleSortType"
-        class="action button"
-      >
+      <button @click="cycleSortType" class="action button">
         ➔ by
         {{ sortType }}
-        <font-awesome-icon icon="check" />
+        <font-awesome-icon icon="check"/>
       </button>
-      <button
-        @click="toggleFilters"
-        class="action button"
-      >
+      <button @click="toggleFilters" class="action button">
         {{ showFilters? 'hide' : 'show' }} filters
-        <font-awesome-icon icon="filter" />
+        <font-awesome-icon icon="filter"/>
         ({{ nrFiltersApplied }})
       </button>
     </div>
@@ -48,13 +35,8 @@
       :filter="filter"
       :filterMeta="notesFilterMeta"
     />
-    <pa-create-note
-      @create-note="createNote"
-      :categories="categories"
-    />
-    <div v-if="loading" class="loading">
-      loading...
-    </div>
+    <pa-create-note @create-note="createNote" :categories="categories"/>
+    <div v-if="loading" class="loading">loading...</div>
     <transition-group
       v-if="!loading"
       tag="div"
@@ -77,7 +59,7 @@
 <script>
 import Note from "./Note";
 import CreateNote from "./CreateEditNote";
-import FilterControl from './FilterControl';
+import FilterControl from "./FilterControl";
 
 // Get notes as "Reactive Lists with Live Queries"
 // https://feathers-plus.github.io/v1/feathers-vuex/common-patterns.html#Reactive-Lists-with-Live-Queries
@@ -86,9 +68,9 @@ import { mapState, mapGetters, mapActions } from "vuex";
 export default {
   name: "Notes",
   components: {
-    'pa-note': Note,
-    'pa-create-note': CreateNote,
-    'pa-filter-control': FilterControl
+    "pa-note": Note,
+    "pa-create-note": CreateNote,
+    "pa-filter-control": FilterControl
   },
   props: {
     onDashboard: {
@@ -99,16 +81,16 @@ export default {
   data() {
     return {
       sortAsc: true,
-      colors: ['red', 'yellow', 'purple', 'blue', 'green', ''],
+      colors: ["red", "yellow", "purple", "blue", "green", ""],
       categories: [],
-      types: ['color', 'category', 'date created', 'date modified'],
-      sortType: 'category',
-      filter: {colors:[], categories:[]},
+      types: ["color", "category", "date created", "date modified"],
+      sortType: "category",
+      filter: { colors: [], categories: [] },
       showFilters: false,
       sortDateAsc: false,
       sortNoCatLast: true,
       displayGrid: !this.onDashboard
-    }
+    };
   },
   created() {
     // Find all notes from server. We'll filter/sort on the client.
@@ -151,39 +133,51 @@ export default {
         typeIndex = 0;
       }
       this.sortType = this.types[typeIndex];
-      console.log(this.sortType + ' ' + typeIndex);
+      console.log(this.sortType + " " + typeIndex);
     },
-    sortByDate(a,b, type) {
-      type = type || 'updated';
-      let dateDiff
-      dateDiff = (type === 'updated') ? 
-        new Date(b.updatedAt) - new Date(a.updatedAt) 
-        : new Date(b.createdAt) - new Date(a.createdAt);
-      return this.sortDateAsc? -dateDiff : dateDiff;
+    sortByDate(a, b, type) {
+      type = type || "updated";
+      let dateDiff;
+      dateDiff =
+        type === "updated"
+          ? new Date(b.updatedAt) - new Date(a.updatedAt)
+          : new Date(b.createdAt) - new Date(a.createdAt);
+      return this.sortDateAsc ? -dateDiff : dateDiff;
     },
-    uiSort(a,b) {
+    uiSort(a, b) {
       // TODO: implement sort selector
-      let dir = this.sortAsc? 1 : -1;
+      let dir = this.sortAsc ? 1 : -1;
       const colorIndex = clr => this.colors.findIndex(c => c === clr);
       let result;
       switch (this.sortType) {
-        case 'color':
-        result = colorIndex(b.color) < colorIndex(a.color) ? 1*dir
-          : colorIndex(b.color) > colorIndex(a.color) ? -1*dir
-          : 0;
+        case "color":
+          result =
+            colorIndex(b.color) < colorIndex(a.color)
+              ? 1 * dir
+              : colorIndex(b.color) > colorIndex(a.color)
+              ? -1 * dir
+              : 0;
           break;
-        case 'category':
-          result = !a.category ? this.sortNoCatLast? 1 : -1
-          : !b.category ? this.sortNoCatLast? -1 : 1
-          : b.category < a.category ? 1*dir
-          : b.category > a.category ? -1*dir
-          : 0;
+        case "category":
+          result = !a.category
+            ? this.sortNoCatLast
+              ? 1
+              : -1
+            : !b.category
+            ? this.sortNoCatLast
+              ? -1
+              : 1
+            : b.category < a.category
+            ? 1 * dir
+            : b.category > a.category
+            ? -1 * dir
+            : 0;
           break;
-        case 'date created':
-          result = this.sortByDate(a,b, 'created');
+        case "date created":
+          result = this.sortByDate(a, b, "created");
           break;
-        case 'date modified':
-          result = this.sortByDate(a,b);
+        case "date modified":
+          result = this.sortByDate(a, b);
           break;
       }
       return result;
@@ -197,20 +191,22 @@ export default {
       // Multiple colors are `or`-ed. Multiple categories are `or`-ed.
       // Example:
       // (note.color === 'green' || note.color === 'blue') && (note.category === 'code')
-      const clrReducer = (acc,cur) => (acc || note.color === cur);
-      const catReducer = (acc,cur) => (acc || note.category === cur);
+      const clrReducer = (acc, cur) => acc || note.color === cur;
+      const catReducer = (acc, cur) => acc || note.category === cur;
       const hasClr = this.filter.colors.length > 0;
       const hasCat = this.filter.categories.length > 0;
-      return this.filter.colors.reduce(clrReducer, !hasClr) 
-          && this.filter.categories.reduce(catReducer, !hasCat);
+      return (
+        this.filter.colors.reduce(clrReducer, !hasClr) &&
+        this.filter.categories.reduce(catReducer, !hasCat)
+      );
     },
     setCategories() {
       // get list of user-defined categories and remove duplicates
       this.categories = this.notesUnfiltered
         .map(n => n.category)
-        .filter((c,i,s) => s.indexOf(c) === i)
+        .filter((c, i, s) => s.indexOf(c) === i)
         .sort();
-      console.log({categories: this.categories});
+      console.log({ categories: this.categories });
     }
   },
   computed: {
@@ -238,9 +234,9 @@ export default {
     },
     notes() {
       return this.notesUnfiltered
-          .filter(this.uiFilter)
-          .sort(this.sortByDate)
-          .sort(this.uiSort);
+        .filter(this.uiFilter)
+        .sort(this.sortByDate)
+        .sort(this.uiSort);
     },
     notesUnfiltered() {
       return this.user
@@ -253,7 +249,10 @@ export default {
       return this.filter.colors.length + this.filter.categories.length;
     },
     notesFilterMeta() {
-      return this.notesUnfiltered.map(n => ({color:n.color, category:n.category}));
+      return this.notesUnfiltered.map(n => ({
+        color: n.color,
+        category: n.category
+      }));
     }
   }
 };
