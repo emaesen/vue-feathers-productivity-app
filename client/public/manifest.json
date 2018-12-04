@@ -1,6 +1,6 @@
 {
-  "name": "client",
-  "short_name": "client",
+  "name": "Personal Assistant Suite",
+  "short_name": "PAS",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
