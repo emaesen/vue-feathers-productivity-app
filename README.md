@@ -183,11 +183,12 @@ You can view the client app at <http://localhost:8289/> (local) or <http://192.1
 - @feathersjs/authentication-client
 - @feathersjs/feathers
 - @feathersjs/socketio-client
-- feathers-vuex
 - @fortawesome/vue-fontawesome
 - @fortawesome/fontawesome-svg-core
 - @fortawesome/free-regular-svg-icons
 - @fortawesome/free-solid-svg-icons
+- dayjs
+- feathers-vuex
 - register-service-worker
 - socket.io-client
 - vue
