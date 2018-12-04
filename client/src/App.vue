@@ -1,13 +1,19 @@
 <template>
   <div id="app">
+    <div id="header">
+      <div class="header">Personal Assistant Suite</div>
+      <pa-clock/>
+    </div>
     <div id="nav">
       <div v-if="user" class="nav-item">
         <span class="info">
-          <font-awesome-icon icon="user-check" />
-          <span class="remove-on-small-device"> Logged in as</span>
+          <font-awesome-icon icon="user-check"/>
+          <span class="remove-on-small-device">Logged in as</span>
           {{ userName }}
         </span>
-        <button @click="logout" class="action button"><font-awesome-icon icon="sign-out-alt" /> Logout</button>
+        <button @click="logout" class="action button">
+          <font-awesome-icon icon="sign-out-alt"/>Logout
+        </button>
       </div>
     </div>
     <router-view/>
@@ -17,9 +23,13 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
+import Clock from "./components/Clock";
 
 export default {
   name: "App",
+  components: {
+    "pa-clock": Clock
+  },
   data: function() {
     return {};
   },
@@ -56,6 +66,25 @@ button {
 }
 h2 {
   margin: 0 0 0.5em 0.2em;
+}
+#header {
+  font-family: monospace;
+  text-align: center;
+  color: #daf6ff;
+  text-shadow: 0 0 10px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0.5);
+}
+#header .date,
+#header .time {
+  display: inline-block;
+}
+#header .date::after {
+  content: ",";
+  margin-right: 1em;
+}
+.header {
+  letter-spacing: 1em;
+  font-size: 72%;
+  text-transform: uppercase;
 }
 section {
   padding: 5px;
