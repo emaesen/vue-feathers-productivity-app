@@ -50,11 +50,11 @@
               name="date"
               v-model="date"
               type="date"
-              pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"
+              placeholder="yyyy-mm-dd"
               min="new Date()"
               required
             >
-            <input id="time" name="time" v-model="time" type="time">
+            <input id="time" name="time" v-model="time" type="time" placeholder="hh:mm">
           </div>
           <div class="group three">
             <div class="cell">
