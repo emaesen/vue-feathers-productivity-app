@@ -1,7 +1,7 @@
 <template>
   <div class="clock">
     <div class="date">{{ clock.date }}</div>
-    <div class="time">{{ clock.time }}</div>
+    <div class="time">{{ clock.time }}<span class="ampm">{{ clock.ampm }}</span></div>
   </div>
 </template>
 
@@ -11,16 +11,31 @@ export default {
     return {
       clock: {
         time: '',
-        date: ''
+        date: '',
+        ampm: ''
       },
       week: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       month: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       timerID: '',
-      showYear: false
+      showYear: false,
+      showSeconds: false,
+      showAMPM: true
     }
   },
   created() {
-    this.timerID = setInterval(this.updateTime, 1000);
+    let multiplier = this.showSeconds ? 1 : 60;
+    let delay = 0
+    if (!this.showSeconds) {
+      delay = 60 - (new Date().getSeconds());
+      this.updateTime();
+    }
+    setTimeout(() => {
+      this.updateTime();
+      this.timerID = setInterval(this.updateTime, multiplier * 1000);
+    }, delay * 1000);
+  },
+  destroyed() {
+    clearInterval(this.timerID);
   },
   methods: {
     padZeros(n, td){
@@ -35,9 +50,20 @@ export default {
     updateTime() {
       let cd = new Date();
       let pz = this.padZeros;
-      this.clock.time = pz(cd.getHours(), 2) + ':' + pz(cd.getMinutes(), 2) + ':' + pz(cd.getSeconds(), 2);
-      if (this.showYear) {
-        this.clock.date += ' ' + cd.getFullYear();
+      let hours = cd.getHours();
+      let ampm = "";
+      if (this.showAMPM) {
+        ampm = hours > 12 ? "PM" : "AM";
+        if (this.clock.ampm !== ampm) {
+          this.clock.ampm = ampm;
+        }
+        if (hours > 12) {
+          hours = hours - 12;
+        }
+      }
+      this.clock.time = hours + ':' + pz(cd.getMinutes(), 2);
+      if (this.showSeconds) {
+        this.clock.time += ':' + pz(cd.getSeconds(), 2);
       }
       if (cd.getDate() !== this.dayOfMonth) {
         this.updateDate(cd);
@@ -46,6 +72,9 @@ export default {
     },
     updateDate(cd) {
       this.clock.date = this.week[cd.getDay()] + ' ' + this.month[cd.getMonth()] + ' ' + cd.getDate();
+      if (this.showYear) {
+        this.clock.date += ' ' + cd.getFullYear();
+      }
     }
   }
 }
@@ -67,5 +96,9 @@ export default {
 }
 .date {
   letter-spacing: 0.1em;
+}
+.ampm {
+  margin-left: 0.5em;
+  font-size: 75%;
 }
 </style>
