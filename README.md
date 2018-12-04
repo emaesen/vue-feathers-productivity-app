@@ -72,7 +72,8 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       - [x] Read
       - [x] Update
       - [x] Delete
-    - [ ] the logged-in user can access only their own reminders
+    - [x] the logged-in user can access only their own reminders
+    - [x] real-time update events are send only to the authenticated user
     - [ ] when user logs out, their reminders data are cleared from store
     - [ ] changes in one browser are immediately reflected in another
     - [ ] reminder has text, date, time, window, recurring properties
