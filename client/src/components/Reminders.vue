@@ -5,7 +5,10 @@
     </h2>
     <div class="controls convert-to-block-on-small-device">
       <button @click="displayOnlyOne=!displayOnlyOne" class="action button">
-        <font-awesome-icon :icon="displayOnlyOne? 'align-justify' : ['far','window-minimize']"/>
+        <font-awesome-icon
+          :icon="displayOnlyOne? 'align-justify' : ['far','window-minimize']"
+          class="flush-right"
+        />
       </button>
       <pa-clock v-if="!onDashboard"/>
     </div>

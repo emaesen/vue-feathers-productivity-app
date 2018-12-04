@@ -5,26 +5,32 @@
     </h2>
     <div class="controls convert-to-block-on-small-device">
       <button @click="displayGrid=!displayGrid" class="action button">
-        <font-awesome-icon :icon="displayGrid? 'align-justify' : 'th'"/>
+        <font-awesome-icon :icon="displayGrid? 'align-justify' : 'th'" class="flush-right"/>
       </button>
       <button
         v-if="sortType==='color' || sortType==='category'"
         @click="sortAsc = !sortAsc"
         class="action button"
       >sort
-        <font-awesome-icon :icon="sortAsc? 'sort-amount-down' : 'sort-amount-up'"/>
+        <font-awesome-icon
+          :icon="sortAsc? 'sort-amount-down' : 'sort-amount-up'"
+          class="flush-right"
+        />
       </button>
       <button v-else @click="sortDateAsc = !sortDateAsc" class="action button">sort
-        <font-awesome-icon :icon="sortDateAsc? 'sort-amount-down' : 'sort-amount-up'"/>
+        <font-awesome-icon
+          :icon="sortDateAsc? 'sort-amount-down' : 'sort-amount-up'"
+          class="flush-right"
+        />
       </button>
       <button @click="cycleSortType" class="action button">
         ➔ by
         {{ sortType }}
-        <font-awesome-icon icon="check"/>
+        <font-awesome-icon icon="check" class="flush-right"/>
       </button>
       <button @click="toggleFilters" class="action button">
         {{ showFilters? 'hide' : 'show' }} filters
-        <font-awesome-icon icon="filter"/>
+        <font-awesome-icon icon="filter" class="flush-right"/>
         ({{ nrFiltersApplied }})
       </button>
     </div>

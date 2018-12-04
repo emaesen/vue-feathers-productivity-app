@@ -260,6 +260,10 @@ button,
 }
 .svg-inline--fa {
   color: #cec0a1;
+  margin-right: 0.3em;
+}
+.svg-inline--fa.flush-right {
+  margin-right: 0;
 }
 ::-webkit-scrollbar {
   background-color: #3d3b4a;
