@@ -44,7 +44,7 @@
     <pa-create-note @create-note="createNote" :categories="categories"/>
     <div v-if="loading" class="loading">loading...</div>
     <transition-group
-      v-if="!loading"
+      v-if="!loading && notes && notes[0]"
       tag="div"
       name="notes-list"
       :class="{grid : displayGrid, 'grid-list' : !displayGrid}"

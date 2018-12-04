@@ -15,7 +15,11 @@
     <div class>
       <pa-create-reminder @create-reminder="createReminder"/>
       <div v-if="loading" class="loading">loading...</div>
-      <transition-group v-if="!loading" tag="div" name="reminders-list">
+      <transition-group
+        v-if="!loading && reminders && reminders[0]"
+        tag="div"
+        name="reminders-list"
+      >
         <pa-reminder
           v-for="reminder in reminders"
           :reminder="reminder"
@@ -57,7 +61,11 @@ export default {
   },
   created() {
     // Find all reminders from server. We'll filter/sort on the client.
-    this.findReminders({ query: {} }).then();
+    this.findReminders({ query: {} })
+      .then(resp => console.log({ resp: resp }))
+      .catch(err => {
+        console.log({ err: err });
+      });
   },
   methods: {
     ...mapActions("reminders", { findReminders: "find" }),
