@@ -204,9 +204,8 @@ export default {
 <style scoped>
 .reminder {
   border: 1px solid #555;
-  border-radius: 10px;
   padding: 5px;
-  margin-bottom: 0.2rem;
+  margin-bottom: -1px;
 }
 .grid .reminder {
   margin: 0.2rem;
