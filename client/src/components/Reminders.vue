@@ -8,9 +8,7 @@
       >
         <font-awesome-icon :icon="displayOnlyOne? 'align-justify' : ['far','window-minimize']" />
       </button>
-      <span class="now">
-        {{ Date() }}
-      </span>
+      <pa-clock/>
     </div>
     <div class="">
       <pa-create-reminder
@@ -39,7 +37,7 @@
 <script>
 import Reminder from "./Reminder";
 import CreateReminder from "./CreateEditReminder";
-
+import Clock from "./Clock";
 
 // Get reminders as "Reactive Lists with Live Queries"
 // https://feathers-plus.github.io/v1/feathers-vuex/common-patterns.html
@@ -49,7 +47,8 @@ export default {
   name: "Reminders",
   components: {
     'pa-reminder': Reminder,
-    'pa-create-reminder': CreateReminder
+    'pa-create-reminder': CreateReminder,
+    'pa-clock': Clock
   },
   props: {
      onDashboard: {
