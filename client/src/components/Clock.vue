@@ -1,7 +1,10 @@
 <template>
   <div class="clock">
     <div class="date">{{ clock.date }}</div>
-    <div class="time">{{ clock.time }}<span class="ampm">{{ clock.ampm }}</span></div>
+    <div class="time">
+      {{ clock.time }}
+      <span class="ampm">{{ clock.ampm }}</span>
+    </div>
   </div>
 </template>
 
@@ -10,23 +13,36 @@ export default {
   data() {
     return {
       clock: {
-        time: '',
-        date: '',
-        ampm: ''
+        time: "",
+        date: "",
+        ampm: ""
       },
-      week: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-      month: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      timerID: '',
+      week: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+      month: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ],
+      timerID: "",
       showYear: false,
       showSeconds: false,
       showAMPM: true
-    }
+    };
   },
   created() {
     let multiplier = this.showSeconds ? 1 : 60;
-    let delay = 0
+    let delay = 0;
     if (!this.showSeconds) {
-      delay = 60 - (new Date().getSeconds());
+      delay = 60 - new Date().getSeconds();
       this.updateTime();
     }
     setTimeout(() => {
@@ -38,13 +54,15 @@ export default {
     clearInterval(this.timerID);
   },
   methods: {
-    padZeros(n, td){
-			var ns = n.toString(), l = ns.length, z = '';
-			if (td > l) {
-					for (var i = l; i < td; i++) {
-							z += '0';
-					}
-			}
+    padZeros(n, td) {
+      var ns = n.toString(),
+        l = ns.length,
+        z = "";
+      if (td > l) {
+        for (var i = l; i < td; i++) {
+          z += "0";
+        }
+      }
       return z + ns;
     },
     updateTime() {
@@ -61,9 +79,9 @@ export default {
           hours = hours - 12;
         }
       }
-      this.clock.time = hours + ':' + pz(cd.getMinutes(), 2);
+      this.clock.time = hours + ":" + pz(cd.getMinutes(), 2);
       if (this.showSeconds) {
-        this.clock.time += ':' + pz(cd.getSeconds(), 2);
+        this.clock.time += ":" + pz(cd.getSeconds(), 2);
       }
       if (cd.getDate() !== this.dayOfMonth) {
         this.updateDate(cd);
@@ -71,13 +89,18 @@ export default {
       }
     },
     updateDate(cd) {
-      this.clock.date = this.week[cd.getDay()] + ' ' + this.month[cd.getMonth()] + ' ' + cd.getDate();
+      this.clock.date =
+        this.week[cd.getDay()] +
+        " " +
+        this.month[cd.getMonth()] +
+        " " +
+        cd.getDate();
       if (this.showYear) {
-        this.clock.date += ' ' + cd.getFullYear();
+        this.clock.date += " " + cd.getFullYear();
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -85,11 +108,10 @@ export default {
   margin: 0em 2em;
   display: inline-block;
   font-family: monospace;
-  color: #ffffff;
   text-align: center;
   vertical-align: middle;
   color: #daf6ff;
-  text-shadow: 0 0 20px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0);
+  text-shadow: 0 0 10px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0.5);
 }
 .time {
   letter-spacing: 0.2em;
