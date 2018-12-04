@@ -7,7 +7,7 @@
       <button @click="displayOnlyOne=!displayOnlyOne" class="action button">
         <font-awesome-icon :icon="displayOnlyOne? 'align-justify' : ['far','window-minimize']"/>
       </button>
-      <pa-clock/>
+      <pa-clock v-if="!onDashboard"/>
     </div>
     <div class>
       <pa-create-reminder @create-reminder="createReminder"/>
