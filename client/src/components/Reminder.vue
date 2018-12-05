@@ -72,7 +72,9 @@
 <script>
 import EditReminder from "./CreateEditReminder";
 
-const DAY = 1000 * 60 * 60 * 24;
+const NRMILLISECINDAY = 1000 * 60 * 60 * 24;
+const NRDAYSFORDUESOON = 3;
+const DUETEXTWINDOWDAYS = 7;
 
 // allow limited markdown-inspired formatting
 function simpleFormat(inp) {
@@ -143,18 +145,34 @@ export default {
     },
     due() {
       //let today = new Date();
-      let date = new Date(this.reminder.date);
+      let date = this.date(this.reminder);
       let time = this.reminder.time.split(":");
       let dateTxt = "";
-      dateTxt =
-        this.week[date.getDay()] +
-        " " +
-        this.month[date.getMonth()] +
-        " " +
-        date.getDate();
       let timeTxt = "";
       let ampmTxt = "";
-      if (time[1]) {
+      let dueInNrDays = this.dayDiff(date, new Date());
+      let window =
+        (this.reminder.window && this.reminder.window[0]) || DUETEXTWINDOWDAYS;
+      if (dueInNrDays < window) {
+        dateTxt =
+          dueInNrDays === 0
+            ? "today"
+            : dueInNrDays === 1
+            ? "tomorrow"
+            : dueInNrDays === -1
+            ? "yesterday"
+            : dueInNrDays < -1
+            ? -dueInNrDays + " days ago"
+            : "in " + dueInNrDays + " days";
+      } else {
+        dateTxt =
+          this.week[date.getDay()] +
+          " " +
+          this.month[date.getMonth()] +
+          " " +
+          date.getDate();
+      }
+      if (time[1] && !this.isPastDue) {
         timeTxt =
           (1 * time[0] > 12 ? 1 * time[0] - 12 : time[0]) + ":" + time[1];
         ampmTxt = 1 * time[0] > 12 ? "PM" : "AM";
@@ -166,31 +184,16 @@ export default {
       };
     },
     dueDateObj: function() {
-      return this.reminder.date
-        ? new Date(this.reminder.date + "T00:00:00")
-        : null;
+      return this.date(this.reminder);
     },
     isPastDue: function() {
-      return (
-        this.dueDateObj &&
-        this.dueDateObj.setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0)
-      );
+      return this.timeDiff(this.dueDateObj, new Date()) < 0;
     },
     isDueToday: function() {
-      const window = DAY;
-      return (
-        this.dueDateObj &&
-        this.dueDateObj.setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0) <
-          window
-      );
+      return this.dayDiff(this.dueDateObj, new Date()) === 0;
     },
     isDueSoon: function() {
-      const window = DAY * 3;
-      return (
-        this.dueDateObj &&
-        this.dueDateObj.setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0) <
-          window
-      );
+      return this.dayDiff(this.dueDateObj, new Date()) < NRDAYSFORDUESOON;
     },
     dueClass: function() {
       return this.isPastDue
@@ -203,6 +206,38 @@ export default {
     }
   },
   methods: {
+    date(d1) {
+      // return Date object for d1:{date, time} object
+      if (d1.time) {
+        return new Date(d1.date + "T" + d1.time);
+      } else {
+        return new Date(d1.date + "T00:00:00");
+      }
+    },
+    dayDiff(d1, d2) {
+      // d1 and d2 must be date objects
+      if (
+        typeof d1.setHours === "function" &&
+        typeof d2.setHours === "function"
+      ) {
+        return (
+          (d1.setHours(0, 0, 0, 0) - d2.setHours(0, 0, 0, 0)) / NRMILLISECINDAY
+        );
+      } else {
+        return null;
+      }
+    },
+    timeDiff(d1, d2) {
+      // d1 and d2 must be date objects
+      if (
+        typeof d1.getTime === "function" &&
+        typeof d2.getTime === "function"
+      ) {
+        return d1.getTime() - d2.getTime();
+      } else {
+        return null;
+      }
+    },
     editTransitionComplete() {
       if (this.resetStyle) {
         this.setContentStyleProps();

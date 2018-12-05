@@ -4,9 +4,9 @@
       <font-awesome-icon icon="bell"/>Reminders
     </h2>
     <div class="controls convert-to-block-on-small-device">
-      <button @click="displayOnlyOne=!displayOnlyOne" class="action button">
+      <button @click="minimize=!minimize" class="action button">
         <font-awesome-icon
-          :icon="displayOnlyOne? 'align-justify' : ['far','window-minimize']"
+          :icon="minimize? 'align-justify' : ['far','window-minimize']"
           class="flush-right"
         />
       </button>
@@ -41,6 +41,8 @@ import Clock from "./Clock";
 // https://feathers-plus.github.io/v1/feathers-vuex/common-patterns.html
 import { mapState, mapGetters, mapActions } from "vuex";
 
+const NRMILLISECINDAY = 1000 * 60 * 60 * 24;
+
 export default {
   name: "Reminders",
   components: {
@@ -56,15 +58,16 @@ export default {
   },
   data() {
     return {
-      displayOnlyOne: this.onDashboard
+      minimize: this.onDashboard,
+      displayOnlyOne: false
     };
   },
   created() {
     // Find all reminders from server. We'll filter/sort on the client.
     this.findReminders({ query: {} })
-      .then(resp => console.log({ resp: resp }))
+      .then(resp => console.log({ remindersResp: resp }))
       .catch(err => {
-        console.log({ err: err });
+        console.log({ remindersErr: err });
       });
   },
   methods: {
@@ -98,12 +101,67 @@ export default {
       });
     },
     sortByDate(a, b) {
-      let dateTimeDiff;
-      dateTimeDiff = new Date(a.date) - new Date(b.date);
-      return dateTimeDiff;
+      return this.timeDiff(this.date(a), this.date(b));
+    },
+    date(d1) {
+      // return Date object for d1:{date, time} object
+      if (d1.time) {
+        return new Date(d1.date + "T" + d1.time);
+      } else {
+        return new Date(d1.date + "T00:00:00");
+      }
+    },
+    dayDiff(d1, d2) {
+      // d1 and d2 must be date objects
+      if (
+        typeof d1.setHours === "function" &&
+        typeof d2.setHours === "function"
+      ) {
+        return (
+          (d1.setHours(0, 0, 0, 0) - d2.setHours(0, 0, 0, 0)) / NRMILLISECINDAY
+        );
+      } else {
+        return null;
+      }
+    },
+    timeDiff(d1, d2) {
+      // d1 and d2 must be date objects
+      if (
+        typeof d1.getTime === "function" &&
+        typeof d2.getTime === "function"
+      ) {
+        return d1.getTime() - d2.getTime();
+      } else {
+        return null;
+      }
     },
     uiFilter(reminder) {
       return reminder ? true : false;
+    },
+    uiPreviewFilter(reminder) {
+      let todayDate = new Date();
+      let dueDate = this.date(reminder);
+      let previewWindowDays = (reminder.window && reminder.window[0]) || 0;
+      let timeFromNow = this.timeDiff(dueDate, todayDate);
+      let daysFromNow = this.dayDiff(dueDate, todayDate);
+      let isDueWithinPreviewWindow = Math.abs(daysFromNow) < previewWindowDays;
+      let isDueToday = daysFromNow === 0;
+      let isPastDue = timeFromNow < 0;
+      // console.log({
+      //   prevWin: previewWindowDays,
+      //   dueDate: dueDate,
+      //   remDate: reminder.date,
+      //   remTime: reminder.time,
+      //   daysFromNow: daysFromNow,
+      //   dueInPrevWin: isDueWithinPreviewWindow,
+      //   dueToday: isDueToday,
+      //   pastDue: isPastDue
+      // });
+      if (isDueWithinPreviewWindow || isDueToday || isPastDue) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   computed: {
@@ -128,8 +186,13 @@ export default {
       return query;
     },
     reminders() {
-      if (this.displayOnlyOne) {
-        return [this.remindersUnfiltered[0]];
+      let nextReminder = this.remindersUnfiltered[0];
+      if (this.minimize) {
+        if (this.displayOnlyOne) {
+          return [nextReminder];
+        } else {
+          return this.remindersUnfiltered.filter(this.uiPreviewFilter);
+        }
       } else {
         return this.remindersUnfiltered.filter(this.uiFilter);
       }
