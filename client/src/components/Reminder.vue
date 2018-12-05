@@ -206,12 +206,12 @@ export default {
     }
   },
   methods: {
-    date(d1) {
-      // return Date object for d1:{date, time} object
-      if (d1.time) {
-        return new Date(d1.date + "T" + d1.time);
+    date(reminder) {
+      // return Date object for reminder:{date, time} object
+      if (reminder.time) {
+        return new Date(reminder.date + "T" + reminder.time);
       } else {
-        return new Date(d1.date + "T00:00:00");
+        return new Date(reminder.date + "T00:00:00");
       }
     },
     dayDiff(d1, d2) {
