@@ -230,6 +230,11 @@ a,
   border-radius: 5px;
   line-height: 21px;
 }
+button,
+.action.button {
+  background-color: transparent;
+  border: 1px solid #4b3f69;
+}
 .action.button + .action.button {
   margin-left: 5px;
 }
