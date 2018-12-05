@@ -8,13 +8,17 @@
           :class="{collapsed: isCollapsed}"
           @click="toggleCollapse"
           :style="{
-          maxHeight: maxReminderHeight + 'px',
-          'transition-duration': transitionDuration + 's'
-        }"
+            maxHeight: maxReminderHeight + 'px',
+            'transition-duration': transitionDuration + 's'
+          }"
         >
-          <div ref="content">
-            <div v-if="reminder.category" class="category">{{ reminder.category }}</div>
-            <div v-else class="category"/>
+          <div ref="content" :class="dueClass">
+            <div class="due" :class="dueClass">
+              {{ due.date }} {{ due.date && due.time ? ", " : ""}} {{ due.time}}
+              <span
+                class="ampm"
+              >{{ due.ampm }}</span>
+            </div>
             <div v-html="textAsHtml"/>
             <div class="action-row" :class="{hidden:isCollapsed}">
               <button class="action button" title="edit" @click="showForm">
@@ -68,6 +72,8 @@
 <script>
 import EditReminder from "./CreateEditReminder";
 
+const DAY = 1000 * 60 * 60 * 24;
+
 // allow limited markdown-inspired formatting
 function simpleFormat(inp) {
   return (
@@ -110,7 +116,22 @@ export default {
       nrOfCharsWhenCollapsed: 15,
       maxReminderHeight: "100",
       transitionDuration: "1",
-      isDeleteClicked: false
+      isDeleteClicked: false,
+      week: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+      month: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ]
     };
   },
   mounted: function() {
@@ -119,6 +140,66 @@ export default {
   computed: {
     textAsHtml() {
       return simpleFormat(this.reminder.text);
+    },
+    due() {
+      //let today = new Date();
+      let date = new Date(this.reminder.date);
+      let time = this.reminder.time.split(":");
+      let dateTxt = "";
+      dateTxt =
+        this.week[date.getDay()] +
+        " " +
+        this.month[date.getMonth()] +
+        " " +
+        date.getDate();
+      let timeTxt = "";
+      let ampmTxt = "";
+      if (time[1]) {
+        timeTxt =
+          (1 * time[0] > 12 ? 1 * time[0] - 12 : time[0]) + ":" + time[1];
+        ampmTxt = 1 * time[0] > 12 ? "PM" : "AM";
+      }
+      return {
+        date: dateTxt,
+        time: timeTxt,
+        ampm: ampmTxt
+      };
+    },
+    dueDateObj: function() {
+      return this.reminder.date
+        ? new Date(this.reminder.date + "T00:00:00")
+        : null;
+    },
+    isPastDue: function() {
+      return (
+        this.dueDateObj &&
+        this.dueDateObj.setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0)
+      );
+    },
+    isDueToday: function() {
+      const window = DAY;
+      return (
+        this.dueDateObj &&
+        this.dueDateObj.setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0) <
+          window
+      );
+    },
+    isDueSoon: function() {
+      const window = DAY * 3;
+      return (
+        this.dueDateObj &&
+        this.dueDateObj.setHours(0, 0, 0, 0) - new Date().setHours(0, 0, 0, 0) <
+          window
+      );
+    },
+    dueClass: function() {
+      return this.isPastDue
+        ? "pastdue"
+        : this.isDueToday
+        ? "duetoday"
+        : this.isDueSoon
+        ? "duesoon"
+        : "notyetdue";
     }
   },
   methods: {
@@ -209,10 +290,24 @@ export default {
   padding: 5px;
   margin-bottom: -1px;
 }
-.category {
+.due {
   float: right;
   font-style: italic;
   color: #cec0a1;
+  font-size: 90%;
+}
+.duesoon {
+  color: #ffd900;
+}
+.duetoday {
+  color: #ff9100;
+}
+.pastdue {
+  color: #ff0000;
+}
+.ampm {
+  margin-left: 0.3em;
+  font-size: 80%;
 }
 .trans {
   /* use max-height to transition the height */
