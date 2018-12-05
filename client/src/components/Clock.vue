@@ -35,25 +35,45 @@ export default {
       timerID: "",
       showYear: false,
       showSeconds: false,
-      showAMPM: true
+      showAMPM: true,
+      updateCounter: 0
     };
   },
   created() {
-    let multiplier = this.showSeconds ? 1 : 60;
-    let delay = 0;
-    if (!this.showSeconds) {
-      delay = 60 - new Date().getSeconds();
-      this.updateTime();
+    this.startClock();
+  },
+  updated() {
+    this.updateCounter++;
+    // (re)start (resync) the clock each hour
+    if (this.updateCounter > 60) {
+      this.startClock();
+      this.updateCounter = 0;
     }
-    setTimeout(() => {
-      this.updateTime();
-      this.timerID = setInterval(this.updateTime, multiplier * 1000);
-    }, delay * 1000);
   },
   destroyed() {
-    clearInterval(this.timerID);
+    this.stopClock();
   },
   methods: {
+    startClock() {
+      this.stopClock();
+      let multiplier = this.showSeconds ? 1 : 60;
+      let delay = 0;
+      console.log("Start the clock");
+      if (!this.showSeconds) {
+        delay = 60 - new Date().getSeconds();
+        this.updateTime();
+      }
+      setTimeout(() => {
+        this.updateTime();
+        this.timerID = setInterval(this.updateTime, multiplier * 1000);
+      }, delay * 1000);
+    },
+    stopClock() {
+      if (this.timerID) {
+        console.log("Stop the clock");
+        clearInterval(this.timerID);
+      }
+    },
     padZeros(n, td) {
       var ns = n.toString(),
         l = ns.length,
