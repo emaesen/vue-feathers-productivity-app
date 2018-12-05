@@ -14,7 +14,7 @@
         >
           <div ref="content" :class="dueClass">
             <div class="due" :class="dueClass">
-              {{ due.date }} {{ due.date && due.time ? ", " : ""}} {{ due.time}}
+              {{ due.date }}{{ due.date && due.time ? ", " : ""}}{{ due.time}}
               <span
                 class="ampm"
               >{{ due.ampm }}</span>
@@ -172,7 +172,7 @@ export default {
           " " +
           date.getDate();
       }
-      if (time[1] && !this.isPastDue) {
+      if (time[1] && (!this.isPastDue || dueInNrDays === 0)) {
         timeTxt =
           (1 * time[0] > 12 ? 1 * time[0] - 12 : time[0]) + ":" + time[1];
         ampmTxt = 1 * time[0] > 12 ? "PM" : "AM";
