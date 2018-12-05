@@ -41,7 +41,9 @@ import Clock from "./Clock";
 // https://feathers-plus.github.io/v1/feathers-vuex/common-patterns.html
 import { mapState, mapGetters, mapActions } from "vuex";
 
-const NRMILLISECINDAY = 1000 * 60 * 60 * 24;
+const NRMILLISECINMINUTE = 1000 * 60;
+const NRMILLISECINHOUR = NRMILLISECINMINUTE * 60;
+const NRMILLISECINDAY = NRMILLISECINHOUR * 24;
 
 export default {
   name: "Reminders",
@@ -59,7 +61,8 @@ export default {
   data() {
     return {
       minimize: this.onDashboard,
-      displayOnlyOne: false
+      displayOnlyOne: false,
+      correctDateForReminderWindow: true
     };
   },
   created() {
@@ -101,14 +104,32 @@ export default {
       });
     },
     sortByDate(a, b) {
-      return this.timeDiff(this.date(a), this.date(b));
-    },
-    date(d1) {
-      // return Date object for d1:{date, time} object
-      if (d1.time) {
-        return new Date(d1.date + "T" + d1.time);
+      // a and b are reminders
+      if (!this.correctDateForReminderWindow) {
+        return this.timeDiff(this.date(a), this.date(b));
       } else {
-        return new Date(d1.date + "T00:00:00");
+        return this.timeDiff(this.correctedDate(a), this.correctedDate(b));
+      }
+    },
+    correctedDate(reminder) {
+      let date = this.date(reminder);
+      if (!this.isPastDue(date) && reminder.window) {
+        let correction =
+          NRMILLISECINDAY * (reminder.window[3] || 0) +
+          NRMILLISECINHOUR * (reminder.window[4] || 0) +
+          NRMILLISECINMINUTE * (reminder.window[5] || 0);
+        let time = date.getTime();
+        return new Date().setTime(time + correction);
+      } else {
+        return this.date(reminder);
+      }
+    },
+    date(reminder) {
+      // return Date object for reminder:{date, time} object
+      if (reminder.time) {
+        return new Date(reminder.date + "T" + reminder.time);
+      } else {
+        return new Date(reminder.date + "T00:00:00");
       }
     },
     dayDiff(d1, d2) {
@@ -135,6 +156,10 @@ export default {
         return null;
       }
     },
+    isPastDue(d1) {
+      // d1 must be a date object
+      return this.timeDiff(d1, new Date()) < 0;
+    },
     uiFilter(reminder) {
       return reminder ? true : false;
     },
@@ -147,16 +172,6 @@ export default {
       let isDueWithinPreviewWindow = Math.abs(daysFromNow) < previewWindowDays;
       let isDueToday = daysFromNow === 0;
       let isPastDue = timeFromNow < 0;
-      // console.log({
-      //   prevWin: previewWindowDays,
-      //   dueDate: dueDate,
-      //   remDate: reminder.date,
-      //   remTime: reminder.time,
-      //   daysFromNow: daysFromNow,
-      //   dueInPrevWin: isDueWithinPreviewWindow,
-      //   dueToday: isDueToday,
-      //   pastDue: isPastDue
-      // });
       if (isDueWithinPreviewWindow || isDueToday || isPastDue) {
         return true;
       } else {
