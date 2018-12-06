@@ -13,13 +13,13 @@
           }"
         >
           <div ref="content" :class="dueClass">
-            <div class="due" :class="dueClass">
+            <div class="date-time" :class="dueClass">
               {{ due.date }}{{ due.date && due.time ? ", " : ""}}{{ due.time}}
               <span
                 class="ampm"
               >{{ due.ampm }}</span>
             </div>
-            <div v-html="textAsHtml"/>
+            <div v-html="textAsHtml" class="task" :class="dueClass"/>
             <div class="action-row" :class="{hidden:isCollapsed}">
               <button class="action button" title="edit" @click="showForm">
                 <font-awesome-icon icon="edit"/>edit
@@ -327,19 +327,28 @@ export default {
   padding: 5px;
   margin-bottom: -1px;
 }
-.due {
+.date-time {
   float: right;
   font-style: italic;
   color: #cec0a1;
   font-size: 90%;
+  padding: 0 10px;
 }
-.duesoon {
-  color: #ffd900;
+.task {
+  padding: 0 5px;
+  border-left: 3px solid;
+  border-right: 3px solid;
 }
-.duetoday {
-  color: #ff9100;
+.duesoon.task {
+  border-color: #ffd900;
 }
-.pastdue {
+.duetoday.task {
+  border-color: #ff9100;
+}
+.pastdue.task {
+  border-color: #ff0000;
+}
+.pastdue.date-time {
   color: #ff0000;
 }
 .ampm {
@@ -364,9 +373,6 @@ export default {
 }
 .action-row {
   display: inline-block;
-  background-color: #8a8a8a63;
-  border: 1px solid #212027a3;
-  border-radius: 10px;
   margin-top: 0.5em;
   padding: 0.2em 0.5em;
 }
