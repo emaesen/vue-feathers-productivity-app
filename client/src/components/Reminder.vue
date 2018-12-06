@@ -71,6 +71,7 @@
 
 <script>
 import EditReminder from "./CreateEditReminder";
+import { mapGetters } from "vuex";
 
 const NRMILLISECINDAY = 1000 * 60 * 60 * 24;
 const NRDAYSFORDUESOON = 3;
@@ -140,6 +141,7 @@ export default {
     this.setContentStyleProps();
   },
   computed: {
+    ...mapGetters(["timeTick"]),
     textAsHtml() {
       return simpleFormat(this.reminder.text);
     },

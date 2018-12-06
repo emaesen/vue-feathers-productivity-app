@@ -11,9 +11,20 @@ Vue.use(Vuex);
 Vue.use(FeathersVuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
-  actions: {},
+  state: {
+    timeTick: new Date().getTime()
+  },
+  getters: {
+    timeTick: state => state.timeTick
+  },
+  mutations: {
+    // can be used directly for synchronous events
+    SET_TIME_TICK: (state, tick) => (state.timeTick = tick)
+  },
+  actions: {
+    // for async functionality - commit a mutation
+    // e.g. setTimeTick: (context, tick) => context.commit("SET_TIME_TICK", tick)
+  },
   plugins: [
     service("users", {
       instanceDefaults: {

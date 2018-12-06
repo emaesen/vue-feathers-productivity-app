@@ -9,6 +9,8 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+
 export default {
   data() {
     return {
@@ -54,6 +56,7 @@ export default {
     this.stopClock();
   },
   methods: {
+    ...mapMutations(["SET_TIME_TICK"]),
     startClock() {
       this.stopClock();
       let multiplier = this.showSeconds ? 1 : 60;
@@ -90,6 +93,9 @@ export default {
       let pz = this.padZeros;
       let hours = cd.getHours();
       let ampm = "";
+      // store time centrally
+      // so we only have to run one clock in our application
+      this.SET_TIME_TICK(cd.getTime());
       if (this.showAMPM) {
         ampm = hours > 12 ? "PM" : "AM";
         if (this.clock.ampm !== ampm) {
