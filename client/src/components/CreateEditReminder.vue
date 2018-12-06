@@ -104,6 +104,7 @@
                 type="number"
                 placeholder="hours"
                 min="0"
+                max="23"
               >
               <input
                 id="alertWindowMinutes"
@@ -119,7 +120,7 @@
             <div class="cell">
               <!-- Time period to keep showing the reminder (plus time elapsed)
               *after* the due time-->
-              <label for="reminderWindowDays">Grace/Snooze window (d,h,m)
+              <label for="graceWindowDays">Grace/Snooze window (d,h,m)
                 <font-awesome-icon
                   icon="question-circle"
                   class="hover-info-action"
@@ -130,28 +131,29 @@
                 Grace period (days, hours, minutes)
                 <i>after</i> the due date-time;
                 only after this grace period is the reminder considered past-due.
-                <br>If left empty, the reminder is consider past-due
+                <br>If left empty, the reminder is considered past-due
                 once the reminder's date-time is past.
               </div>
               <input
-                id="reminderWindowDays"
-                name="reminderWindowDays"
+                id="graceWindowDays"
+                name="graceWindowDays"
                 v-model="window[3]"
                 type="number"
                 placeholder="days"
                 min="0"
               >
               <input
-                id="reminderWindowHours"
-                name="reminderWindowHours"
+                id="graceWindowHours"
+                name="graceWindowHours"
                 v-model="window[4]"
                 type="number"
                 placeholder="hours"
                 min="0"
+                max="23"
               >
               <input
-                id="reminderWindowMinutes"
-                name="reminderWindowMinutes"
+                id="graceWindowMinutes"
+                name="graceWindowMinutes"
                 v-model="window[5]"
                 type="number"
                 placeholder="minutes"
