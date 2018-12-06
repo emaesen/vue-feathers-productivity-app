@@ -24,6 +24,7 @@
               type="text"
               maxlength="108"
               v-model="text"
+              placeholder="I need to ..."
               required
             >
           </div>
@@ -60,7 +61,18 @@
             <div class="cell">
               <!-- Time period to show the reminder
               *before* the due date-->
-              <label for="previewWindowDays">Preview window (d)</label>
+              <label for="previewWindowDays">Preview window (d)
+                <font-awesome-icon
+                  icon="question-circle"
+                  class="hover-info-action"
+                  @click="revealInfo"
+                />
+              </label>
+              <div class="hover-info">
+                Time period (days) to show the reminder on the Dashboard
+                <i>before</i> the due date.
+                <br>If left empty, the reminder will show only on the due day itself.
+              </div>
               <input
                 id="previewWindowDays"
                 name="previewWindowDays"
@@ -73,7 +85,18 @@
             <div class="cell">
               <!-- Time period to show a count-down alert
               *before* the due time-->
-              <label for="alertWindowHours">Alert window (h&amp;m)</label>
+              <label for="alertWindowHours">Count-down window (h,m)
+                <font-awesome-icon
+                  icon="question-circle"
+                  class="hover-info-action"
+                  @click="revealInfo"
+                />
+              </label>
+              <div class="hover-info">
+                Time period (hours, minutes) to show a count-down
+                <i>before</i> the due time.
+                <br>If left empty, a 30-minute countdown will be shown.
+              </div>
               <input
                 id="alertWindowHours"
                 name="alertWindowHours"
@@ -96,7 +119,20 @@
             <div class="cell">
               <!-- Time period to keep showing the reminder (plus time elapsed)
               *after* the due time-->
-              <label for="reminderWindowDays">Display window (d&amp;h&amp;m)</label>
+              <label for="reminderWindowDays">Grace/Snooze window (d,h,m)
+                <font-awesome-icon
+                  icon="question-circle"
+                  class="hover-info-action"
+                  @click="revealInfo"
+                />
+              </label>
+              <div class="hover-info">
+                Grace period (days, hours, minutes)
+                <i>after</i> the due date-time;
+                only after this grace period is the reminder considered past-due.
+                <br>If left empty, the reminder is consider past-due
+                once the reminder's date-time is past.
+              </div>
               <input
                 id="reminderWindowDays"
                 name="reminderWindowDays"
@@ -232,6 +268,27 @@ export default {
       } else {
         this.showError = true;
       }
+    },
+    revealInfo(evt) {
+      console.log(evt);
+      // the info icon is an SVG element.
+      // Sometimes the target is a path instead of the svg element
+      let ancestor;
+      if (evt.path) {
+        ancestor = evt.path[1].parentElement.parentElement;
+      } else {
+        ancestor = evt.target.parentElement.parentElement;
+      }
+      let style = ancestor && ancestor.children[1].style;
+      console.log(style);
+      if (style !== undefined) {
+        console.log("display: " + style.display);
+        if (!style.display) {
+          style.display = "inline-block";
+        } else {
+          style.display = "";
+        }
+      }
     }
   }
 };
@@ -249,8 +306,18 @@ input#description {
   margin-bottom: 5px;
 }
 .group.three .cell {
-  margin-right: 2em;
+  position: relative;
   float: left;
+}
+.group.three .cell + .cell {
+  margin-left: 2em;
+}
+input[type="number"] {
+  width: 4rem;
+}
+.hover-info-action {
+  margin-right: 0;
+  margin-left: 5px;
 }
 .border {
   border: 1px solid #555;
@@ -262,6 +329,18 @@ input#description {
   margin-top: -0.75em;
 }
 .date {
+  display: inline-block;
+}
+.hover-info {
+  display: none;
+  position: absolute;
+  top: 50px;
+  opacity: 0.8;
+  background-color: #000;
+  border: 1px solid #777;
+  padding: 5px;
+}
+label:hover .hover-info {
   display: inline-block;
 }
 .expl {
