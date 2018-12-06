@@ -272,7 +272,6 @@ export default {
       }
     },
     revealInfo(evt) {
-      console.log(evt);
       // the info icon is an SVG element.
       // Sometimes the target is a path instead of the svg element
       let ancestor;
@@ -282,9 +281,7 @@ export default {
         ancestor = evt.target.parentElement.parentElement;
       }
       let style = ancestor && ancestor.children[1].style;
-      console.log(style);
       if (style !== undefined) {
-        console.log("display: " + style.display);
         if (!style.display) {
           style.display = "inline-block";
         } else {
