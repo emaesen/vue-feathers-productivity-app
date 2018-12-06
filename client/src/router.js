@@ -30,6 +30,7 @@ function logOut(to, from, next) {
     // Clear the store state of the notes userService
     // To prevent data from previous logins to bleed through
     store.commit("notes/clearAll");
+    store.commit("reminders/clearAll");
     next();
   });
 }
