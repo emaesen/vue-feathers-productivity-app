@@ -341,6 +341,7 @@ input[type="number"] {
   background-color: #000;
   border: 1px solid #777;
   padding: 5px;
+  z-index: 9;
 }
 label:hover .hover-info {
   display: inline-block;
