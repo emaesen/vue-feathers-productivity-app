@@ -27,8 +27,9 @@ function checkAuth(to, from, next, target) {
 function logOut(to, from, next) {
   console.log("logging out...");
   store.dispatch("auth/logout").then(() => {
-    // Clear the store state of the notes userService
-    // To prevent data from previous logins to bleed through
+    // Clear the store state of data services
+    // to prevent data from previous logins to bleed through
+    // when one user logs out and another logs in, in the same tab.
     store.commit("notes/clearAll");
     store.commit("reminders/clearAll");
     next();
