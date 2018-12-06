@@ -13,6 +13,7 @@ import {
   faFilter, // filter
   faMinusCircle, // remove
   faPlusCircle, // add
+  faQuestionCircle, // info
   faSignInAlt, // log/sign in
   faSignOutAlt, // log/sign out
   faSortAmountDown, // sort down
@@ -44,6 +45,7 @@ library.add(
   faFilter,
   faMinusCircle,
   faPlusCircle,
+  faQuestionCircle,
   faSignInAlt,
   faSignOutAlt,
   faSortAmountDown,
