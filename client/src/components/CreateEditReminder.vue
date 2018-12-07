@@ -203,6 +203,7 @@ export default {
         null,
         null,
         null,
+        null,
         null
       ],
       showForm: !!(this.reminder && this.reminder.text),
@@ -253,7 +254,7 @@ export default {
       this.text = "";
       this.date = "";
       this.time = "";
-      this.window = [null, null, null, null, null];
+      this.window = [null, null, null, null, null, null];
       this.showForm = false;
     },
     save() {
