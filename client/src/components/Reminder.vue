@@ -14,6 +14,7 @@
         >
           <div ref="content" :class="dueClass">
             <div class="date-time" :class="dueClass">
+              <pa-count-down v-if="showCountDown" :targetDate="countDownTarget"/>
               {{ due.date }}{{ due.date && due.time ? ", " : ""}}{{ due.time}}
               <span
                 class="ampm"
@@ -71,11 +72,11 @@
 
 <script>
 import EditReminder from "./CreateEditReminder";
+import CountDown from "./CountDown";
 import { mapGetters } from "vuex";
 
 const NRMILLISECINDAY = 1000 * 60 * 60 * 24;
-const NRDAYSFORDUESOON = 3;
-const DUETEXTWINDOWDAYS = 7;
+const DUETEXTWINDOWDAYS = 1;
 
 // allow limited markdown-inspired formatting
 function simpleFormat(inp) {
@@ -93,7 +94,8 @@ function simpleFormat(inp) {
 export default {
   name: "Reminder",
   components: {
-    "pa-edit-reminder": EditReminder
+    "pa-edit-reminder": EditReminder,
+    "pa-count-down": CountDown
   },
   props: {
     reminder: {
@@ -155,7 +157,7 @@ export default {
       let dueInNrDays = this.dayDiff(date, new Date());
       let window =
         (this.reminder.window && this.reminder.window[0]) || DUETEXTWINDOWDAYS;
-      if (dueInNrDays < window) {
+      if (dueInNrDays <= window) {
         dateTxt =
           dueInNrDays === 0
             ? "today"
@@ -185,8 +187,51 @@ export default {
         ampm: ampmTxt
       };
     },
+    countDownMSecBeforeDue() {
+      let window = this.reminder && this.reminder.window;
+      let minutes = 0;
+      if (window[1]) {
+        // hours in countdown window - count as minutes
+        minutes = minutes + 60 * window[1];
+      }
+      if (window[2]) {
+        // minutes in countdown window
+        minutes = minutes + 1 * window[2];
+      }
+      // convert minutes to msec
+      return minutes * 60 * 1000;
+    },
+    countDownMSecDuringGracePeriod() {
+      let window = this.reminder && this.reminder.window;
+      let minutes = 0;
+      if (window[3]) {
+        // days in countdown window - count as minutes
+        minutes = minutes + 24 * 60 * window[3];
+      }
+      if (window[4]) {
+        // hours in countdown window - count as minutes
+        minutes = minutes + 60 * window[4];
+      }
+      if (window[5]) {
+        // minutes in countdown window
+        minutes = minutes + 1 * window[5];
+      }
+      // convert minutes to msec
+      return minutes * 60 * 1000;
+    },
+    dueDateAfterGracePeriod() {
+      return new Date(
+        this.dueDateObj.getTime() + this.countDownMSecDuringGracePeriod
+      );
+    },
+    countDownTarget() {
+      return this.isNotYetDue ? this.dueDateObj : this.dueDateAfterGracePeriod;
+    },
     dueDateObj: function() {
       return this.date(this.reminder);
+    },
+    isNotYetDue() {
+      return this.timeDiff(this.dueDateObj, new Date()) > 0;
     },
     isPastDue: function() {
       return this.timeDiff(this.dueDateObj, new Date()) < 0;
@@ -195,7 +240,12 @@ export default {
       return this.dayDiff(this.dueDateObj, new Date()) === 0;
     },
     isDueSoon: function() {
-      return this.dayDiff(this.dueDateObj, new Date()) < NRDAYSFORDUESOON;
+      let timeDiff = this.timeDiff(this.dueDateObj, new Date());
+      return timeDiff < this.countDownMSecBeforeDue && timeDiff > 0;
+    },
+    isInGraceWindow() {
+      let timeDiff = this.timeDiff(this.dueDateAfterGracePeriod, new Date());
+      return timeDiff < this.countDownMSecDuringGracePeriod && timeDiff > 0;
     },
     dueClass: function() {
       return this.isPastDue
@@ -205,6 +255,9 @@ export default {
         : this.isDueSoon
         ? "duesoon"
         : "notyetdue";
+    },
+    showCountDown() {
+      return this.isDueSoon || this.isInGraceWindow;
     }
   },
   methods: {
@@ -219,11 +272,14 @@ export default {
     dayDiff(d1, d2) {
       // d1 and d2 must be date objects
       if (
-        typeof d1.setHours === "function" &&
-        typeof d2.setHours === "function"
+        typeof d1.getTime === "function" &&
+        typeof d2.getTime === "function"
       ) {
+        let d1clone = new Date(d1.getTime());
+        let d2clone = new Date(d2.getTime());
         return (
-          (d1.setHours(0, 0, 0, 0) - d2.setHours(0, 0, 0, 0)) / NRMILLISECINDAY
+          (d1clone.setHours(0, 0, 0, 0) - d2clone.setHours(0, 0, 0, 0)) /
+          NRMILLISECINDAY
         );
       } else {
         return null;
@@ -336,8 +392,11 @@ export default {
 }
 .task {
   padding: 0 5px;
-  border-left: 3px solid;
-  border-right: 3px solid;
+  border-left: 3px solid #000;
+  border-right: 3px solid #000;
+}
+.notyetdue.task {
+  border-color: #018b18;
 }
 .duesoon.task {
   border-color: #ffd900;
