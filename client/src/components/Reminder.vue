@@ -234,26 +234,33 @@ export default {
     },
     dueDateAfterGracePeriod() {
       return new Date(
-        this.dueDateObj.getTime() + this.countDownMSecDuringGracePeriod
+        this.reminderDate.getTime() + this.countDownMSecDuringGracePeriod
       );
     },
     countDownTarget() {
-      return this.isNotYetDue ? this.dueDateObj : this.dueDateAfterGracePeriod;
+      return this.isNotYetDue ? this.dueDate : this.dueDateAfterGracePeriod;
     },
-    dueDateObj: function() {
+    reminderDate() {
       return this.date(this.reminder);
     },
+    dueDate: function() {
+      if (this.isInGraceWindow) {
+        return this.dueDateAfterGracePeriod;
+      } else {
+        return this.reminderDate;
+      }
+    },
     isNotYetDue() {
-      return this.timeDiff(this.dueDateObj, new Date()) > 0;
+      return this.timeDiff(this.dueDate, new Date()) > 0;
     },
     isPastDue: function() {
-      return this.timeDiff(this.dueDateObj, new Date()) < 0;
+      return this.timeDiff(this.dueDate, new Date()) < 0;
     },
     isDueToday: function() {
-      return this.dayDiff(this.dueDateObj, new Date()) === 0;
+      return this.dayDiff(this.dueDate, new Date()) === 0;
     },
     isDueSoon: function() {
-      let timeDiff = this.timeDiff(this.dueDateObj, new Date());
+      let timeDiff = this.timeDiff(this.dueDate, new Date());
       return timeDiff < this.countDownMSecBeforeDue && timeDiff > 0;
     },
     isInGraceWindow() {
