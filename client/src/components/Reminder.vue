@@ -13,8 +13,16 @@
           }"
         >
           <div ref="content" :class="dueClass">
+            <transition name="fade">
+              <div
+                v-if="showCountDown && !hideCountDown"
+                class="countdown-timer"
+                @click.stop="brieflyRevealDueDate"
+              >
+                <pa-count-down v-if="showCountDown" :targetDate="countDownTarget"/>
+              </div>
+            </transition>
             <div class="date-time" :class="dueClass">
-              <pa-count-down v-if="showCountDown" :targetDate="countDownTarget"/>
               {{ due.date }}{{ due.date && due.time ? ", " : ""}}{{ due.time}}
               <span
                 class="ampm"
@@ -122,6 +130,7 @@ export default {
       maxReminderHeight: "100",
       transitionDuration: "1",
       isDeleteClicked: false,
+      hideCountDown: false,
       week: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
       month: [
         "Jan",
@@ -370,6 +379,10 @@ export default {
     },
     editReminderWarning(warning) {
       this.$emit("edit-reminder-warning", warning);
+    },
+    brieflyRevealDueDate() {
+      this.hideCountDown = true;
+      setTimeout(() => (this.hideCountDown = false), 5000);
     }
   }
 };
@@ -389,6 +402,12 @@ export default {
   color: #cec0a1;
   font-size: 90%;
   padding: 0 10px;
+}
+.countdown-timer {
+  position: absolute;
+  right: 20px;
+  padding-left: 10px;
+  background-color: #1e1d21;
 }
 .task {
   padding: 0 5px;

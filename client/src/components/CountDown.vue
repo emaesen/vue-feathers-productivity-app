@@ -49,7 +49,6 @@ export default {
 
 <style scoped>
 .countdown {
-  margin: 0em 0.5em;
   display: inline-block;
   font-family: monospace;
   text-align: center;
