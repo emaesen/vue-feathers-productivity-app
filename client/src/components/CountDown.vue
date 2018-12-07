@@ -106,14 +106,12 @@ export default {
   animation-duration: 15s;
 }
 @keyframes pulse {
-  0% {
+  0%,
+  100% {
     opacity: 0.5;
   }
   50% {
     opacity: 1;
-  }
-  100% {
-    opacity: 0.5;
   }
 }
 </style>
