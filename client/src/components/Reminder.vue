@@ -263,10 +263,10 @@ export default {
     dueClass: function() {
       return this.isPastDue
         ? "pastdue"
-        : this.isDueToday
-        ? "duetoday"
         : this.isDueSoon
         ? "duesoon"
+        : this.isDueToday
+        ? "duetoday"
         : "notyetdue";
     },
     showCountDown() {
@@ -425,10 +425,10 @@ export default {
 .notyetdue.task {
   border-color: #018b18;
 }
-.duesoon.task {
+.duetoday.task {
   border-color: #ffd900;
 }
-.duetoday.task {
+.duesoon.task {
   border-color: #ff9100;
 }
 .pastdue.task {
