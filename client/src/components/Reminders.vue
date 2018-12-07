@@ -135,11 +135,14 @@ export default {
     dayDiff(d1, d2) {
       // d1 and d2 must be date objects
       if (
-        typeof d1.setHours === "function" &&
-        typeof d2.setHours === "function"
+        typeof d1.getTime === "function" &&
+        typeof d2.getTime === "function"
       ) {
+        let d1clone = new Date(d1.getTime());
+        let d2clone = new Date(d2.getTime());
         return (
-          (d1.setHours(0, 0, 0, 0) - d2.setHours(0, 0, 0, 0)) / NRMILLISECINDAY
+          (d1clone.setHours(0, 0, 0, 0) - d2clone.setHours(0, 0, 0, 0)) /
+          NRMILLISECINDAY
         );
       } else {
         return null;
@@ -169,7 +172,7 @@ export default {
       let previewWindowDays = (reminder.window && reminder.window[0]) || 0;
       let timeFromNow = this.timeDiff(dueDate, todayDate);
       let daysFromNow = this.dayDiff(dueDate, todayDate);
-      let isDueWithinPreviewWindow = Math.abs(daysFromNow) < previewWindowDays;
+      let isDueWithinPreviewWindow = Math.abs(daysFromNow) <= previewWindowDays;
       let isDueToday = daysFromNow === 0;
       let isPastDue = timeFromNow < 0;
       if (isDueWithinPreviewWindow || isDueToday || isPastDue) {
