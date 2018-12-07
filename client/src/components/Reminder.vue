@@ -1,5 +1,18 @@
 <template>
   <div class="cell reminders-list-cell">
+    <transition name="fade">
+      <div
+        v-if="showCountDown && !hideCountDown"
+        class="countdown-timer"
+        @click.stop="brieflyRevealDueDate"
+      >
+        <pa-count-down
+          v-if="showCountDown"
+          :targetDate="countDownTarget"
+          :class="{'fast': isDueSoon}"
+        />
+      </div>
+    </transition>
     <div :id="'reminder-'+reminder._id" class="reminder" :class="'clr-' + reminder.color">
       <transition name="fade" mode="out-in" @after-enter="editTransitionComplete">
         <div
@@ -13,15 +26,6 @@
           }"
         >
           <div ref="content" :class="dueClass">
-            <transition name="fade">
-              <div
-                v-if="showCountDown && !hideCountDown"
-                class="countdown-timer"
-                @click.stop="brieflyRevealDueDate"
-              >
-                <pa-count-down v-if="showCountDown" :targetDate="countDownTarget"/>
-              </div>
-            </transition>
             <div class="date-time" :class="dueClass">
               {{ due.date }}{{ due.date && due.time ? ", " : ""}}{{ due.time}}
               <span
@@ -407,7 +411,11 @@ export default {
   position: absolute;
   right: 20px;
   padding-left: 10px;
-  background-color: #1e1d21;
+  background-color: inherit;
+  width: 110px;
+  font-size: 125%;
+  text-align: right;
+  cursor: pointer;
 }
 .task {
   padding: 0 5px;
