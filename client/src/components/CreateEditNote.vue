@@ -28,14 +28,9 @@
               />
             </div>
             <div class="clr-selector">
-              <span
-                v-for="clr in colors"
-                :key="clr"
-                class="clr"
-                :class="'clr-' + clr"
-                :title="clr"
-                @click="selectClr(clr)"
-              >&nbsp;</span>
+              <span v-for="clr in colors" :key="clr" class="action button" @click="selectClr(clr)">
+                <span class="clr" :class="'clr-' + clr" :title="clr">{{ clr===color ? "✔" : "" }}</span>
+              </span>
             </div>
             <div class>
               <label for="category">Category</label>

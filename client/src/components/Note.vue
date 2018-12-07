@@ -1,6 +1,6 @@
 <template>
   <div class="cell notes-list-cell">
-    <div :id="'note-'+note._id" class="note" :class="'clr-' + note.color">
+    <div :id="'note-'+note._id" class="note">
       <transition name="fade" mode="out-in" @after-enter="editTransitionComplete">
         <div
           v-if="!isEditing"
@@ -15,7 +15,7 @@
           <div ref="content">
             <div v-if="note.category" class="category">{{ note.category }}</div>
             <div v-else class="category"/>
-            <div v-html="textAsHtml"/>
+            <div class="content-text" :class="'clr-' + note.color" v-html="textAsHtml"/>
             <div class="action-row" :class="{hidden:isCollapsed}">
               <button class="action button" title="edit" @click="showForm">
                 <font-awesome-icon icon="edit"/>edit
@@ -225,16 +225,35 @@ export default {
 
 <style scoped>
 .note {
-  border: 1px dashed #454545;
-  border-left: 0;
-  border-right: 0;
   padding: 5px;
 }
 .grid .note {
-  border: 1px dashed #454545;
-  margin: 0.2rem;
   min-height: 15rem;
 }
+.content-text {
+  padding: 0 5px;
+  border-left: 3px solid #000;
+  border-right: 3px solid #000;
+}
+.grid .content-text {
+  border-right: 0;
+}
+.content-text.clr-red {
+  border-color: #f91414;
+}
+.content-text.clr-blue {
+  border-color: #141bf9;
+}
+.content-text.clr-green {
+  border-color: #14f926;
+}
+.content-text.clr-yellow {
+  border-color: #ffea02;
+}
+.content-text.clr-purple {
+  border-color: #c114f9;
+}
+
 .note hr {
   border-style: groove;
 }
@@ -242,6 +261,8 @@ export default {
   float: right;
   font-style: italic;
   color: #cec0a1;
+  font-size: 90%;
+  padding: 0 10px;
 }
 .trans {
   /* use max-height to transition the height */

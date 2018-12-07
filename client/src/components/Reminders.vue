@@ -255,19 +255,4 @@ h2.reminders {
 .reminders-list-cell + .reminders-list-cell {
   border-top: 1px dashed #454545;
 }
-.clr-red {
-  background-color: #f9141436;
-}
-.clr-blue {
-  background-color: #141bf936;
-}
-.clr-green {
-  background-color: #14f92627;
-}
-.clr-yellow {
-  background-color: #ffea0245;
-}
-.clr-purple {
-  background-color: #c114f936;
-}
 </style>

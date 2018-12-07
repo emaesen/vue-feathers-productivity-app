@@ -11,7 +11,7 @@
         ➔
         <div class="filter" v-for="color in colors" :key="color">
           <input type="checkbox" :id="'clr-' + color" :value="color" v-model="filter.colors">
-          <label :for="'clr-' + color">
+          <label :for="'clr-' + color" class="action button">
             <span class="clr cntr" :class="'clr-' + color">({{ colorsCount['clr-'+color] }})</span>
           </label>
         </div>

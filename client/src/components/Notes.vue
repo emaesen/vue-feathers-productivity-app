@@ -298,9 +298,10 @@ h2.notes {
 }
 .grid .cell.expanded {
   width: 100%;
+  border: 1px dashed #454545;
 }
 .grid .collapsed {
-  overflow: auto;
+  overflow-y: auto;
   max-height: 15rem !important;
 }
 .grid pre {
@@ -320,27 +321,38 @@ h2.notes {
 .clr {
   cursor: pointer;
   display: inline-block;
-  border: 1px solid #555;
-  border-radius: 10px;
+  border-left: 3px solid #000;
+  border-right: 3px solid #000;
   margin: 0 5px;
   vertical-align: middle;
+  text-align: center;
   width: 25px;
   height: 25px;
 }
-.clr-red {
-  background-color: #f9141436;
+.clr.clr-red {
+  border-color: #f91414;
 }
-.clr-blue {
-  background-color: #141bf936;
+.clr.clr-blue {
+  border-color: #141bf9;
 }
-.clr-green {
-  background-color: #14f92627;
+.clr.clr-green {
+  border-color: #14f926;
 }
-.clr-yellow {
-  background-color: #ffea0245;
+.clr.clr-yellow {
+  border-color: #ffea02;
 }
-.clr-purple {
-  background-color: #c114f936;
+.clr.clr-purple {
+  border-color: #c114f9;
+}
+.notes-list-cell:nth-child(odd) {
+  background-color: #1e1d21;
+}
+.grid-list .notes-list-cell + .notes-list-cell {
+  border-top: 1px dashed #454545;
+}
+.grid .notes-list-cell {
+  border: 1px dashed #454545;
+  margin: -1px;
 }
 @media all and (max-width: 400px) {
   .grid .cell {
