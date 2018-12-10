@@ -113,15 +113,15 @@ export default {
     },
     correctedDate(reminder) {
       let date = this.date(reminder);
-      if (!this.isPastDue(date) && reminder.window) {
+      if (reminder.window) {
         let correction =
           NRMILLISECINDAY * (reminder.window[3] || 0) +
           NRMILLISECINHOUR * (reminder.window[4] || 0) +
           NRMILLISECINMINUTE * (reminder.window[5] || 0);
         let time = date.getTime();
-        return new Date().setTime(time + correction);
+        return new Date(time + correction);
       } else {
-        return this.date(reminder);
+        return date;
       }
     },
     date(reminder) {
