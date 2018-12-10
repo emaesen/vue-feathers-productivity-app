@@ -103,7 +103,6 @@ export default {
               this.setTimeLeft();
             }, this.minutesToPauseAtEnd * 60 * 1000);
           }
-          console.log("interval cleared");
         }, 1000 * secondsLeft);
       }
       if (this.showSeconds || this.intervalTimerId) {
@@ -115,13 +114,11 @@ export default {
         this.minutes = this.isReversed ? "-" : "--";
         this.seconds = "--";
       }
-      console.log(secondsLeft + " m=" + this.minutes + " s=" + this.seconds);
     }
   },
   watch: {
     timeTick() {
       if (!this.intervalTimerId && !this.isPaused) {
-        console.log("countdown: tick observed");
         this.setTimeLeft();
       }
     }
