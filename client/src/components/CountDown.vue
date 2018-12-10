@@ -135,13 +135,13 @@ export default {
   font-family: monospace;
   text-align: center;
   vertical-align: middle;
-  color: #ffebda;
-  text-shadow: 0 0 10px rgb(230, 171, 10), 0 0 20px rgba(10, 175, 230, 0.5);
+  color: #fff3e8;
+  text-shadow: 0 0 10px rgb(255, 188, 2), 0 0 20px rgba(255, 188, 2, 0.5);
 }
 .reverse,
 .pause {
-  color: #ff9290;
-  text-shadow: 0 0 10px rgb(230, 171, 10), 0 0 20px rgba(10, 175, 230, 0.5);
+  color: #ffdfde;
+  text-shadow: 0 0 10px rgb(255, 0, 0), 0 0 20px rgba(255, 0, 0, 0.5);
 }
 .pulse {
   animation: pulse 5s infinite;
@@ -156,7 +156,7 @@ export default {
 @keyframes pulse {
   0%,
   100% {
-    opacity: 0.5;
+    opacity: 0.75;
   }
   50% {
     opacity: 1;
