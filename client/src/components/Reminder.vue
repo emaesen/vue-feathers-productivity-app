@@ -324,13 +324,15 @@ export default {
     },
     setContentStyleProps() {
       this.$nextTick(function() {
-        let elHeight = this.$refs.content.offsetHeight;
-        // set max-height to actual height
-        // (to allow for non-delay smooth open/close transition)
-        this.maxReminderHeight = elHeight;
-        // calculate transition duration such that the transition speed
-        // is fairly consistent for various reminder heights. (in seconds)
-        this.transitionDuration = 0.3 + elHeight / 500;
+        if (this.$refs && this.$refs.content) {
+          let elHeight = this.$refs.content.offsetHeight;
+          // set max-height to actual height
+          // (to allow for non-delay smooth open/close transition)
+          this.maxReminderHeight = elHeight;
+          // calculate transition duration such that the transition speed
+          // is fairly consistent for various reminder heights. (in seconds)
+          this.transitionDuration = 0.3 + elHeight / 500;
+        }
       });
     },
     toggleCollapse(evt) {
