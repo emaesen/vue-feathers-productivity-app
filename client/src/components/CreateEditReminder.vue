@@ -55,7 +55,7 @@
               min="new Date()"
               required
             >
-            <input id="time" name="time" v-model="time" type="time" placeholder="hh:mm">
+            <input id="time" name="time" v-model="time" type="time" placeholder="hh:mm" step="300">
           </div>
           <div class="group three">
             <div class="cell">
