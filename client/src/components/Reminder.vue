@@ -2,7 +2,7 @@
   <div class="cell reminders-list-cell">
     <transition name="fade">
       <div
-        v-if="showCountDown && !hideCountDown"
+        v-if="showCountDown && !brieflyHideCountDown"
         class="countdown-timer"
         @click.stop="brieflyRevealDueDate"
       >
@@ -134,7 +134,7 @@ export default {
       maxReminderHeight: "100",
       transitionDuration: "1",
       isDeleteClicked: false,
-      hideCountDown: false,
+      brieflyHideCountDown: false,
       week: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
       month: [
         "Jan",
@@ -394,8 +394,8 @@ export default {
       this.$emit("edit-reminder-warning", warning);
     },
     brieflyRevealDueDate() {
-      this.hideCountDown = true;
-      setTimeout(() => (this.hideCountDown = false), 5000);
+      this.brieflyHideCountDown = true;
+      setTimeout(() => (this.brieflyHideCountDown = false), 5000);
     }
   }
 };
