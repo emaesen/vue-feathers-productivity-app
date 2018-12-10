@@ -432,6 +432,7 @@ export default {
   right: 20px;
   padding-left: 10px;
   background-color: inherit;
+  min-width: 110px;
   width: auto;
   font-size: 125%;
   text-align: right;
