@@ -8,8 +8,16 @@
       >
         <pa-count-down
           v-if="showCountDown"
-          :targetDate="countDownTarget"
-          :class="{'fast': isDueSoon}"
+          :targetDate="reminderDate"
+          class="countdown-reminder"
+          :class="{'fast': isDueSoon && !hasGraceWindow}"
+        />
+        <span v-if="showCountDown && hasGraceWindow" class="grace-indicator">ℊ:</span>
+        <pa-count-down
+          v-if="showCountDown && hasGraceWindow"
+          :targetDate="dueDateAfterGracePeriod"
+          class="countdown-grace"
+          :class="{'fast': isDueSoon && isInGraceWindow}"
         />
       </div>
     </transition>
@@ -263,6 +271,9 @@ export default {
       let timeDiff = this.timeDiff(this.dueDate, new Date());
       return timeDiff < this.countDownMSecBeforeDue && timeDiff > 0;
     },
+    hasGraceWindow() {
+      return this.countDownMSecDuringGracePeriod > 0;
+    },
     isInGraceWindow() {
       let timeDiff = this.timeDiff(this.dueDateAfterGracePeriod, new Date());
       return timeDiff < this.countDownMSecDuringGracePeriod && timeDiff > 0;
@@ -421,10 +432,17 @@ export default {
   right: 20px;
   padding-left: 10px;
   background-color: inherit;
-  width: 110px;
+  width: auto;
   font-size: 125%;
   text-align: right;
   cursor: pointer;
+}
+.grace-indicator {
+  margin-left: 10px;
+  color: #cec0a1;
+}
+.countdown-grace {
+  margin-left: 5px;
 }
 .task {
   padding: 0 5px;
