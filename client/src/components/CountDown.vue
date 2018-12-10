@@ -1,5 +1,6 @@
 <template>
-  <div class="countdown" :class="animationClass">
+  <div class="countdown" :class="[animationClass, {reverse:isReversed},  {pause:isPaused}]">
+    <span v-if="isReversed">-</span>
     <span v-if="days" class="days">{{ days + "d" }}</span>
     <span v-if="days && hours" class="divider">:</span>
     <span v-if="hours" class="hours">{{ hours + "h" }}</span>
@@ -36,7 +37,12 @@ export default {
       days: 0,
       hours: 0,
       minutes: 0,
-      seconds: 0
+      seconds: 0,
+      minutesToShowSeconds: 1,
+      intervalTimerId: null,
+      isReversed: false,
+      isPaused: false,
+      minutesToPauseAtEnd: 2
     };
   },
   created() {
@@ -58,6 +64,12 @@ export default {
       let secondsLeft = Math.floor(
         (this.targetDate.getTime() - new Date().getTime()) / 1000
       );
+      if (secondsLeft < 0) {
+        this.isReversed = true;
+        secondsLeft = -secondsLeft;
+      } else {
+        this.isReversed = false;
+      }
       this.days = Math.floor(secondsLeft / NRSECINDAY);
       if (this.days) {
         secondsLeft = secondsLeft % (this.days * NRSECINDAY);
@@ -70,14 +82,48 @@ export default {
       if (this.minutes) {
         secondsLeft = secondsLeft % (this.minutes * NRSECINMINUTE);
       }
-      if (this.showSeconds) {
-        this.seconds = secondsLeft;
+
+      if (
+        this.minutes < this.minutesToShowSeconds &&
+        !this.showSeconds &&
+        !this.intervalTimerId &&
+        !this.isPaused
+      ) {
+        this.intervalTimerId = setInterval(this.setTimeLeft, 1000);
+        this.setTimeLeft();
+        setTimeout(() => {
+          clearInterval(this.intervalTimerId);
+          this.seconds = 0;
+          this.intervalTimerId = null;
+          this.isPaused = true;
+          this.setTimeLeft();
+          if (this.minutesToPauseAtEnd) {
+            setTimeout(() => {
+              this.isPaused = false;
+              this.setTimeLeft();
+            }, this.minutesToPauseAtEnd * 60 * 1000);
+          }
+          console.log("interval cleared");
+        }, 1000 * secondsLeft);
       }
+      if (this.showSeconds || this.intervalTimerId) {
+        this.seconds = secondsLeft;
+      } else {
+        this.seconds = 0;
+      }
+      if (this.isPaused) {
+        this.minutes = this.isReversed ? "-" : "--";
+        this.seconds = "--";
+      }
+      console.log(secondsLeft + " m=" + this.minutes + " s=" + this.seconds);
     }
   },
   watch: {
     timeTick() {
-      this.setTimeLeft();
+      if (!this.intervalTimerId && !this.isPaused) {
+        console.log("countdown: tick observed");
+        this.setTimeLeft();
+      }
     }
   },
   computed: {
@@ -93,6 +139,11 @@ export default {
   text-align: center;
   vertical-align: middle;
   color: #ffebda;
+  text-shadow: 0 0 10px rgb(230, 171, 10), 0 0 20px rgba(10, 175, 230, 0.5);
+}
+.reverse,
+.pause {
+  color: #ff9290;
   text-shadow: 0 0 10px rgb(230, 171, 10), 0 0 20px rgba(10, 175, 230, 0.5);
 }
 .pulse {
