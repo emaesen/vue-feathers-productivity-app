@@ -46,6 +46,9 @@ const router = new Router({
       component: Home,
       beforeEnter(to, from, next) {
         checkAuth(to, from, next, "dashboard");
+      },
+      meta: {
+        title: "Personal Assistant Suite"
       }
     },
     {
@@ -56,7 +59,7 @@ const router = new Router({
         logOut(to, from, next);
       },
       meta: {
-        title: "Register"
+        title: "Register - Personal Assistant Suite"
       }
     },
     {
@@ -67,7 +70,7 @@ const router = new Router({
         logOut(to, from, next);
       },
       meta: {
-        title: "Login"
+        title: "Login - Personal Assistant Suite"
       }
     },
     {
@@ -80,7 +83,7 @@ const router = new Router({
         import(/* webpackChunkName: "dashboard" */ "./views/Dashboard.vue"),
       beforeEnter: checkAuth,
       meta: {
-        title: "Dashboard"
+        title: "Dashboard - Personal Assistant Suite"
       }
     },
     {
