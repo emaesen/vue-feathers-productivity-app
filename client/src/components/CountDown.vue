@@ -1,13 +1,14 @@
 <template>
   <div class="countdown" :class="[animationClass, {reverse:isReversed},  {pause:isPaused}]">
-    <span v-if="isReversed">-</span>
-    <span v-if="days" class="days">{{ days + "d" }}</span>
-    <span v-if="days && hours" class="divider">:</span>
-    <span v-if="hours" class="hours">{{ hours + "h" }}</span>
-    <span v-if="hours && minutes" class="divider">:</span>
-    <span v-if="minutes" class="minutes">{{ minutes + "m" }}</span>
-    <span v-if="minutes && seconds" class="divider">:</span>
-    <span v-if="seconds" class="seconds">{{ seconds + "s" }}</span>
+    <span v-if="isReversed && !isPaused">-</span>
+    <span v-if="displayDays" class="days">{{ days + "d" }}</span>
+    <span v-if="displayDays && displayHours" class="divider">:</span>
+    <span v-if="displayHours" class="hours">{{ hours + "h" }}</span>
+    <span v-if="displayHours && displayMinutes" class="divider">:</span>
+    <span v-if="displayMinutes" class="minutes">{{ minutes + "m" }}</span>
+    <span v-if="displayMinutes && displaySeconds" class="divider">:</span>
+    <span v-if="displaySeconds" class="seconds">{{ seconds + "s" }}</span>
+    <span v-if="isPaused">⊘</span>
   </div>
 </template>
 
@@ -38,11 +39,11 @@ export default {
       hours: 0,
       minutes: 0,
       seconds: 0,
-      minutesToShowSeconds: 1,
+      minutesToShowSeconds: 5,
       intervalTimerId: null,
       isReversed: false,
       isPaused: false,
-      minutesToPauseAtEnd: 2
+      minutesToPauseAtEnd: 5
     };
   },
   created() {
@@ -64,29 +65,44 @@ export default {
       let secondsLeft = Math.floor(
         (this.targetDate.getTime() - new Date().getTime()) / 1000
       );
+      const minutesLeft = Math.abs(secondsLeft / 60);
       if (secondsLeft < 0) {
         this.isReversed = true;
         secondsLeft = -secondsLeft;
       } else {
         this.isReversed = false;
       }
-      this.days = Math.floor(secondsLeft / NRSECINDAY);
-      if (this.days) {
-        secondsLeft = secondsLeft % (this.days * NRSECINDAY);
-      }
-      this.hours = Math.floor(secondsLeft / NRSECINHOUR);
-      if (this.hours) {
-        secondsLeft = secondsLeft % (this.hours * NRSECINHOUR);
-      }
-      this.minutes = Math.floor(secondsLeft / NRSECINMINUTE);
-      if (this.minutes) {
-        secondsLeft = secondsLeft % (this.minutes * NRSECINMINUTE);
+
+      this.days = Math.round(secondsLeft / NRSECINDAY);
+      if (Math.floor(secondsLeft / NRSECINDAY)) {
+        secondsLeft =
+          secondsLeft % (Math.floor(secondsLeft / NRSECINDAY) * NRSECINDAY);
       }
 
+      this.hours = Math.round(secondsLeft / NRSECINHOUR);
+      if (Math.floor(secondsLeft / NRSECINHOUR)) {
+        secondsLeft =
+          secondsLeft % (Math.floor(secondsLeft / NRSECINHOUR) * NRSECINHOUR);
+      }
+
+      this.minutes =
+        minutesLeft > this.minutesToShowSeconds
+          ? Math.round(secondsLeft / NRSECINMINUTE)
+          : Math.floor(secondsLeft / NRSECINMINUTE);
+
+      if (Math.floor(secondsLeft / NRSECINMINUTE)) {
+        secondsLeft =
+          secondsLeft %
+          (Math.floor(secondsLeft / NRSECINMINUTE) * NRSECINMINUTE);
+      }
+
+      this.seconds = secondsLeft;
+
       if (
-        this.minutes < this.minutesToShowSeconds &&
+        minutesLeft < this.minutesToShowSeconds &&
         !this.showSeconds &&
         !this.intervalTimerId &&
+        !this.isReversed &&
         !this.isPaused
       ) {
         this.intervalTimerId = setInterval(this.setTimeLeft, 1000);
@@ -103,16 +119,7 @@ export default {
               this.setTimeLeft();
             }, this.minutesToPauseAtEnd * 60 * 1000);
           }
-        }, 1000 * secondsLeft);
-      }
-      if (this.showSeconds || this.intervalTimerId) {
-        this.seconds = secondsLeft;
-      } else {
-        this.seconds = 0;
-      }
-      if (this.isPaused) {
-        this.minutes = this.isReversed ? "-" : "--";
-        this.seconds = "--";
+        }, 1000 * 60 * minutesLeft);
       }
     }
   },
@@ -124,7 +131,21 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["timeTick"])
+    ...mapGetters(["timeTick"]),
+    displayDays() {
+      return !this.isPaused && this.days > 0;
+    },
+    displayHours() {
+      return !this.isPaused && this.days < 1 && this.hours > 0;
+    },
+    displayMinutes() {
+      return (
+        !this.isPaused && this.days < 1 && this.hours < 3 && this.minutes > 0
+      );
+    },
+    displaySeconds() {
+      return !this.isPaused && (this.showSeconds || this.intervalTimerId);
+    }
   }
 };
 </script>
