@@ -20,6 +20,7 @@ const NRSECINHOUR = 60 * NRSECINMINUTE;
 const NRSECINDAY = 24 * NRSECINHOUR;
 
 export default {
+  name: "CountDown",
   props: {
     targetDate: {
       type: Date

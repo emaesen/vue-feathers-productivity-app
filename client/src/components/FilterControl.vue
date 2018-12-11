@@ -49,6 +49,7 @@
 
 <script>
 export default {
+  name: "FilterControl",
   props: ["filter", "colors", "categories", "filterMeta"],
   mounted() {
     // console.log({filterMeta:this.filterMeta});

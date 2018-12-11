@@ -12,6 +12,7 @@
 import { mapMutations } from "vuex";
 
 export default {
+  name: "Clock",
   data() {
     return {
       clock: {

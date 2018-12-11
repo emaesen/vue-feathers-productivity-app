@@ -64,6 +64,7 @@
 
 <script>
 export default {
+  name: "CreatEditNote",
   props: {
     note: {
       type: Object,

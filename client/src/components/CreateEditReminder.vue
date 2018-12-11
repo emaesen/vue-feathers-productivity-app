@@ -179,6 +179,7 @@
 
 <script>
 export default {
+  name: "CreateEditReminder",
   props: {
     reminder: {
       type: Object,
