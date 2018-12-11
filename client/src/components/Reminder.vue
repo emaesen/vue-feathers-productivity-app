@@ -12,7 +12,7 @@
           class="countdown-reminder"
           :class="{'fast': isDueSoon && !hasGraceWindow}"
         />
-        <span v-if="showCountDown && hasGraceWindow" class="grace-indicator">ℊ:</span>
+        <span v-if="showCountDown && hasGraceWindow" class="grace-indicator">ℊ</span>
         <pa-count-down
           v-if="showCountDown && hasGraceWindow"
           :targetDate="dueDateAfterGracePeriod"
@@ -439,7 +439,7 @@ export default {
   cursor: pointer;
 }
 .grace-indicator {
-  margin-left: 10px;
+  margin-left: 15px;
   color: #cec0a1;
 }
 .countdown-grace {
