@@ -5,6 +5,7 @@
     </h1>
     <pa-reminders view="dashboard" :onDashboard="true"/>
     <pa-notes view="dashboard" :onDashboard="true"/>
+    <pa-calendar view="dashboard" :onDashboard="true"/>
   </div>
 </template>
 
@@ -13,12 +14,14 @@
 // @ is an alias to /src
 import Reminders from "@/components/Reminders.vue";
 import Notes from "@/components/Notes.vue";
+import Calendar from "@/components/Calendar.vue";
 
 export default {
   name: "Dashboard",
   components: {
     "pa-reminders": Reminders,
-    "pa-notes": Notes
+    "pa-notes": Notes,
+    "pa-calendar": Calendar
   },
   data: function() {
     return {};

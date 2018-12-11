@@ -1,11 +1,13 @@
 import Vue from "vue";
 import App from "./App";
+
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
   faAlignJustify, // list layout
   faBan, // cancel
   faBell, // reminders
+  faCalendarAlt, // calendar
   faCheck, // check
   faCheckCircle, // save, ok
   faEdit, // edit
@@ -30,14 +32,17 @@ import {
 import {
   faWindowMinimize as farWindowMinimize // single list item
 } from "@fortawesome/free-regular-svg-icons";
+
 import router from "./router";
 import store from "./store";
+
 import "./registerServiceWorker";
 
 library.add(
   faAlignJustify,
   faBan,
   faBell,
+  faCalendarAlt,
   faCheck,
   faCheckCircle,
   faEdit,
