@@ -10,52 +10,48 @@
       </button>
     </transition>
     <transition name="slidefade">
-      <div v-if="showForm" class>
-        <div class>
-          <div class>
-            <div class>
-              <label for="text">
-                Content
-                <span v-if="!showError && !isValid" class="req">(required)</span>
-                <span v-if="showError" class="error">Please provide some content text</span>
-              </label>
-              <textarea
-                id="text"
-                name="text"
-                v-model="text"
-                :class="'clr-' + color"
-                :style="{height: textAreaHeight + 'px'}"
-              />
-            </div>
-            <div class="clr-selector">
-              <span v-for="clr in colors" :key="clr" class="action button" @click="selectClr(clr)">
-                <span class="clr" :class="'clr-' + clr" :title="clr">{{ clr===color ? "✔" : "" }}</span>
-              </span>
-            </div>
-            <div class>
-              <label for="category">Category</label>
-              <input
-                id="category"
-                name="category"
-                v-model="category"
-                placeholder="type new or select below"
-              >
-              <div class="categories">
-                <span class="expl">└ select ➔</span>
-                <div class="category" v-for="cat in categories" :key="cat">
-                  <button class="action" v-if="cat.length>0" @click="category=cat">{{ cat }}</button>
-                </div>
-              </div>
-            </div>
-            <div class>
-              <button class="action button" @click="save" :disabled="!isValid">
-                <font-awesome-icon icon="check-circle"/>save
-              </button>
-              <button class="action button" @click="cancel">
-                <font-awesome-icon icon="ban"/>cancel
-              </button>
+      <div v-if="showForm" @keydown.s="onKeydownS">
+        <div>
+          <label for="text">
+            Content
+            <span v-if="!showError && !isValid" class="req">(required)</span>
+            <span v-if="showError" class="error">Please provide some content text</span>
+          </label>
+          <textarea
+            id="text"
+            name="text"
+            v-model="text"
+            :class="'clr-' + color"
+            :style="{height: textAreaHeight + 'px'}"
+          />
+        </div>
+        <div class="clr-selector">
+          <span v-for="clr in colors" :key="clr" class="action button" @click="selectClr(clr)">
+            <span class="clr" :class="'clr-' + clr" :title="clr">{{ clr===color ? "✔" : "" }}</span>
+          </span>
+        </div>
+        <div>
+          <label for="category">Category</label>
+          <input
+            id="category"
+            name="category"
+            v-model="category"
+            placeholder="type new or select below"
+          >
+          <div class="categories">
+            <span class="expl">└ select ➔</span>
+            <div class="category" v-for="cat in categories" :key="cat">
+              <button class="action" v-if="cat.length>0" @click="category=cat">{{ cat }}</button>
             </div>
           </div>
+        </div>
+        <div>
+          <button class="action button" @click="save" :disabled="!isValid">
+            <font-awesome-icon icon="check-circle"/>save
+          </button>
+          <button class="action button" @click="cancel">
+            <font-awesome-icon icon="ban"/>cancel
+          </button>
         </div>
       </div>
     </transition>
@@ -145,6 +141,13 @@ export default {
         this.closeNoteForm();
       } else {
         this.showError = true;
+      }
+    },
+    onKeydownS(evt) {
+      if (evt.ctrlKey) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        this.save();
       }
     }
   }
