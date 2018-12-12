@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="toggleCollapse">
     <h1>
       <font-awesome-icon icon="tachometer-alt"/>Dashboard
     </h1>
@@ -25,9 +25,29 @@ export default {
   },
   data: function() {
     return {};
+  },
+  methods: {
+    toggleCollapse(evt) {
+      let className = "section-collapsed";
+      let el = evt.target;
+      if (el.localName === "section" && el.classList) {
+        if (el.classList.contains(className)) {
+          el.classList.remove(className);
+        } else {
+          el.classList.add(className);
+        }
+      }
+    }
   }
 };
 </script>
 
 <style>
+.section-collapsed {
+  height: 2em;
+  overflow: hidden;
+}
+.section-collapsed > div {
+  display: none !important;
+}
 </style>
