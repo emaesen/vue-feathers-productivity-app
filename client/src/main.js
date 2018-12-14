@@ -5,6 +5,8 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
   faAlignJustify, // list layout
+  faAngleLeft, // angle left
+  faAngleRight, // angle right
   faBan, // cancel
   faBell, // reminders
   faCalendarAlt, // calendar
@@ -40,6 +42,8 @@ import "./registerServiceWorker";
 
 library.add(
   faAlignJustify,
+  faAngleLeft,
+  faAngleRight,
   faBan,
   faBell,
   faCalendarAlt,
