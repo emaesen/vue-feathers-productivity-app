@@ -49,18 +49,22 @@ const lastDateOfMonth = date => {
   return new Date(date.getFullYear(), date.getMonth() + 1, 0);
 };
 
+const shiftMonth = (date, shift) => {
+  return new Date(date.setMonth(date.getMonth() - shift));
+};
+
 const startOfWeek = (date, firstDay = 0) => {
   firstDay = firstDay < 0 || firstDay > 6 ? 0 : firstDay;
 
   let day = date.getDay();
-  let calendarStart = new Date(date);
+  let weekStart = new Date(date);
 
-  let diff = calendarStart.getDate() - day + ((day === 0 ? -7 : 0) + firstDay);
-  calendarStart.setDate(diff);
+  let diff = weekStart.getDate() - day + ((day === 0 ? -7 : 0) + firstDay);
+  weekStart.setDate(diff);
 
-  return calendarStart > date
-    ? calendarStart.setDate(calendarStart.getDate() - 7)
-    : calendarStart;
+  return weekStart > date
+    ? weekStart.setDate(weekStart.getDate() - 7)
+    : weekStart;
 };
 
 const calendarMonth = (startDate, firstDay = 1) => {
@@ -103,8 +107,9 @@ const calendarMonth = (startDate, firstDay = 1) => {
 
 export default {
   names,
-  startOfWeek,
-  calendarMonth,
+  firstDateOfMonth,
   lastDateOfMonth,
-  firstDateOfMonth
+  shiftMonth,
+  startOfWeek,
+  calendarMonth
 };
