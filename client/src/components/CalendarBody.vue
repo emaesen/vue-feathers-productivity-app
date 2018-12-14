@@ -1,7 +1,7 @@
 <template>
   <div class="calendar-body">
     <div class="days-header">
-      <div class="day-label" v-for="day in 7" :key="day">{{ displayDay(day - 1) }}</div>
+      <div class="day-label" v-for="day in 7" :key="day">{{ dayName(day - 1) }}</div>
     </div>
 
     <div class="days-body">
@@ -16,7 +16,7 @@
           class="week-day"
           :class="dayClasses(day)"
           v-for="(day, key) in week"
-          @click.stop="dayClicked(day)"
+          @click.stop="expandDay(day)"
         >
           <div class="day-number">{{ day.monthDay }}</div>
 
@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     ...mapMutations(["SET_CALENDAR_DAYINFOCUS"]),
-    displayDay(day) {
+    dayName(day) {
       let dayIndex = parseInt(day + this.firstDay) % 7;
       return calendarUtils.names.daysShort[dayIndex];
     },
@@ -81,9 +81,9 @@ export default {
 
       return Object.keys(classes).filter(key => classes[key] === true);
     },
-    dayClicked(day) {
+    expandDay(day) {
       this.SET_CALENDAR_DAYINFOCUS(day);
-      console.log("in dayClicked", { day });
+      console.log("in expandDay", { day });
     }
   }
 };
