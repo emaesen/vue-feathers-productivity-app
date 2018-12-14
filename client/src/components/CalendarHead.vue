@@ -11,7 +11,9 @@
       <button @click="goPrev" class="action button prev-month">
         <font-awesome-icon icon="angle-left"/>
       </button>
-      <span class="title">{{ month }} {{ year }}</span>
+      <transition :name="'slide-' + transitionDirection" mode="out-in">
+        <span :key="year+'-'+month" class="title">{{ month }} {{ year }}</span>
+      </transition>
       <button @click="goNext" class="action button next-month">
         <font-awesome-icon icon="angle-right" class="flush-right"/>
       </button>
@@ -29,7 +31,8 @@ export default {
   props: {},
   data() {
     return {
-      monthStart: null
+      monthStart: null,
+      transitionDirection: ""
     };
   },
   created() {
@@ -72,14 +75,17 @@ export default {
       }
     },
     goPrev(evt) {
+      this.transitionDirection = "right";
       this.monthStart = calendarUtils.shiftMonth(this.monthStart, 1);
       this.blurTargetButton(evt);
     },
     goNext(evt) {
+      this.transitionDirection = "left";
       this.monthStart = calendarUtils.shiftMonth(this.monthStart, -1);
       this.blurTargetButton(evt);
     },
     showCurrentMonth(evt) {
+      this.transitionDirection = "up";
       this.monthStart = calendarUtils.firstDateOfMonth();
       this.blurTargetButton(evt);
     }
@@ -113,6 +119,22 @@ export default {
   min-width: 11em;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  transition: all 0.2s;
+}
+.slide-left-enter,
+.slide-right-leave-to {
+  opacity: 0;
+  transform: translateX(18px);
+}
+.slide-right-enter,
+.slide-left-leave-to {
+  opacity: 0;
+  transform: translateX(-18px);
+}
+.slide-up-enter,
+.slide-up-leave-to {
+  opacity: 0;
+  transform: translateY(-9px);
 }
 .prev-month,
 .next-month {

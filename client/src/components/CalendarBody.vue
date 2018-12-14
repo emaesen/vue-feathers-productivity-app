@@ -18,9 +18,12 @@
           v-for="(day, key) in week"
           @click.stop="expandDay(day)"
         >
-          <div class="day-number">{{ day.monthDay }}</div>
-
-          <pa-calendar-events-box></pa-calendar-events-box>
+          <transition name="fade" mode="out-in">
+            <div :key="day.date.getTime()" class="day-container">
+              <div class="day-number">{{ day.monthDay }}</div>
+              <pa-calendar-events-box></pa-calendar-events-box>
+            </div>
+          </transition>
         </div>
       </div>
     </div>
@@ -130,6 +133,7 @@ export default {
   padding: 4px;
   border-right: 1px solid #121017;
   border-bottom: 1px solid #121017;
+  overflow: hidden;
 }
 .week-day.today {
   border: 1px dashed #91948b;
@@ -155,5 +159,13 @@ export default {
 }
 .week-day.past {
   color: #84808a;
+}
+.day-container {
+  transition: all 0.2s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-9px);
 }
 </style>
