@@ -1,5 +1,5 @@
 <template>
-  <div class="calendar-container height-regular">
+  <div class="calendar-container">
     <pa-calendar-head/>
     <pa-calendar-body :events="calendarEvents"></pa-calendar-body>
   </div>
@@ -33,7 +33,11 @@ export default {
 </script>
 
 <style scoped>
-.height-regular {
-  height: 600px;
+.calendar-container {
+  display: grid;
+  margin: 0 auto;
+  border: 1px solid #555;
+  padding: 3px;
+  border-radius: 5px;
 }
 </style>

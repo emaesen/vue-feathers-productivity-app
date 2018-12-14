@@ -90,17 +90,8 @@ export default {
 </script>
 
 <style>
-.calendar-container {
-  display: grid;
-  grid-template-rows: 7% 93%;
-  margin: 0 auto;
-  border: 1px solid #555;
-  padding: 3px;
-  border-radius: 5px;
-}
 .calendar-body {
   display: grid;
-  grid-template-rows: 7% 93%;
   background-color: #1e1d21;
 }
 .days-header {
@@ -135,6 +126,7 @@ export default {
   border-left: 1px solid #121017;
 }
 .week-day {
+  min-height: 3em;
   padding: 4px;
   border-right: 1px solid #121017;
   border-bottom: 1px solid #121017;
@@ -152,7 +144,7 @@ export default {
 .day-label .current {
   font-style: italic;
 }
-.week-day.event {
+.week-day.events {
   color: #dfcaa8;
 }
 .week-row.past {
