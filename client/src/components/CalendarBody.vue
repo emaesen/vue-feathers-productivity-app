@@ -64,7 +64,6 @@ export default {
       return calendarUtils.names.daysShort[dayIndex];
     },
     weekClasses(week) {
-      console.log({ week });
       const classes = {
         past: week[6].isPast
       };
