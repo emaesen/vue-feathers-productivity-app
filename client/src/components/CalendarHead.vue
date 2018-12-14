@@ -1,7 +1,11 @@
 <template>
   <div class="calendar-head">
     <div class="head-left">
-      <slot name="head-left"></slot>
+      <button
+        v-if="!isCurrentMonth"
+        @click="showCurrentMonth"
+        class="action button today"
+      >{{ currentMonth }}</button>
     </div>
     <div class="head-center">
       <button @click="goPrev" class="action button prev-month">
@@ -12,9 +16,7 @@
         <font-awesome-icon icon="angle-right" class="flush-right"/>
       </button>
     </div>
-    <div class="head-right">
-      <slot name="head-right"></slot>
-    </div>
+    <div class="head-right"></div>
   </div>
 </template>
 
@@ -39,6 +41,21 @@ export default {
     },
     month() {
       return calendarUtils.names.months[this.monthStart.getMonth()];
+    },
+    isCurrentMonth() {
+      let today = new Date();
+      return (
+        today.getFullYear() == this.monthStart.getFullYear() &&
+        today.getMonth() == this.monthStart.getMonth()
+      );
+    },
+    currentMonth() {
+      let today = new Date();
+      return (
+        calendarUtils.names.monthsShort[today.getMonth()] +
+        " " +
+        today.getFullYear()
+      );
     }
   },
   methods: {
@@ -61,6 +78,10 @@ export default {
     goNext(evt) {
       this.monthStart = calendarUtils.shiftMonth(this.monthStart, -1);
       this.blurTargetButton(evt);
+    },
+    showCurrentMonth(evt) {
+      this.monthStart = calendarUtils.firstDateOfMonth();
+      this.blurTargetButton(evt);
     }
   },
   watch: {
@@ -74,14 +95,16 @@ export default {
 
 <style scoped>
 .calendar-head {
+  display: flex;
   align-items: center;
 }
 .head-left,
 .head-right {
   flex: 1;
+  text-align: center;
 }
 .head-center {
-  flex: 3;
+  flex: 5;
   text-align: center;
 }
 .title {
