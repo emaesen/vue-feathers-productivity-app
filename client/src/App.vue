@@ -75,13 +75,24 @@ h6 {
   letter-spacing: 0.1em;
   color: #fffef5;
 }
+h1 {
+  margin-top: 1.5em;
+}
 h2 {
   margin: 0 0 0.5em 0.2em;
 }
 #header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  background-color: #000;
   font-family: monospace;
   text-align: center;
   color: #fffef5;
+  padding-bottom: 3px;
+  border-bottom: 5px solid #333;
 }
 #header .date,
 #header .time {
