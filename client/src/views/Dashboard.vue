@@ -3,9 +3,9 @@
     <h1>
       <font-awesome-icon icon="tachometer-alt"/>Dashboard
     </h1>
-    <pa-reminders view="dashboard" :onDashboard="true"/>
-    <pa-notes view="dashboard" :onDashboard="true"/>
-    <pa-calendar view="dashboard" :onDashboard="true"/>
+    <pa-reminders view="dashboard" :onDashboard="true" class="section"/>
+    <pa-notes view="dashboard" :onDashboard="true" class="section"/>
+    <pa-calendar view="dashboard" :onDashboard="true" class="section"/>
   </div>
 </template>
 
@@ -43,11 +43,17 @@ export default {
 </script>
 
 <style>
+.section {
+  transition: all 0.6s;
+  max-height: 1000px;
+  overflow-y: auto;
+}
 .section-collapsed {
-  height: 2em;
+  max-height: 2em;
   overflow: hidden;
 }
-.section-collapsed > div {
+.section-collapsed .button.absolute,
+.section-collapsed > div.controls {
   display: none !important;
 }
 </style>
