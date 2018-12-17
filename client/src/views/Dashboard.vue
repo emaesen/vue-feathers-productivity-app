@@ -27,14 +27,33 @@ export default {
     return {};
   },
   methods: {
+    setContentStyleProps(el, doSet) {
+      doSet = doSet === false ? false : true;
+      let elHeight = el.offsetHeight;
+      console.log({ doSet, el, elHeight });
+      if (doSet) {
+        // set max-height to actual section height
+        // (to allow for non-delay smooth open/close transition)
+        el.style.maxHeight = elHeight + "px";
+        // calculate transition duration such that the transition speed
+        // is fairly consistent for each dashboard section. (in seconds)
+        el.style.transitionDuration = 0.3 + elHeight / 500 + "s";
+      } else {
+        el.style.maxHeight = "";
+      }
+    },
     toggleCollapse(evt) {
       let className = "section-collapsed";
       let el = evt.target;
       if (el.localName === "section" && el.classList) {
         if (el.classList.contains(className)) {
           el.classList.remove(className);
+          setTimeout(() => this.setContentStyleProps(el, false), 2000);
         } else {
-          el.classList.add(className);
+          this.setContentStyleProps(el);
+          this.$nextTick(function() {
+            el.classList.add(className);
+          });
         }
       }
     }
@@ -45,11 +64,9 @@ export default {
 <style>
 .section {
   transition: all 0.6s;
-  max-height: 1000px;
-  overflow-y: auto;
 }
 .section-collapsed {
-  max-height: 2em;
+  max-height: 2em !important;
   overflow: hidden;
 }
 .section-collapsed .button.absolute,
