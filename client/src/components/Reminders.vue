@@ -258,4 +258,15 @@ h2.reminders {
 .reminders-list-cell + .reminders-list-cell {
   border-top: 1px dashed #454545;
 }
+.duesoon.reminders-list-cell:first-child {
+  position: fixed;
+  top: 34px;
+  left: 0;
+  right: 0;
+  background: #560000;
+  z-index: 9999;
+}
+.duesoon.reminders-list-cell:first-child .countdown-timer {
+  right: 15px;
+}
 </style>

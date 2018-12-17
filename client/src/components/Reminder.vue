@@ -1,5 +1,5 @@
 <template>
-  <div class="cell reminders-list-cell">
+  <div class="cell reminders-list-cell" :class="dueClass">
     <transition name="fade">
       <div
         v-if="showCountDown && !brieflyHideCountDown"
