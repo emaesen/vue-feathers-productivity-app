@@ -264,9 +264,14 @@ h2.reminders {
   left: 0;
   right: 0;
   background: #560000;
+  border: 1px solid #f00;
   z-index: 9999;
+  margin: 2px;
 }
 .duesoon.reminders-list-cell:first-child .countdown-timer {
   right: 15px;
+}
+.duesoon.reminders-list-cell:first-child .reminder {
+  margin-bottom: 0;
 }
 </style>

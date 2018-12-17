@@ -76,7 +76,7 @@ h6 {
   color: #fffef5;
 }
 h1 {
-  margin-top: 1.5em;
+  margin-top: 2.5em;
 }
 h2 {
   margin: 0 0 0.5em 0.2em;
