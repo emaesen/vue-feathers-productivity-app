@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="register">
+  <form id="register-form" @submit.prevent="register">
     <fieldset>
       <legend>Register</legend>
       <div v-if="errors.length" class="errors">
@@ -56,6 +56,11 @@
           <font-awesome-icon icon="user-plus"/>Register
         </button>
         <input v-if="loading" class="button loading" type="submit" value="in progress..." disabled>
+        <span class="login">-or- &nbsp;
+          <router-link to="/login">
+            <font-awesome-icon icon="sign-in-alt"/>Login
+          </router-link>
+        </span>
       </div>
     </fieldset>
   </form>
@@ -133,6 +138,9 @@ export default {
 </script>
 
 <style scoped>
+#register-form {
+  margin-top: 5em;
+}
 .warning {
   margin-left: 5px;
   font-size: 0.65rem;
@@ -144,5 +152,11 @@ export default {
 }
 ul {
   margin: 0 -1em 1em 0;
+}
+.login {
+  margin-left: 1em;
+  font-size: 0.85rem;
+  color: #999;
+  font-style: italic;
 }
 </style>
