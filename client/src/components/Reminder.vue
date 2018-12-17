@@ -168,6 +168,9 @@ export default {
     textAsHtml() {
       return simpleFormat(this.reminder.text);
     },
+    tickTock() {
+      return this.timeTick;
+    },
     due() {
       //let today = new Date();
       let date = this.date(this.reminder);
@@ -276,16 +279,23 @@ export default {
     },
     isInGraceWindow() {
       let timeDiff = this.timeDiff(this.dueDateAfterGracePeriod, new Date());
-      return timeDiff < this.countDownMSecDuringGracePeriod && timeDiff > 0;
+      return (
+        this.tickTock &&
+        timeDiff < this.countDownMSecDuringGracePeriod &&
+        timeDiff > 0
+      );
     },
     dueClass: function() {
-      return this.isPastDue
-        ? "pastdue"
-        : this.isDueSoon
-        ? "duesoon"
-        : this.isDueToday
-        ? "duetoday"
-        : "notyetdue";
+      return (
+        this.tickTock &&
+        (this.isPastDue
+          ? "pastdue"
+          : this.isDueSoon
+          ? "duesoon"
+          : this.isDueToday
+          ? "duetoday"
+          : "notyetdue")
+      );
     },
     showCountDown() {
       return this.isDueSoon || this.isInGraceWindow;
