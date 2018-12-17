@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="login" novalidate="true">
+  <form id="login-form" @submit.prevent="login" novalidate="true">
     <fieldset>
       <legend>Login</legend>
       <div v-if="errors.length" class="errors">
@@ -125,6 +125,9 @@ export default {
 </script>
 
 <style scoped lang="less">
+#login-form {
+  margin-top: 5em;
+}
 .validation {
   visibility: hidden;
   margin-left: 5px;
