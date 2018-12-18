@@ -24,7 +24,7 @@
 
 <script>
 import calendarUtils from "../utils/calendar";
-import { mapMutations } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "CalendarHead",
@@ -36,9 +36,13 @@ export default {
     };
   },
   created() {
-    this.monthStart = calendarUtils.firstDateOfMonth();
+    this.setMonthStart();
   },
   computed: {
+    ...mapGetters({ calendarState: "calendar" }),
+    today() {
+      return this.calendarState.today;
+    },
     year() {
       return this.monthStart.getFullYear();
     },
@@ -63,6 +67,9 @@ export default {
   },
   methods: {
     ...mapMutations(["SET_CALENDAR_MONTH"]),
+    setMonthStart() {
+      this.monthStart = calendarUtils.firstDateOfMonth();
+    },
     blurTargetButton(evt) {
       if (evt.target.localName === "button") {
         evt.target.blur();
@@ -91,6 +98,7 @@ export default {
     }
   },
   watch: {
+    today: "setMonthStart",
     monthStart(monthStart) {
       const monthEnd = calendarUtils.lastDateOfMonth(monthStart);
       this.SET_CALENDAR_MONTH({ start: monthStart, end: monthEnd });

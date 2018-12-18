@@ -48,20 +48,28 @@ export default {
   },
   data() {
     return {
-      firstDay: 0
+      firstDay: 0,
+      today: calendarUtils.yyyy_mm_dd(new Date())
     };
   },
   computed: {
+    ...mapGetters(["timeTick"]),
     ...mapGetters({ calendarState: "calendar" }),
+    tickTock() {
+      return this.timeTick;
+    },
     calendarMonth() {
-      return calendarUtils.calendarMonth(this.monthStart, this.firstDay);
+      return (
+        this.today &&
+        calendarUtils.calendarMonth(this.monthStart, this.firstDay)
+      );
     },
     monthStart() {
       return this.calendarState.month.start || calendarUtils.firstDateOfMonth();
     }
   },
   methods: {
-    ...mapMutations(["SET_CALENDAR_DAYINFOCUS"]),
+    ...mapMutations(["SET_CALENDAR_DAYINFOCUS", "SET_CALENDAR_TODAY"]),
     dayName(day) {
       let dayIndex = parseInt(day + this.firstDay) % 7;
       return calendarUtils.names.daysShort[dayIndex];
@@ -87,6 +95,14 @@ export default {
     expandDay(day) {
       this.SET_CALENDAR_DAYINFOCUS(day);
       console.log("in expandDay", { day });
+    }
+  },
+  watch: {
+    timeTick() {
+      this.today = calendarUtils.yyyy_mm_dd(new Date());
+    },
+    today(day) {
+      this.SET_CALENDAR_TODAY(day);
     }
   }
 };
