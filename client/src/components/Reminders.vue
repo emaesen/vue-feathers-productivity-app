@@ -209,7 +209,10 @@ export default {
         if (this.displayOnlyOne) {
           return [nextReminder];
         } else {
-          return this.remindersUnfiltered.filter(this.uiPreviewFilter);
+          let remindersArray = this.remindersUnfiltered.filter(
+            this.uiPreviewFilter
+          );
+          return remindersArray.length > 0 ? remindersArray : [nextReminder];
         }
       } else {
         return this.remindersUnfiltered.filter(this.uiFilter);
