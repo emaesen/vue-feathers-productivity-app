@@ -8,9 +8,9 @@
           :class="{collapsed: isCollapsed}"
           @click="toggleCollapse"
           :style="{
-          maxHeight: maxNoteHeight + 'px',
-          'transition-duration': transitionDuration + 's'
-        }"
+            maxHeight: maxNoteHeight + 'px',
+            'transition-duration': transitionDuration + 's'
+          }"
         >
           <div ref="content">
             <div v-if="note.category" class="category">{{ note.category }}</div>
