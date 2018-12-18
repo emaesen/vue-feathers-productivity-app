@@ -96,7 +96,7 @@ import CountDown from "./CountDown";
 import { mapGetters } from "vuex";
 
 const NRMILLISECINDAY = 1000 * 60 * 60 * 24;
-const DUETEXTWINDOWDAYS = 1;
+const DUETEXTWINDOWDAYS = 7;
 
 // allow limited markdown-inspired formatting
 function simpleFormat(inp) {
@@ -179,9 +179,7 @@ export default {
       let timeTxt = "";
       let ampmTxt = "";
       let dueInNrDays = this.dayDiff(date, new Date());
-      let window =
-        (this.reminder.window && this.reminder.window[0]) || DUETEXTWINDOWDAYS;
-      if (dueInNrDays <= window) {
+      if (dueInNrDays <= DUETEXTWINDOWDAYS) {
         dateTxt =
           dueInNrDays === 0
             ? "today"
