@@ -94,7 +94,6 @@ export default {
     },
     expandDay(day) {
       this.SET_CALENDAR_DAYINFOCUS(day);
-      console.log("in expandDay", { day });
     }
   },
   watch: {
