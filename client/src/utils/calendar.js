@@ -105,11 +105,48 @@ const calendarMonth = (startDate, firstDay = 1) => {
   return month;
 };
 
+const padZeros = (n, td) => {
+  var ns = n.toString(),
+    l = ns.length,
+    z = "";
+  if (td > l) {
+    for (var i = l; i < td; i++) {
+      z += "0";
+    }
+  }
+  return z + ns;
+};
+
+const yyyy_mm_dd = date => {
+  // return a yyyy-mm-dd string for date object
+  return date == null
+    ? null
+    : date.getFullYear() +
+        "-" +
+        padZeros(date.getMonth() + 1, 2) +
+        "-" +
+        padZeros(date.getDate(), 2);
+};
+
+const yyyymmdd = date => {
+  // return a yyyymmdd string for date object (or yyyy-mm-dd date string)
+  return date == null
+    ? null
+    : typeof date === "string"
+      ? date.replace(/-/g, "")
+      : date.getFullYear() +
+        padZeros(date.getMonth() + 1, 2) +
+        padZeros(date.getDate(), 2);
+};
+
 export default {
   names,
   firstDateOfMonth,
   lastDateOfMonth,
   shiftMonth,
   startOfWeek,
-  calendarMonth
+  calendarMonth,
+  padZeros,
+  yyyy_mm_dd,
+  yyyymmdd
 };
