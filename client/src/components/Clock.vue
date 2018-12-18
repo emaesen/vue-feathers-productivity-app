@@ -10,6 +10,7 @@
 
 <script>
 import { mapMutations } from "vuex";
+import calendarUtils from "../utils/calendar";
 
 export default {
   name: "Clock",
@@ -20,21 +21,6 @@ export default {
         date: "",
         ampm: ""
       },
-      week: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
-      month: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
-      ],
       timerID: "",
       showYear: false,
       showSeconds: false,
@@ -65,11 +51,11 @@ export default {
       console.log("Start the clock");
       if (!this.showSeconds) {
         delay = 60 - new Date().getSeconds();
-        this.updateTime();
+        this.updateClockDisplay();
       }
       setTimeout(() => {
-        this.updateTime();
-        this.timerID = setInterval(this.updateTime, multiplier * 1000);
+        this.updateClockDisplay();
+        this.timerID = setInterval(this.updateClockDisplay, multiplier * 1000);
       }, delay * 1000);
     },
     stopClock() {
@@ -78,52 +64,30 @@ export default {
         clearInterval(this.timerID);
       }
     },
-    padZeros(n, td) {
-      var ns = n.toString(),
-        l = ns.length,
-        z = "";
-      if (td > l) {
-        for (var i = l; i < td; i++) {
-          z += "0";
-        }
-      }
-      return z + ns;
-    },
-    updateTime() {
+    updateClockDisplay() {
       let cd = new Date();
-      let pz = this.padZeros;
-      let hours = cd.getHours();
-      let ampm = "";
       // store time centrally
       // so we only have to run one clock in our application
       this.SET_TIME_TICK(cd.getTime());
+      let time = calendarUtils.formattedTime(cd, {
+        ampm: this.showAMPM,
+        seconds: this.showSeconds
+      });
       if (this.showAMPM) {
-        ampm = hours > 12 ? "PM" : "AM";
-        if (this.clock.ampm !== ampm) {
-          this.clock.ampm = ampm;
+        if (this.clock.ampm !== time.ampmStr) {
+          this.clock.ampm = time.ampmStr;
         }
-        if (hours > 12) {
-          hours = hours - 12;
-        }
+        this.clock.time = time.timeStr;
+      } else {
+        this.clock.time = time;
       }
-      this.clock.time = hours + ":" + pz(cd.getMinutes(), 2);
-      if (this.showSeconds) {
-        this.clock.time += ":" + pz(cd.getSeconds(), 2);
-      }
+
       if (cd.getDate() !== this.dayOfMonth) {
-        this.updateDate(cd);
+        this.clock.date = calendarUtils.formattedDate(cd, {
+          showYear: this.showYear,
+          shortForm: true
+        });
         this.dayOfMonth = cd.getDate();
-      }
-    },
-    updateDate(cd) {
-      this.clock.date =
-        this.week[cd.getDay()] +
-        " " +
-        this.month[cd.getMonth()] +
-        " " +
-        cd.getDate();
-      if (this.showYear) {
-        this.clock.date += " " + cd.getFullYear();
       }
     }
   }
@@ -147,7 +111,7 @@ export default {
   letter-spacing: 0.1em;
 }
 .ampm {
-  margin-left: 0.5em;
+  margin-left: -0.5em;
   font-size: 75%;
 }
 </style>
