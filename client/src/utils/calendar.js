@@ -139,6 +139,44 @@ const yyyymmdd = date => {
         padZeros(date.getDate(), 2);
 };
 
+const formattedDate = (date, opts) => {
+  date = date || new Date();
+  let dateStr;
+  if (opts.shortForm) {
+    dateStr =
+      names.daysShort[date.getDay()] + " " + names.monthsShort[date.getMonth()];
+  } else {
+    dateStr = names.days[date.getDay()] + " " + names.months[date.getMonth()];
+  }
+  dateStr += " " + date.getDate();
+  if (opts.showYear) {
+    dateStr += ", " + date.getFullYear();
+  }
+  return dateStr;
+};
+
+const formattedTime = (date, opts) => {
+  date = date || new Date();
+  let hours = date.getHours();
+  let ampmStr;
+  let timeStr;
+  if (opts.ampm) {
+    ampmStr = hours > 12 ? "PM" : "AM";
+    if (hours > 12) {
+      hours = hours - 12;
+    }
+  }
+  timeStr = hours + ":" + padZeros(date.getMinutes(), 2);
+  if (opts.seconds) {
+    timeStr += ":" + padZeros(date.getSeconds(), 2);
+  }
+  if (opts.ampm) {
+    return { timeStr, ampmStr };
+  } else {
+    return timeStr;
+  }
+};
+
 export default {
   names,
   firstDateOfMonth,
@@ -148,5 +186,7 @@ export default {
   calendarMonth,
   padZeros,
   yyyy_mm_dd,
-  yyyymmdd
+  yyyymmdd,
+  formattedDate,
+  formattedTime
 };
