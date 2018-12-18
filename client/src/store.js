@@ -14,6 +14,7 @@ export default new Vuex.Store({
   state: {
     timeTick: new Date().getTime(),
     calendar: {
+      today: null,
       month: {
         start: null,
         end: null
@@ -34,6 +35,9 @@ export default new Vuex.Store({
     },
     SET_CALENDAR_DAYINFOCUS: (state, day) => {
       state.calendar.dayInFocus = day;
+    },
+    SET_CALENDAR_TODAY: (state, day) => {
+      state.calendar.today = day;
     }
   },
   actions: {
