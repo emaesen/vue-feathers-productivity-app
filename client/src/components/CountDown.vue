@@ -41,6 +41,8 @@ export default {
       minutes: 0,
       seconds: 0,
       minutesToShowSeconds: 5,
+      hoursToShowMinutes: 3,
+      daysToShowHours: 1,
       intervalTimerId: null,
       isReversed: false,
       isPaused: false,
@@ -67,6 +69,7 @@ export default {
         (this.targetDate.getTime() - new Date().getTime()) / 1000
       );
       const minutesLeft = Math.abs(secondsLeft / 60);
+
       if (secondsLeft < 0) {
         this.isReversed = true;
         secondsLeft = -secondsLeft;
@@ -74,20 +77,26 @@ export default {
         this.isReversed = false;
       }
 
-      this.days = Math.round(secondsLeft / NRSECINDAY);
+      this.days =
+        secondsLeft > this.daysToShowHours * NRSECINDAY
+          ? Math.round(secondsLeft / NRSECINDAY)
+          : Math.floor(secondsLeft / NRSECINDAY);
       if (Math.floor(secondsLeft / NRSECINDAY)) {
         secondsLeft =
           secondsLeft % (Math.floor(secondsLeft / NRSECINDAY) * NRSECINDAY);
       }
 
-      this.hours = Math.round(secondsLeft / NRSECINHOUR);
+      this.hours =
+        secondsLeft > this.hoursToShowMinutes * NRSECINHOUR
+          ? Math.round(secondsLeft / NRSECINHOUR)
+          : Math.floor(secondsLeft / NRSECINHOUR);
       if (Math.floor(secondsLeft / NRSECINHOUR)) {
         secondsLeft =
           secondsLeft % (Math.floor(secondsLeft / NRSECINHOUR) * NRSECINHOUR);
       }
 
       this.minutes =
-        minutesLeft > this.minutesToShowSeconds
+        secondsLeft > this.minutesToShowSeconds * NRSECINMINUTE
           ? Math.round(secondsLeft / NRSECINMINUTE)
           : Math.floor(secondsLeft / NRSECINMINUTE);
 
@@ -137,11 +146,16 @@ export default {
       return !this.isPaused && this.days > 0;
     },
     displayHours() {
-      return !this.isPaused && this.days < 1 && this.hours > 0;
+      return (
+        !this.isPaused && this.days < this.daysToShowHours && this.hours > 0
+      );
     },
     displayMinutes() {
       return (
-        !this.isPaused && this.days < 1 && this.hours < 3 && this.minutes > 0
+        !this.isPaused &&
+        this.days < this.daysToShowHours &&
+        this.hours < this.hoursToShowMinutes &&
+        this.minutes > 0
       );
     },
     displaySeconds() {
