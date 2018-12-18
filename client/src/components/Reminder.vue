@@ -211,8 +211,15 @@ export default {
         ampm: ampmTxt
       };
     },
+    windowAsString() {
+      let str = "";
+      if (this.reminder && this.reminder.window) {
+        str = this.reminder.window.join("|");
+      }
+      return str;
+    },
     countDownMSecBeforeDue() {
-      let window = this.reminder && this.reminder.window;
+      let window = this.windowAsString && this.reminder && this.reminder.window;
       let minutes = 0;
       if (window[1]) {
         // hours in countdown window - count as minutes
@@ -226,7 +233,7 @@ export default {
       return minutes * 60 * 1000;
     },
     countDownMSecDuringGracePeriod() {
-      let window = this.reminder && this.reminder.window;
+      let window = this.windowAsString && this.reminder && this.reminder.window;
       let minutes = 0;
       if (window[3]) {
         // days in countdown window - count as minutes
@@ -244,8 +251,11 @@ export default {
       return minutes * 60 * 1000;
     },
     dueDateAfterGracePeriod() {
-      return new Date(
-        this.reminderDate.getTime() + this.countDownMSecDuringGracePeriod
+      return (
+        this.windowAsString &&
+        new Date(
+          this.reminderDate.getTime() + this.countDownMSecDuringGracePeriod
+        )
       );
     },
     countDownTarget() {
