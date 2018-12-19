@@ -63,7 +63,8 @@ export default new Vuex.Store({
         text: "",
         date: "",
         time: "",
-        snooze: ""
+        window: [],
+        weekdays: []
       }
     }),
     // Setup the auth plugin.

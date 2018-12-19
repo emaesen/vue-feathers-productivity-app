@@ -53,7 +53,6 @@
               type="date"
               placeholder="yyyy-mm-dd"
               min="new Date()"
-              required
             >
             <input id="time" name="time" v-model="time" type="time" placeholder="hh:mm" step="300">
           </div>
@@ -163,6 +162,17 @@
               >
             </div>
           </div>
+          <div class="group">
+            <div class="cell">
+              <label>Repeat every week</label>
+              <div class="weekday" v-for="(day, index) in week" :key="day">
+                <input type="checkbox" :id="day" :value="index" v-model="weekdays">
+                <label :for="day" class="action button checkbox">
+                  <span class="day" :class="day">{{ day }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
           <div class>
             <button class="action button" @click="save" :disabled="!isValid">
               <font-awesome-icon icon="check-circle"/>save
@@ -207,9 +217,11 @@ export default {
         null,
         null
       ],
+      weekdays: (this.reminder && this.reminder.weekdays) || [],
       showForm: !!(this.reminder && this.reminder.text),
       showError: false,
-      colors: ["", "red", "blue", "green", "yellow", "purple"]
+      colors: ["", "red", "blue", "green", "yellow", "purple"],
+      week: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
     };
   },
   computed: {
@@ -217,7 +229,10 @@ export default {
       return !!(this.reminder && this.reminder.text);
     },
     isValid() {
-      return this.text && this.date;
+      return (
+        this.text &&
+        (this.date || (this.weekdays.length > 0 && (this.date || this.time)))
+      );
     },
     textAreaHeight() {
       const minHeight = 150;
@@ -250,12 +265,14 @@ export default {
       this.date = this.reminder.date;
       this.time = this.reminder.time;
       this.window = this.reminder.window;
+      this.weekdays = this.reminder.weekdays;
     },
     clearReminderForm() {
       this.text = "";
       this.date = "";
       this.time = "";
       this.window = [null, null, null, null, null, null];
+      this.weekdays = [];
       this.showForm = false;
     },
     save() {
@@ -266,7 +283,8 @@ export default {
           text: this.text,
           date: this.date,
           time: this.time,
-          window: this.window
+          window: this.window,
+          weekdays: this.weekdays
         });
         this.closeReminderForm();
       } else {
@@ -362,6 +380,20 @@ label:hover .hover-info {
 }
 .clr-selector {
   margin-bottom: 1em;
+}
+.weekday,
+label.checkbox,
+input[type="checkbox"] {
+  display: inline-block;
+}
+input[type="checkbox"] {
+  visibility: hidden;
+  width: 1em;
+}
+input[type="checkbox"]:checked + label::before {
+  content: "✓ ";
+  margin-left: -1.2em;
+  color: #29dc58;
 }
 .fade-enter-active,
 .fade-leave-active {

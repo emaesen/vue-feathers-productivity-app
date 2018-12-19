@@ -35,6 +35,7 @@
         >
           <div ref="content" :class="dueClass">
             <div class="date-time" :class="dueClass">
+              <font-awesome-icon v-if="isRecurring" icon="recycle"/>
               {{ due.date }}{{ due.date && due.time ? ", " : ""}}{{ due.time}}
               <span
                 class="ampm"
@@ -171,9 +172,16 @@ export default {
     tickTock() {
       return this.timeTick;
     },
+    isRecurring() {
+      return (
+        this.reminder &&
+        this.reminder.weekdays &&
+        this.reminder.weekdays.length > 0
+      );
+    },
     due() {
       //let today = new Date();
-      let date = this.date(this.reminder);
+      let date = this.reminderDate;
       let time = this.reminder.time.split(":");
       let dateTxt = "";
       let timeTxt = "";
@@ -260,7 +268,13 @@ export default {
       return this.isNotYetDue ? this.dueDate : this.dueDateAfterGracePeriod;
     },
     reminderDate() {
-      return this.date(this.reminder);
+      if (this.reminder.weekdays && this.reminder.weekdays.length > 0) {
+        // TODO! if this.reminder.weekdays is defined,
+        //       derive what is the next matching day.
+        return this.date(this.reminder);
+      } else {
+        return this.date(this.reminder);
+      }
     },
     dueDate: function() {
       if (this.isInGraceWindow) {
@@ -417,6 +431,7 @@ export default {
       this.reminder.date = this.origReminder.date;
       this.reminder.time = this.origReminder.time;
       this.reminder.window = this.origReminder.window;
+      this.reminder.weekdays = this.origReminder.weekdays;
       this.isEditing = false;
     },
     editReminderWarning(warning) {

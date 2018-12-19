@@ -98,7 +98,7 @@ export default {
       props.reminder.date = props.mod.date;
       props.reminder.time = props.mod.time;
       props.reminder.window = props.mod.window;
-      props.reminder.snooze = props.mod.snooze;
+      props.reminder.weekdays = props.mod.weekdays;
       props.reminder.update().then(reminder => {
         console.log("edit succesful", reminder);
       });

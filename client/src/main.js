@@ -18,6 +18,7 @@ import {
   faMinusCircle, // remove
   faPlusCircle, // add
   faQuestionCircle, // info
+  faRecycle, // recycle
   faSignInAlt, // log/sign in
   faSignOutAlt, // log/sign out
   faSortAmountDown, // sort down
@@ -55,6 +56,7 @@ library.add(
   faMinusCircle,
   faPlusCircle,
   faQuestionCircle,
+  faRecycle,
   faSignInAlt,
   faSignOutAlt,
   faSortAmountDown,
