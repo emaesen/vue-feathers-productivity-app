@@ -273,6 +273,8 @@ h2.reminders {
 }
 .duesoon.reminders-list-cell:first-child .countdown-timer {
   right: 15px;
+  font-size: 171%;
+  line-height: 20px;
 }
 .duesoon.reminders-list-cell:first-child .reminder {
   margin-bottom: 0;
