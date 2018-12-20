@@ -30,7 +30,6 @@ export default {
     setContentStyleProps(el, doSet) {
       doSet = doSet === false ? false : true;
       let elHeight = el.offsetHeight;
-      console.log({ doSet, el, elHeight });
       if (doSet) {
         // set max-height to actual section height
         // (to allow for non-delay smooth open/close transition)
