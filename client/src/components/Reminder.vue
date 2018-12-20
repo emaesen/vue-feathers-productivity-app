@@ -268,12 +268,35 @@ export default {
       return this.isNotYetDue ? this.dueDate : this.dueDateAfterGracePeriod;
     },
     reminderDate() {
+      let reminderDate = this.date(this.reminder);
       if (this.reminder.weekdays && this.reminder.weekdays.length > 0) {
-        // TODO! if this.reminder.weekdays is defined,
-        //       derive what is the next matching day.
-        return this.date(this.reminder);
+        let now = new Date();
+        let reminderTime = this.reminder.time.split(":");
+        let skipToday =
+          now.getHours() > reminderTime[0] && now.getMinutes > reminderTime[1];
+        let dayOfTheWeek = now.getDay();
+        let offset = skipToday ? 1 : 0;
+        let reminderWeekday = this.reminder.weekdays.reduce(
+          (result, current) => {
+            return current < result && current + offset >= dayOfTheWeek
+              ? current
+              : result;
+          },
+          99
+        );
+        let dayDelta = reminderWeekday - dayOfTheWeek;
+        if (dayDelta < 0) dayDelta = dayDelta + 7;
+        let nextReminderDate = new Date();
+        nextReminderDate.setDate(now.getDate() + dayDelta);
+        nextReminderDate.setHours(reminderTime[0], reminderTime[1], 0, 0);
+        console.log({
+          skipToday,
+          dayDelta,
+          nextReminderDate
+        });
+        return nextReminderDate;
       } else {
-        return this.date(this.reminder);
+        return reminderDate;
       }
     },
     dueDate: function() {
