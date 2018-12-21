@@ -213,6 +213,26 @@ const timeDiff = (d1, d2) => {
   }
 };
 
+const upcomingDate = dateAttr => {
+  let now = new Date();
+  let timeArr = dateAttr.time.split(":");
+  let skipToday = now.getHours() > timeArr[0] && now.getMinutes > timeArr[1];
+  let dayOfTheWeek = now.getDay();
+  let offset = skipToday ? 1 : 0;
+  let reminderWeekday = dateAttr.weekdays.reduce((result, current) => {
+    return current < result && current + offset >= dayOfTheWeek
+      ? current
+      : result;
+  }, 99);
+  let dayDelta = reminderWeekday - dayOfTheWeek;
+  if (dayDelta < 0) dayDelta = dayDelta + 7;
+  let nextReminderDate = new Date();
+  nextReminderDate.setDate(now.getDate() + dayDelta);
+  nextReminderDate.setHours(timeArr[0], timeArr[1], 0, 0);
+
+  return nextReminderDate;
+};
+
 export default {
   NRMILLISECINMINUTE,
   NRMILLISECINHOUR,
@@ -230,5 +250,6 @@ export default {
   formattedTime,
   dateObj,
   dayDiff,
-  timeDiff
+  timeDiff,
+  upcomingDate
 };
