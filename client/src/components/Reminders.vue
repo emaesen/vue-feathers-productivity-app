@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import calendarUtils from "../utils/calendar";
 import Reminder from "./Reminder";
 import CreateReminder from "./CreateEditReminder";
 import Clock from "./Clock";
@@ -41,9 +42,9 @@ import Clock from "./Clock";
 // https://feathers-plus.github.io/v1/feathers-vuex/common-patterns.html
 import { mapState, mapGetters, mapActions } from "vuex";
 
-const NRMILLISECINMINUTE = 1000 * 60;
-const NRMILLISECINHOUR = NRMILLISECINMINUTE * 60;
-const NRMILLISECINDAY = NRMILLISECINHOUR * 24;
+const NRMILLISECINMINUTE = calendarUtils.NRMILLISECINMINUTE;
+const NRMILLISECINHOUR = calendarUtils.NRMILLISECINHOUR;
+const NRMILLISECINDAY = calendarUtils.NRMILLISECINDAY;
 
 export default {
   name: "Reminders",
@@ -106,13 +107,19 @@ export default {
     sortByDate(a, b) {
       // a and b are reminders
       if (!this.correctDateForReminderWindow) {
-        return this.timeDiff(this.date(a), this.date(b));
+        return calendarUtils.timeDiff(
+          calendarUtils.dateObj(a),
+          calendarUtils.dateObj(b)
+        );
       } else {
-        return this.timeDiff(this.correctedDate(a), this.correctedDate(b));
+        return calendarUtils.timeDiff(
+          this.correctedDate(a),
+          this.correctedDate(b)
+        );
       }
     },
     correctedDate(reminder) {
-      let date = this.date(reminder);
+      let date = calendarUtils.dateObj(reminder);
       if (reminder.window) {
         let correction =
           NRMILLISECINDAY * (reminder.window[3] || 0) +
@@ -124,54 +131,19 @@ export default {
         return date;
       }
     },
-    date(reminder) {
-      // return Date object for reminder:{date, time} object
-      if (reminder.time) {
-        return new Date(reminder.date + "T" + reminder.time);
-      } else {
-        return new Date(reminder.date + "T00:00:00");
-      }
-    },
-    dayDiff(d1, d2) {
-      // d1 and d2 must be date objects
-      if (
-        typeof d1.getTime === "function" &&
-        typeof d2.getTime === "function"
-      ) {
-        let d1clone = new Date(d1.getTime());
-        let d2clone = new Date(d2.getTime());
-        return (
-          (d1clone.setHours(0, 0, 0, 0) - d2clone.setHours(0, 0, 0, 0)) /
-          NRMILLISECINDAY
-        );
-      } else {
-        return null;
-      }
-    },
-    timeDiff(d1, d2) {
-      // d1 and d2 must be date objects
-      if (
-        typeof d1.getTime === "function" &&
-        typeof d2.getTime === "function"
-      ) {
-        return d1.getTime() - d2.getTime();
-      } else {
-        return null;
-      }
-    },
     isPastDue(d1) {
       // d1 must be a date object
-      return this.timeDiff(d1, new Date()) < 0;
+      return calendarUtils.timeDiff(d1, new Date()) < 0;
     },
     uiFilter(reminder) {
       return reminder ? true : false;
     },
     uiPreviewFilter(reminder) {
       let todayDate = new Date();
-      let dueDate = this.date(reminder);
+      let dueDate = calendarUtils.dateObj(reminder);
       let previewWindowDays = (reminder.window && reminder.window[0]) || 0;
-      let timeFromNow = this.timeDiff(dueDate, todayDate);
-      let daysFromNow = this.dayDiff(dueDate, todayDate);
+      let timeFromNow = calendarUtils.timeDiff(dueDate, todayDate);
+      let daysFromNow = calendarUtils.dayDiff(dueDate, todayDate);
       let isDueWithinPreviewWindow = Math.abs(daysFromNow) <= previewWindowDays;
       let isDueToday = daysFromNow === 0;
       let isPastDue = timeFromNow < 0;
