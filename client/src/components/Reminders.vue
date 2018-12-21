@@ -107,10 +107,7 @@ export default {
     sortByDate(a, b) {
       // a and b are reminders
       if (!this.correctDateForReminderWindow) {
-        return calendarUtils.timeDiff(
-          calendarUtils.dateObj(a),
-          calendarUtils.dateObj(b)
-        );
+        return calendarUtils.timeDiff(a._dateObj, b._dateObj);
       } else {
         return calendarUtils.timeDiff(
           this.correctedDate(a),
@@ -119,7 +116,7 @@ export default {
       }
     },
     correctedDate(reminder) {
-      let date = calendarUtils.dateObj(reminder);
+      let date = reminder._dateObj;
       if (reminder.window) {
         let correction =
           NRMILLISECINDAY * (reminder.window[3] || 0) +
@@ -140,7 +137,7 @@ export default {
     },
     uiPreviewFilter(reminder) {
       let todayDate = new Date();
-      let dueDate = calendarUtils.dateObj(reminder);
+      let dueDate = reminder._dateObj;
       let previewWindowDays = (reminder.window && reminder.window[0]) || 0;
       let timeFromNow = calendarUtils.timeDiff(dueDate, todayDate);
       let daysFromNow = calendarUtils.dayDiff(dueDate, todayDate);
@@ -194,7 +191,18 @@ export default {
       return this.user
         ? this.findRemindersInStore({
             query: this.query
-          }).data.sort(this.sortByDate)
+          })
+            .data.map(r => {
+              // add a dateObj Date object for the reminder date
+              if (r.weekdays && r.weekdays.length > 0) {
+                // in case this is a recurring reminder, calculate next reminder date
+                r._dateObj = calendarUtils.upcomingDate(r);
+              } else {
+                r._dateObj = calendarUtils.dateObj(r);
+              }
+              return r;
+            })
+            .sort(this.sortByDate)
         : [];
     }
   }
