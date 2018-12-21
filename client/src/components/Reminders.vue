@@ -68,14 +68,18 @@ export default {
   },
   created() {
     // Find all reminders from server. We'll filter/sort on the client.
-    this.findReminders({ query: {} })
-      .then(resp => console.log({ remindersResp: resp }))
-      .catch(err => {
-        console.log({ remindersErr: err });
-      });
+    this.loadReminders();
   },
   methods: {
     ...mapActions("reminders", { findReminders: "find" }),
+    loadReminders() {
+      // Find all reminders from server. We'll filter/sort on the client.
+      this.findReminders({ query: {} })
+        .then(resp => console.log({ remindersResp: resp }))
+        .catch(err => {
+          console.log({ remindersErr: err });
+        });
+    },
     createReminder(newReminder) {
       console.log("Create reminder ", newReminder);
       // create reminder instance
@@ -158,6 +162,10 @@ export default {
       creating: "isCreatePending"
     }),
     ...mapGetters("reminders", { findRemindersInStore: "find" }),
+    ...mapGetters({ calendarState: "calendar" }),
+    today() {
+      return this.calendarState.today;
+    },
     category() {
       // For large datasets, an option is to implement a query-selector.
       // But for the Reminders service, we can just filter on the client.
@@ -205,6 +213,9 @@ export default {
             .sort(this.sortByDate)
         : [];
     }
+  },
+  watch: {
+    today: "loadReminders"
   }
 };
 </script>
