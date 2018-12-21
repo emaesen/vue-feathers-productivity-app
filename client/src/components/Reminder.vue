@@ -92,11 +92,11 @@
 </template>
 
 <script>
+import calendarUtils from "../utils/calendar";
 import EditReminder from "./CreateEditReminder";
 import CountDown from "./CountDown";
 import { mapGetters } from "vuex";
 
-const NRMILLISECINDAY = 1000 * 60 * 60 * 24;
 const DUETEXTWINDOWDAYS = 7;
 
 // allow limited markdown-inspired formatting
@@ -186,7 +186,7 @@ export default {
       let dateTxt = "";
       let timeTxt = "";
       let ampmTxt = "";
-      let dueInNrDays = this.dayDiff(date, new Date());
+      let dueInNrDays = calendarUtils.dayDiff(date, new Date());
       if (dueInNrDays <= DUETEXTWINDOWDAYS) {
         dateTxt =
           dueInNrDays === 0
@@ -268,7 +268,7 @@ export default {
       return this.isNotYetDue ? this.dueDate : this.dueDateAfterGracePeriod;
     },
     reminderDate() {
-      let reminderDate = this.date(this.reminder);
+      let reminderDate = calendarUtils.dateObj(this.reminder);
       if (this.reminder.weekdays && this.reminder.weekdays.length > 0) {
         let now = new Date();
         let reminderTime = this.reminder.time.split(":");
@@ -307,23 +307,26 @@ export default {
       }
     },
     isNotYetDue() {
-      return this.timeDiff(this.dueDate, new Date()) > 0;
+      return calendarUtils.timeDiff(this.dueDate, new Date()) > 0;
     },
     isPastDue: function() {
-      return this.timeDiff(this.dueDate, new Date()) < 0;
+      return calendarUtils.timeDiff(this.dueDate, new Date()) < 0;
     },
     isDueToday: function() {
-      return this.dayDiff(this.dueDate, new Date()) === 0;
+      return calendarUtils.dayDiff(this.dueDate, new Date()) === 0;
     },
     isDueSoon: function() {
-      let timeDiff = this.timeDiff(this.dueDate, new Date());
+      let timeDiff = calendarUtils.timeDiff(this.dueDate, new Date());
       return timeDiff < this.countDownMSecBeforeDue && timeDiff > 0;
     },
     hasGraceWindow() {
       return this.countDownMSecDuringGracePeriod > 0;
     },
     isInGraceWindow() {
-      let timeDiff = this.timeDiff(this.dueDateAfterGracePeriod, new Date());
+      let timeDiff = calendarUtils.timeDiff(
+        this.dueDateAfterGracePeriod,
+        new Date()
+      );
       return (
         this.tickTock &&
         timeDiff < this.countDownMSecDuringGracePeriod &&
@@ -347,41 +350,6 @@ export default {
     }
   },
   methods: {
-    date(reminder) {
-      // return Date object for reminder:{date, time} object
-      if (reminder.time) {
-        return new Date(reminder.date + "T" + reminder.time);
-      } else {
-        return new Date(reminder.date + "T00:00:00");
-      }
-    },
-    dayDiff(d1, d2) {
-      // d1 and d2 must be date objects
-      if (
-        typeof d1.getTime === "function" &&
-        typeof d2.getTime === "function"
-      ) {
-        let d1clone = new Date(d1.getTime());
-        let d2clone = new Date(d2.getTime());
-        return (
-          (d1clone.setHours(0, 0, 0, 0) - d2clone.setHours(0, 0, 0, 0)) /
-          NRMILLISECINDAY
-        );
-      } else {
-        return null;
-      }
-    },
-    timeDiff(d1, d2) {
-      // d1 and d2 must be date objects
-      if (
-        typeof d1.getTime === "function" &&
-        typeof d2.getTime === "function"
-      ) {
-        return d1.getTime() - d2.getTime();
-      } else {
-        return null;
-      }
-    },
     editTransitionComplete() {
       if (this.resetStyle) {
         this.setContentStyleProps();
