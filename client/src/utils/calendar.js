@@ -214,6 +214,7 @@ const timeDiff = (d1, d2) => {
 };
 
 const upcomingDate = dateAttr => {
+  // dateAttr: { date: 'yyyy-mm-dd', time: 'hh:mm', weekdays: [daynr{1,7}] }
   let now = new Date();
   let timeArr = dateAttr.time.split(":");
   let skipToday = now.getHours() > timeArr[0] && now.getMinutes > timeArr[1];
