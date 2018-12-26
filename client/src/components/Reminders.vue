@@ -252,22 +252,38 @@ h2.reminders {
 .reminders-list-cell + .reminders-list-cell {
   border-top: 1px dashed #454545;
 }
-.duesoon.reminders-list-cell:first-child {
+.reminders-list-cell.duesoon {
   position: fixed;
   top: 34px;
   left: 0;
   right: 0;
+  z-index: 9999;
+}
+.reminders-list-cell.pastdue,
+.reminders-list-cell.duesoon {
+  margin: 2px;
   background: #560000;
   border: 1px solid #f00;
-  z-index: 9999;
-  margin: 2px;
 }
-.duesoon.reminders-list-cell:first-child .countdown-timer {
+.reminders-list-cell.duesoon {
+  background: #6d2400;
+}
+.reminders-list-cell.pastdue .reminder,
+.reminders-list-cell.duesoon .reminder {
+  margin-bottom: 0;
+}
+.reminders-list-cell.duesoon ~ .duesoon {
+  position: relative;
+  top: 0;
+  z-index: auto;
+}
+.reminders-list-cell.duesoon .countdown-timer {
   right: 15px;
   font-size: 171%;
   line-height: 20px;
 }
-.duesoon.reminders-list-cell:first-child .reminder {
-  margin-bottom: 0;
+.reminders-list-cell.duesoon ~ .reminders-list-cell.duesoon .countdown-timer {
+  font-size: 126%;
+  line-height: 25px;
 }
 </style>
