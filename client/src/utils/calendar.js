@@ -220,11 +220,23 @@ const upcomingDate = dateAttr => {
   let skipToday = now.getHours() > timeArr[0] && now.getMinutes > timeArr[1];
   let dayOfTheWeek = now.getDay();
   let offset = skipToday ? 1 : 0;
-  let reminderWeekday = dateAttr.weekdays.reduce((result, current) => {
-    return current < result && current + offset >= dayOfTheWeek
-      ? current
-      : result;
-  }, 99);
+  // taking into account the time of the day (offset),
+  // find the lowest number that's higher or equal than the current day number (relMin)
+  // -as well as- the lowest number overall (min)
+  let wdMins = dateAttr.weekdays.reduce(
+    (result, current) => {
+      let min = current < result.min ? current : result.min;
+      let relMin =
+        current < result.relMin && current - offset >= dayOfTheWeek
+          ? current
+          : result.relMin;
+      return { min, relMin };
+    },
+    { min: 99, relMin: 99 }
+  );
+  // if a relMin was found, we use that relMin,
+  // else we use min (because we need to cycle past the end of the week)
+  let reminderWeekday = wdMins.relMin === 99 ? wdMins.min : wdMins.relMin;
   let dayDelta = reminderWeekday - dayOfTheWeek;
   if (dayDelta < 0) dayDelta = dayDelta + 7;
   let nextReminderDate = new Date();
