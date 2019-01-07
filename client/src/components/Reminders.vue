@@ -72,12 +72,18 @@ export default {
   },
   methods: {
     ...mapActions("reminders", { findReminders: "find" }),
+    handleError(e) {
+      console.error("Error: ", e);
+      if (e.name === "NotAuthenticated") {
+        this.$router.push("/login");
+      }
+    },
     loadReminders() {
       // Find all reminders from server. We'll filter/sort on the client.
       this.findReminders({ query: {} })
         .then(resp => console.log({ loadRemindersResp: resp }))
         .catch(err => {
-          console.log({ remindersErr: err });
+          this.handleError(err);
         });
     },
     createReminder(newReminder) {
@@ -85,16 +91,26 @@ export default {
       // create reminder instance
       const { Reminder } = this.$FeathersVuex;
       const reminder = new Reminder(newReminder);
-      reminder.save().then(reminder => {
-        console.log("Reminder created ", reminder);
-      });
+      reminder
+        .save()
+        .then(reminder => {
+          console.log("Reminder created ", reminder);
+        })
+        .catch(e => {
+          this.handleError(e);
+        });
     },
     deleteReminder(reminder) {
       console.log("Delete reminder ", reminder);
       // delete the reminder
-      reminder.remove().then(() => {
-        console.log("remove succesful");
-      });
+      reminder
+        .remove()
+        .then(() => {
+          console.log("remove succesful");
+        })
+        .catch(e => {
+          this.handleError(e);
+        });
     },
     editReminder(props) {
       console.log("Edit reminder ", props);
@@ -104,9 +120,14 @@ export default {
       props.reminder.time = props.mod.time;
       props.reminder.window = props.mod.window;
       props.reminder.weekdays = props.mod.weekdays;
-      props.reminder.update().then(reminder => {
-        console.log("edit succesful", reminder);
-      });
+      props.reminder
+        .update()
+        .then(reminder => {
+          console.log("edit succesful", reminder);
+        })
+        .catch(e => {
+          this.handleError(e);
+        });
     },
     sortByDate(a, b) {
       // a and b are reminders

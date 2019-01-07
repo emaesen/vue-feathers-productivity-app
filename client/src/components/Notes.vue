@@ -104,23 +104,39 @@ export default {
   },
   methods: {
     ...mapActions("notes", { findNotes: "find" }),
+    handleError(e) {
+      console.error("Error: ", e);
+      if (e.name === "NotAuthenticated") {
+        this.$router.push("/login");
+      }
+    },
     createNote(newNote) {
       console.log("Create note ", newNote);
       // create note instance
       const { Note } = this.$FeathersVuex;
       const note = new Note(newNote);
-      note.save().then(note => {
-        console.log("Note created ", note);
-        this.setCategories();
-      });
+      note
+        .save()
+        .then(note => {
+          console.log("Note created ", note);
+          this.setCategories();
+        })
+        .catch(err => {
+          this.handleError(err);
+        });
     },
     deleteNote(note) {
       console.log("Delete note ", note);
       // delete the note
-      note.remove().then(() => {
-        console.log("remove succesful");
-        this.setCategories();
-      });
+      note
+        .remove()
+        .then(() => {
+          console.log("remove succesful");
+          this.setCategories();
+        })
+        .catch(err => {
+          this.handleError(err);
+        });
     },
     editNote(props) {
       console.log("Edit note ", props);
@@ -128,10 +144,15 @@ export default {
       props.note.text = props.mod.text;
       props.note.category = props.mod.category;
       props.note.color = props.mod.color;
-      props.note.update().then(note => {
-        console.log("edit succesful", note);
-        this.setCategories();
-      });
+      props.note
+        .update()
+        .then(note => {
+          console.log("edit succesful", note);
+          this.setCategories();
+        })
+        .catch(err => {
+          this.handleError(err);
+        });
     },
     cycleSortType() {
       let typeIndex = this.types.findIndex(t => t === this.sortType) + 1;
