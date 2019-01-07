@@ -1,10 +1,13 @@
 <template>
   <div class="container">
-    <button class="action button absolute top right spaced" @click="deFocus">
-      <font-awesome-icon icon="check-circle"/>done
-    </button>
-    <h4>{{ day }}</h4>
-    <div class="day">{{ date }}</div>
+    <div v-if="onCalendar">...</div>
+    <div v-else>
+      <button class="action button absolute top right spaced" @click="deFocus">
+        <font-awesome-icon icon="check-circle"/>done
+      </button>
+      <h4>{{ day }}</h4>
+      <div class="day">{{ date }}</div>
+    </div>
   </div>
 </template>
 
@@ -16,6 +19,9 @@ export default {
   props: {
     date: {
       type: Object
+    },
+    onCalendar: {
+      type: Boolean
     }
   },
   data() {

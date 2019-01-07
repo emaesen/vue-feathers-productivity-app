@@ -21,7 +21,7 @@
           <transition name="fade" mode="out-in">
             <div :key="day.date.getTime()" class="day-container">
               <div class="day-number">{{ day.monthDay }}</div>
-              <pa-calendar-events-box></pa-calendar-events-box>
+              <pa-calendar-day :date="day" :onCalendar="true"></pa-calendar-day>
             </div>
           </transition>
         </div>
@@ -31,14 +31,14 @@
 </template>
 
 <script>
-import CalendarEventsBox from "./CalendarEventsBox";
+import CalendarDay from "./CalendarDay";
 import calendarUtils from "../utils/calendar";
 import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "CalendarBody",
   components: {
-    "pa-calendar-events-box": CalendarEventsBox
+    "pa-calendar-day": CalendarDay
   },
   props: {
     events: {
