@@ -41,6 +41,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       - [x] Read
       - [x] Update
       - [x] Delete
+      - [x] redirects to login when session has expired
     - [x] display Create/Update error messages
     - [x] ask confirmation before Delete
     - [x] the logged-in user can access only their own notes
@@ -72,12 +73,21 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       - [x] Read
       - [x] Update
       - [x] Delete
+      - [x] redirects to login when session has expired
     - [x] the logged-in user can access only their own reminders
     - [x] real-time update events are send only to the authenticated user
     - [x] when user logs out, their reminders data are cleared from store
     - [x] changes in one browser are immediately reflected in another
-    - [ ] reminder has text, date, time, window, recurring properties
-    - [ ] reminder has countdown when end time is close
+    - [x] reminder has text and due date & time properties
+    - [x] reminder has window properties
+      - [x] preview window (days)
+      - [x] count-down window (hours & minutes)
+      - [x] grace/snooze window (days, hours & minutes)
+    - [ ] reminder has recurring scheduling properties
+      - [ ] start date of recurring schedule
+      - [x] day of the week recurring
+      - [ ] day of the month recurring
+    - [x] reminder has countdown when end time is close
 - [ ] **services**
   - [ ] > Reminders service
   - [ ] > ToDos service
@@ -90,8 +100,8 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
   - [ ] Each service has a dedicated view page.
   - [ ] Each service has a summary view on the Dashboard page
     - [ ] Dashboard page from top to bottom: Reminders, ToDos, Notes, Bookmarks, Calendar, Archive
-    - [ ] Reminders has small strip on top of Dashboard page with upcoming reminder
-    - [ ] Reminders has countdown when next reminder is close
+    - [x] Reminders has small strip on top of Dashboard page with upcoming reminder
+    - [x] Reminders has countdown when next reminder is close
   - [ ] Services can be associated with each other
   - [ ] Services can be archived
 - [ ] **progressive web app**
