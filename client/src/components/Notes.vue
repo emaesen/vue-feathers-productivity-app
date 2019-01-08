@@ -166,7 +166,7 @@ export default {
         typeIndex = 0;
       }
       this.sortType = this.types[typeIndex];
-      console.log(this.sortType + " " + typeIndex);
+      //console.log(this.sortType + " " + typeIndex);
     },
     sortByDate(a, b, type) {
       type = type || "updated";
@@ -242,7 +242,7 @@ export default {
         .map(n => n.category)
         .filter((c, i, s) => s.indexOf(c) === i)
         .sort();
-      console.log({ categories: this.categories });
+      //console.log({ categories: this.categories });
     }
   },
   computed: {
