@@ -55,7 +55,8 @@ export default new Vuex.Store({
       instanceDefaults: {
         text: "",
         category: "",
-        color: ""
+        color: "",
+        isPinned: false
       }
     }),
     service("reminders", {

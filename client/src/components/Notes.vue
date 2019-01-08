@@ -144,6 +144,7 @@ export default {
       props.note.text = props.mod.text;
       props.note.category = props.mod.category;
       props.note.color = props.mod.color;
+      props.note.isPinned = props.mod.isPinned;
       props.note
         .update()
         .then(note => {

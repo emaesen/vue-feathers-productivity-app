@@ -27,7 +27,7 @@
         </div>
         <div class="clr-selector">
           <span v-for="clr in colors" :key="clr" class="action button" @click="selectClr(clr)">
-            <span class="clr" :class="'clr-' + clr" :title="clr">{{ clr===color ? "✔" : "" }}</span>
+            <span class="clr check" :class="'clr-' + clr" :title="clr">{{ clr===color ? "✔" : "" }}</span>
           </span>
         </div>
         <div>
@@ -35,13 +35,19 @@
           <input
             id="category"
             name="category"
+            type="text"
             v-model="category"
             placeholder="type new or select below"
           >
+          <span
+            class="action button dashboard"
+            :class="{checked: isPinned}"
+            @click="toggleDashboard"
+          >{{ isPinned ? "pinned" : "pin" }} on dashboard</span>
           <div class="categories">
             <span class="expl">└ select ➔</span>
             <div class="category" v-for="cat in categories" :key="cat">
-              <button class="action" v-if="cat.length>0" @click="category=cat">{{ cat }}</button>
+              <button class="action cat" v-if="cat.length>0" @click="category=cat">{{ cat }}</button>
             </div>
           </div>
         </div>
@@ -81,6 +87,7 @@ export default {
       category: (this.note && this.note.category) || "",
       color: (this.note && this.note.color) || "",
       showForm: !!(this.note && this.note.text),
+      isPinned: !!(this.note && this.note.isPinned),
       showError: false,
       colors: ["", "red", "blue", "green", "yellow", "purple"]
     };
@@ -122,12 +129,17 @@ export default {
       this.text = this.note.text;
       this.category = this.note.category;
       this.color = this.note.color;
+      this.isPinned = this.note.isPinned;
     },
     clearNoteForm() {
       this.text = "";
       this.category = "";
       this.color = "";
+      this.isPinned = false;
       this.showForm = false;
+    },
+    toggleDashboard() {
+      this.isPinned = !this.isPinned;
     },
     save() {
       const msgType = this.isEdit ? "edit-note" : "create-note";
@@ -136,7 +148,8 @@ export default {
         this.$emit(msgType, {
           text: this.text,
           category: this.category,
-          color: this.color
+          color: this.color,
+          isPinned: this.isPinned
         });
         this.closeNoteForm();
       } else {
@@ -191,6 +204,19 @@ export default {
 }
 .clr-selector {
   margin-bottom: 1em;
+}
+button.action.cat {
+  margin-left: 0.3em;
+}
+.button.dashboard {
+  margin-left: 1em;
+}
+.button.dashboard.checked::before {
+  content: "✓ ";
+  color: #29dc58;
+}
+.clr.check {
+  color: #29dc58;
 }
 .fade-enter-active,
 .fade-leave-active {
