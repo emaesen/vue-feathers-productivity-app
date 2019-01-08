@@ -38,6 +38,7 @@
       v-show="showFilters"
       :colors="colors"
       :categories="categories"
+      :pins="pins"
       :filter="filter"
       :filterMeta="notesFilterMeta"
     />
@@ -89,9 +90,10 @@ export default {
       sortAsc: true,
       colors: ["red", "yellow", "purple", "blue", "green", ""],
       categories: [],
+      pins: [true, false],
       types: ["color", "category", "date created", "date modified"],
       sortType: "category",
-      filter: { colors: [], categories: [] },
+      filter: { colors: [], categories: [], pins: [] },
       showFilters: false,
       sortDateAsc: false,
       sortNoCatLast: true,
@@ -101,6 +103,9 @@ export default {
   created() {
     // Find all notes from server. We'll filter/sort on the client.
     this.findNotes({ query: {} }).then(this.setCategories);
+    if (this.onDashboard) {
+      this.filter.pins.push(true);
+    }
   },
   methods: {
     ...mapActions("notes", { findNotes: "find" }),
@@ -215,15 +220,18 @@ export default {
       this.showFilters = !this.showFilters;
     },
     uiFilter(note) {
-      // Filter by selected colors and categories.
+      // Filter by selected colors, categories and pins.
       // Multiple colors are `or`-ed. Multiple categories are `or`-ed.
       // Example:
       // (note.color === 'green' || note.color === 'blue') && (note.category === 'code')
       const clrReducer = (acc, cur) => acc || note.color === cur;
       const catReducer = (acc, cur) => acc || note.category === cur;
+      const pinReducer = (acc, cur) => acc || note.isPinned === cur;
       const hasClr = this.filter.colors.length > 0;
       const hasCat = this.filter.categories.length > 0;
+      const hasPin = this.filter.pins.length > 0;
       return (
+        this.filter.pins.reduce(pinReducer, !hasPin) &&
         this.filter.colors.reduce(clrReducer, !hasClr) &&
         this.filter.categories.reduce(catReducer, !hasCat)
       );
@@ -274,12 +282,17 @@ export default {
         : [];
     },
     nrFiltersApplied() {
-      return this.filter.colors.length + this.filter.categories.length;
+      return (
+        this.filter.colors.length +
+        this.filter.categories.length +
+        this.filter.pins.length
+      );
     },
     notesFilterMeta() {
       return this.notesUnfiltered.map(n => ({
         color: n.color,
-        category: n.category
+        category: n.category,
+        isPinned: !!n.isPinned
       }));
     }
   }

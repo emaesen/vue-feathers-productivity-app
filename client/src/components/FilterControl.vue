@@ -7,7 +7,7 @@
           class="action button cntr clear clr-none"
           :class="{checked: noColorFiltered}"
           @click="clearColorFilter"
-        >none</span>
+        >clear</span>
         ➔
         <div class="filter" v-for="color in colors" :key="color">
           <input type="checkbox" :id="'clr-' + color" :value="color" v-model="filter.colors">
@@ -22,7 +22,7 @@
           class="action button cntr clear cat-none"
           :class="{checked: noCategoryFiltered}"
           @click="clearCategoryFilter"
-        >none</span>
+        >clear</span>
         ➔
         <div class="filter" v-for="category in categories" :key="category">
           <div v-if="category.length>0">
@@ -43,6 +43,29 @@
           </div>
         </div>
       </div>
+      <div class="filter-group">
+        <span class="filter-type">Pinned:</span>
+        <span
+          class="action button cntr clear clr-none"
+          :class="{checked: noPinsFiltered}"
+          @click="clearPinnedFilter"
+        >clear</span>
+        ➔
+        <div class="filter">
+          <input type="checkbox" id="pin-true" :value="true" v-model="filter.pins">
+          <label for="pin-true" class="action button">
+            yes
+            <span class="clr cntr pinned">({{ pinsCount[true] }})</span>
+          </label>
+        </div>
+        <div class="filter">
+          <input type="checkbox" id="pin-false" :value="false" v-model="filter.pins">
+          <label for="pin-false" class="action button">
+            no
+            <span class="clr cntr pinned">({{ pinsCount[false] }})</span>
+          </label>
+        </div>
+      </div>
     </div>
   </transition>
 </template>
@@ -50,11 +73,14 @@
 <script>
 export default {
   name: "FilterControl",
-  props: ["filter", "colors", "categories", "filterMeta"],
+  props: ["filter", "colors", "categories", "pins", "filterMeta"],
   mounted() {
-    // console.log({filterMeta:this.filterMeta});
-    // console.log({colorsCount:this.colorsCount});
-    // console.log({categoriesCount:this.categoriesCount});
+    // console.log({ filter: this.filter, filterMeta: this.filterMeta });
+    // console.log({
+    //   colorsCount: this.colorsCount,
+    //   categoriesCount: this.categoriesCount,
+    //   pinsCount: this.pinsCount
+    // });
   },
   methods: {
     metaCounter(type, attr, pre) {
@@ -79,6 +105,9 @@ export default {
     clearCategoryFilter() {
       // clear the categories filter array by removing all elements
       this.filter.categories.splice(0);
+    },
+    clearPinnedFilter() {
+      this.filter.pins.splice(0);
     }
   },
   computed: {
@@ -88,11 +117,17 @@ export default {
     categoriesCount() {
       return this.metaCounter(this.categories, "category", "cat-");
     },
+    pinsCount() {
+      return this.metaCounter(this.pins, "isPinned", "");
+    },
     noColorFiltered() {
       return this.filter.colors.length === 0;
     },
     noCategoryFiltered() {
       return this.filter.categories.length === 0;
+    },
+    noPinsFiltered() {
+      return this.filter.pins.length === 0;
     }
   }
 };
