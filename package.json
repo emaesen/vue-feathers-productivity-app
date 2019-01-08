@@ -2,7 +2,7 @@
   "name": "vue-feathers-productivity-app",
   "version": "0.2.0",
   "description": "Productivity app (ToDos, reminders, notes) created with Vue and Feathers",
-  "main": "index.js",
+  "main": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -21,7 +21,5 @@
     "url": "https://github.com/emaesen/vue-feathers-productivity-app/issues"
   },
   "homepage": "https://github.com/emaesen/vue-feathers-productivity-app#readme",
-  "dependencies": {
-    "@fortawesome/free-regular-svg-icons": "^5.5.0"
-  }
+  "dependencies": {}
 }
