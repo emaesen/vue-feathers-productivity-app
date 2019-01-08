@@ -102,6 +102,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     - [ ] Dashboard page from top to bottom: Reminders, ToDos, Notes, Bookmarks, Calendar, Archive
     - [x] Reminders has small strip on top of Dashboard page with upcoming reminder
     - [x] Reminders has countdown when next reminder is close
+    - [x] Notes applies filter to hide non-pinned items
   - [ ] Services can be associated with each other
   - [ ] Services can be archived
 - [ ] **progressive web app**
