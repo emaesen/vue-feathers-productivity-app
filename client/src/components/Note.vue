@@ -13,8 +13,10 @@
           }"
         >
           <div ref="content">
-            <div v-if="note.category" class="category">{{ note.category }}</div>
-            <div v-else class="category"/>
+            <div class="category">
+              <font-awesome-icon icon="thumbtack" v-if="note.isPinned"/>
+              {{ note.category }}
+            </div>
             <div class="content-text" :class="'clr-' + note.color" v-html="textAsHtml"/>
             <div class="action-row" :class="{hidden:isCollapsed}">
               <button class="action button" title="edit" @click="showForm">
