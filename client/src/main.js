@@ -27,6 +27,7 @@ import {
   faStickyNote, // notes
   faTachometerAlt, // dashboard
   faTh, // grid layout
+  faThumbtack, // pin
   faTrashAlt, // delete
   faUserCheck, // logged-in user
   faUserPlus, // register new user
@@ -65,6 +66,7 @@ library.add(
   faStickyNote,
   faTachometerAlt,
   faTh,
+  faThumbtack,
   faTrashAlt,
   faUserCheck,
   faUserPlus,
