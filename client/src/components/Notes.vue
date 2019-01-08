@@ -31,7 +31,7 @@
       <button @click="toggleFilters" class="action button">
         {{ showFilters? 'hide' : 'show' }} filters
         <font-awesome-icon icon="filter" class="flush-right"/>
-        ({{ nrFiltersApplied }})
+        <span class="filter-cntr">({{ nrFiltersApplied }} applied)</span>
       </button>
     </div>
     <pa-filter-control
@@ -297,6 +297,11 @@ h2.notes {
   display: inline-block;
   position: relative;
   top: -5px;
+}
+.filter-cntr {
+  font-weight: 400;
+  color: #948972;
+  margin-left: 0.2em;
 }
 .grid {
   position: relative;
