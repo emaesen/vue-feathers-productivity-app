@@ -208,7 +208,7 @@ export default {
       }
       if (time[1] && (!this.isPastDue || dueInNrDays === 0)) {
         timeTxt =
-          (1 * time[0] > 12 ? 1 * time[0] - 12 : time[0]) + ":" + time[1];
+          (1 * time[0] > 12 ? 1 * time[0] - 12 : 1 * time[0]) + ":" + time[1];
         ampmTxt = 1 * time[0] > 12 ? "PM" : "AM";
       }
       return {
