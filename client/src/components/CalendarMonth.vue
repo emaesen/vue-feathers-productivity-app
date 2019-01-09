@@ -1,7 +1,7 @@
 <template>
   <div class="calendar-container">
     <pa-calendar-head/>
-    <pa-calendar-body :events="calendarEvents"></pa-calendar-body>
+    <pa-calendar-body :events="events" :reminders="reminders"/>
   </div>
 </template>
 
@@ -17,14 +17,14 @@ export default {
   },
   props: {
     events: {
-      type: Array,
-      default: () => []
+      type: Array
+    },
+    reminders: {
+      type: Array
     }
   },
   data() {
-    return {
-      calendarEvents: this.events
-    };
+    return {};
   },
   mounted() {},
   watch: {},
