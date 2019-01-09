@@ -4,11 +4,12 @@
       <div class="reminders">
         <div
           class="reminder"
-          :class="{allday: !reminder.time}"
+          :class="{allday: !reminder.time, recurring: reminder.recurring}"
           v-for="reminder in todaysReminders"
           :key="reminder.time"
         >
           <font-awesome-icon icon="bell"/>
+          <font-awesome-icon v-if="reminder.recurring" icon="recycle"/>
           <span class="time" v-if="reminder.time">{{ reminder.time }}</span>
           <span class="text">{{ reminder.text }}</span>
         </div>
@@ -24,11 +25,12 @@
         <div class="reminders">
           <div
             class="reminder"
-            :class="{allday: !reminder.time}"
+            :class="{allday: !reminder.time, recurring: reminder.recurring}"
             v-for="reminder in todaysReminders"
             :key="reminder.time"
           >
             <font-awesome-icon icon="bell"/>
+            <font-awesome-icon v-if="reminder.recurring" icon="recycle"/>
             <span class="time" v-if="reminder.time">{{ reminder.time }}</span>
             <span class="text">{{ reminder.text }}</span>
           </div>
@@ -77,10 +79,22 @@ export default {
     },
     todaysReminders() {
       let today = calendarUtils.yyyy_mm_dd(this.date.date);
+      let todayNumeric = calendarUtils.yyyymmdd(this.date.date);
+      let weekday = this.date.date.getDay();
       let reminders = this.reminders
-        .filter(rem => rem.date === today)
+        .filter(
+          rem =>
+            rem.date === today ||
+            (rem.weekdays &&
+              rem.weekdays.includes(weekday) &&
+              calendarUtils.yyyymmdd(rem.date) >= todayNumeric)
+        )
         .map(rem => {
-          return { text: rem.text, time: rem.time };
+          return {
+            text: rem.text,
+            time: rem.time,
+            recurring: rem.weekdays && rem.weekdays.length > 0
+          };
         })
         .sort(
           (a, b) => 1 * a.time.replace(":", ".") - 1 * b.time.replace(":", ".")
@@ -139,5 +153,9 @@ h4 {
 .allday,
 .allday .svg-inline--fa {
   color: #b1bcdb;
+}
+.recurring,
+.recurring .svg-inline--fa {
+  color: #8c924082;
 }
 </style>
