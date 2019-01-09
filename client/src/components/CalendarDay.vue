@@ -1,9 +1,15 @@
 <template>
   <div class="container">
-    <div v-if="onCalendar">
+    <div v-if="onCalendar" class="compact">
       <div class="reminders">
-        <div v-for="reminder in todaysReminders" :key="reminder.time">
-          <span class="time">{{ reminder.time }}</span>
+        <div
+          class="reminder"
+          :class="{allday: !reminder.time}"
+          v-for="reminder in todaysReminders"
+          :key="reminder.time"
+        >
+          <font-awesome-icon icon="bell"/>
+          <span class="time" v-if="reminder.time">{{ reminder.time }}</span>
           <span class="text">{{ reminder.text }}</span>
         </div>
       </div>
@@ -14,7 +20,21 @@
         <font-awesome-icon icon="check-circle"/>done
       </button>
       <h4>{{ day }}</h4>
-      <div class="day">{{ date }}</div>
+      <div class="day">
+        <div class="reminders">
+          <div
+            class="reminder"
+            :class="{allday: !reminder.time}"
+            v-for="reminder in todaysReminders"
+            :key="reminder.time"
+          >
+            <font-awesome-icon icon="bell"/>
+            <span class="time" v-if="reminder.time">{{ reminder.time }}</span>
+            <span class="text">{{ reminder.text }}</span>
+          </div>
+        </div>
+        <div class="events"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -99,5 +119,25 @@ h4 {
 }
 .day {
   min-height: 300px;
+}
+.event,
+.reminder {
+  color: #dfcaa8;
+}
+.compact {
+  font-size: 75%;
+}
+.compact .event,
+.compact .reminder {
+  display: flex;
+  overflow: auto;
+  max-height: 2em;
+}
+.time {
+  margin-right: 0.5em;
+}
+.allday,
+.allday .svg-inline--fa {
+  color: #b1bcdb;
 }
 </style>
