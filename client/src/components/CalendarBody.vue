@@ -21,7 +21,12 @@
           <transition name="fade" mode="out-in">
             <div :key="day.date.getTime()" class="day-container">
               <div class="day-number">{{ day.monthDay }}</div>
-              <pa-calendar-day :date="day" :onCalendar="true"></pa-calendar-day>
+              <pa-calendar-day
+                :date="day"
+                :onCalendar="true"
+                :events="events"
+                :reminders="reminders"
+              ></pa-calendar-day>
             </div>
           </transition>
         </div>
@@ -42,8 +47,10 @@ export default {
   },
   props: {
     events: {
-      type: Array,
-      required: true
+      type: Array
+    },
+    reminders: {
+      type: Array
     }
   },
   data() {

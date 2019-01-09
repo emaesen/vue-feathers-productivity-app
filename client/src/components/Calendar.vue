@@ -4,8 +4,14 @@
       <font-awesome-icon icon="calendar-alt"/>Calendar
     </h2>
     <transition name="fade" mode="out-in">
-      <pa-calendar-day v-if="dayInFocus" :date="dayInFocus" key="day"/>
-      <pa-calendar-month v-if="!dayInFocus" key="month"/>
+      <pa-calendar-day
+        v-if="dayInFocus"
+        key="day"
+        :date="dayInFocus"
+        :events="events"
+        :reminders="reminders"
+      />
+      <pa-calendar-month v-if="!dayInFocus" key="month" :events="events" :reminders="reminders"/>
     </transition>
   </section>
 </template>
@@ -13,7 +19,7 @@
 <script>
 import CalendarMonth from "./CalendarMonth";
 import CalendarDay from "./CalendarDay";
-import { mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Calendar",
@@ -30,10 +36,58 @@ export default {
   data() {
     return {};
   },
+  mounted() {
+    console.log("in Calendar.mounted() ", {
+      events: this.events,
+      reminders: this.reminders,
+      loadingReminders: this.loadingReminders
+    });
+    // If the calendar is viewed on the dashboard,
+    //    then the reminders are loaded by the Reminders widget.
+    // If the calendar is viewed stand-alone,
+    //    then it may have to load the reminders by itself.
+    if (this.reminders.length === 0 && !this.loadingReminders) {
+      this.loadReminders();
+    }
+  },
   computed: {
+    ...mapState("auth", { user: "payload" }),
     ...mapGetters({ calendarState: "calendar" }),
     dayInFocus() {
       return this.calendarState.dayInFocus;
+    },
+    ...mapGetters("reminders", { findRemindersInStore: "find" }),
+    ...mapState("reminders", {
+      loadingReminders: "isFindPending"
+    }),
+    events() {
+      // TODO - placeholder
+      return [];
+    },
+    reminders() {
+      return this.user ? this.findRemindersInStore({ query: {} }).data : [];
+    }
+  },
+  methods: {
+    ...mapActions("reminders", { findReminders: "find" }),
+    handleError(e) {
+      console.error("Error: ", e);
+      if (e.name === "NotAuthenticated") {
+        this.$router.push("/login");
+      }
+    },
+    loadReminders() {
+      // Find all reminders from server.
+      this.findReminders({ query: {} })
+        .then(resp =>
+          console.log({
+            loadRemindersInCalendarResp: resp,
+            reminders: this.reminders
+          })
+        )
+        .catch(err => {
+          this.handleError(err);
+        });
     }
   }
 };

@@ -20,8 +20,15 @@ export default {
     date: {
       type: Object
     },
+    events: {
+      type: Array
+    },
+    reminders: {
+      type: Array
+    },
     onCalendar: {
-      type: Boolean
+      type: Boolean,
+      default: false
     }
   },
   data() {
