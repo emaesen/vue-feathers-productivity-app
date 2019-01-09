@@ -110,7 +110,7 @@ export default {
   methods: {
     ...mapActions("notes", { findNotes: "find" }),
     handleError(e) {
-      console.error("Error: ", e);
+      console.error("Notes Error: ", e);
       if (e.name === "NotAuthenticated") {
         this.$router.push("/login");
       }

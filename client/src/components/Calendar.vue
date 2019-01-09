@@ -37,7 +37,7 @@ export default {
     return {};
   },
   mounted() {
-    console.log("in Calendar.mounted() ", {
+    console.log("in Calendar mounted ", {
       events: this.events,
       reminders: this.reminders,
       loadingReminders: this.loadingReminders
@@ -71,7 +71,7 @@ export default {
   methods: {
     ...mapActions("reminders", { findReminders: "find" }),
     handleError(e) {
-      console.error("Error: ", e);
+      console.error("Calendar Error: ", e);
       if (e.name === "NotAuthenticated") {
         this.$router.push("/login");
       }

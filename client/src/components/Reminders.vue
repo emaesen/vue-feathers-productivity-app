@@ -73,7 +73,7 @@ export default {
   methods: {
     ...mapActions("reminders", { findReminders: "find" }),
     handleError(e) {
-      console.error("Error: ", e);
+      console.error("Reminders Error: ", e);
       if (e.name === "NotAuthenticated") {
         this.$router.push("/login");
       }
