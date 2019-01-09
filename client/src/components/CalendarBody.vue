@@ -26,6 +26,7 @@
                 :onCalendar="true"
                 :events="events"
                 :reminders="reminders"
+                :classes="dayClasses(day)"
               ></pa-calendar-day>
             </div>
           </transition>
@@ -169,9 +170,6 @@ export default {
 }
 .day-label .current {
   font-style: italic;
-}
-.week-day.events {
-  color: #dfcaa8;
 }
 .week-row.past {
   opacity: 0.7;
