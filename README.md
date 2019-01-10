@@ -92,32 +92,33 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
   - [ ] add Events service
     - [x] prepare server side
       - [x] generate feathers service
-      - [ ] add authentication hooks
-    - [ ] prepare client side
-      - [ ] add events service to the store
-      - [ ] add events service scaffold to the app
+      - [x] add authentication hooks
+    - [x] prepare client side
+      - [x] add events service to the store
+      - [x] add events service scaffold to the app
     - [ ] CRUD operations
-      - [ ] Create
+      - [x] Create
       - [ ] Read
       - [ ] Update
       - [ ] Delete
-      - [ ] redirects to login when session has expired
-    - [ ] the logged-in user can access only their own events
-    - [ ] real-time update events are send only to the authenticated user
-    - [ ] when user logs out, their events data are cleared from store
+      - [x] redirects to login when session has expired
+    - [ ] events are integrated with the calendar
+    - [ ] event can be associated with a reminder
+    - [x] the logged-in user can access only their own events
+    - [x] real-time update events are send only to the authenticated user
+    - [x] when user logs out, their events data are cleared from store
     - [ ] changes in one browser are immediately reflected in another
-    - [ ] event has title, description and due date & time properties
+    - [x] event has title, description and start/end date & time properties
     - [ ] event has recurring scheduling properties
       - [ ] start date of recurring schedule
       - [ ] day of the week recurring
-      - [ ] day of the month recurring
-    - [ ] event has countdown when end time is close
 - [ ] **services**
-  - [ ] > Reminders service
+  - [x] > Reminders service
   - [ ] > ToDos service
   - [x] > Notes service
   - [ ] > Bookmarks service
-  - [ ] > Events service
+  - [x] > Events service
+  - [ ] > Diary service
   - [ ] > Archive service
   - [x] import vue-fontawesome icons
   - [ ] Each service has a dedicated view page.
