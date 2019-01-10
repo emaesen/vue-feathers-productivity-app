@@ -14,11 +14,11 @@ module.exports = function(app) {
   reminder: {
     _id: '',
     ownerId: user._id,
-    noteId: note._id,
     text: '',
     date: '',
     time: '',
-    snooze: '',
+    window: [],
+    weekdays: [],
     createdAt: {},
     updatedAt: {}
   }
