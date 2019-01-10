@@ -95,7 +95,7 @@
 import calendarUtils from "../utils/calendar";
 import EditReminder from "./CreateEditReminder";
 import CountDown from "./CountDown";
-import { mapGetters } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 
 const DUETEXTWINDOWDAYS = 7;
 
@@ -326,6 +326,10 @@ export default {
     }
   },
   methods: {
+    ...mapMutations([
+      "INCREASE_NR_PAST_DUE_REMINDERS",
+      "DECREASE_NR_PAST_DUE_REMINDERS"
+    ]),
     editTransitionComplete() {
       if (this.resetStyle) {
         this.setContentStyleProps();
@@ -407,6 +411,15 @@ export default {
     brieflyRevealDueDate() {
       this.brieflyHideCountDown = true;
       setTimeout(() => (this.brieflyHideCountDown = false), 5000);
+    }
+  },
+  watch: {
+    isPastDue() {
+      if (this.isPastDue) {
+        this.INCREASE_NR_PAST_DUE_REMINDERS();
+      } else {
+        this.DECREASE_NR_PAST_DUE_REMINDERS();
+      }
     }
   }
 };

@@ -13,6 +13,7 @@ Vue.use(FeathersVuex);
 export default new Vuex.Store({
   state: {
     timeTick: new Date().getTime(),
+    nrPastDueReminders: 0,
     calendar: {
       today: null,
       month: {
@@ -24,6 +25,7 @@ export default new Vuex.Store({
   },
   getters: {
     timeTick: state => state.timeTick,
+    nrPastDueReminders: state => state.nrPastDueReminders,
     calendar: state => state.calendar
   },
   mutations: {
@@ -38,6 +40,18 @@ export default new Vuex.Store({
     },
     SET_CALENDAR_TODAY: (state, day) => {
       state.calendar.today = day;
+    },
+    SET_NR_PAST_DUE_REMINDERS: (state, nr) => {
+      nr = nr || 0;
+      state.nrPastDueReminders = nr;
+    },
+    INCREASE_NR_PAST_DUE_REMINDERS: (state, nr) => {
+      nr = nr || 1;
+      state.nrPastDueReminders += nr;
+    },
+    DECREASE_NR_PAST_DUE_REMINDERS: (state, nr) => {
+      nr = nr || 1;
+      state.nrPastDueReminders -= nr;
     }
   },
   actions: {

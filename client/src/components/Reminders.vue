@@ -40,7 +40,7 @@ import Clock from "./Clock";
 
 // Get reminders as "Reactive Lists with Live Queries"
 // https://feathers-plus.github.io/v1/feathers-vuex/common-patterns.html
-import { mapState, mapGetters, mapActions } from "vuex";
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 
 const NRMILLISECINMINUTE = calendarUtils.NRMILLISECINMINUTE;
 const NRMILLISECINHOUR = calendarUtils.NRMILLISECINHOUR;
@@ -72,6 +72,7 @@ export default {
   },
   methods: {
     ...mapActions("reminders", { findReminders: "find" }),
+    ...mapMutations(["SET_NR_PAST_DUE_REMINDERS"]),
     handleError(e) {
       console.error("Reminders Error: ", e);
       if (e.name === "NotAuthenticated") {
@@ -236,7 +237,18 @@ export default {
     }
   },
   watch: {
-    today: "loadReminders"
+    today: "loadReminders",
+    remindersUnfiltered() {
+      const reducer = (acc, curr) => {
+        if (this.isPastDue(this.correctedDate(curr))) {
+          return acc + 1;
+        } else {
+          return acc;
+        }
+      };
+      let nrPastDueReminders = this.remindersUnfiltered.reduce(reducer, 0);
+      this.SET_NR_PAST_DUE_REMINDERS(nrPastDueReminders);
+    }
   }
 };
 </script>
