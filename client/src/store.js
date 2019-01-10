@@ -82,6 +82,14 @@ export default new Vuex.Store({
         weekdays: []
       }
     }),
+    service("events", {
+      instanceDefaults: {
+        title: "",
+        description: "",
+        date: "",
+        time: ""
+      }
+    }),
     // Setup the auth plugin.
     auth({ userService: "users" })
   ]
