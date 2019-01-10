@@ -3,6 +3,8 @@
     <h2 class="calendar">
       <font-awesome-icon icon="calendar-alt"/>Calendar
     </h2>
+    <pa-create-event @create-event="createEvent"/>
+
     <transition name="fade" mode="out-in">
       <pa-calendar-day
         v-if="dayInFocus"
@@ -19,13 +21,15 @@
 <script>
 import CalendarMonth from "./CalendarMonth";
 import CalendarDay from "./CalendarDay";
+import CreateEvent from "./CreateEditEvent";
 import { mapState, mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Calendar",
   components: {
     "pa-calendar-month": CalendarMonth,
-    "pa-calendar-day": CalendarDay
+    "pa-calendar-day": CalendarDay,
+    "pa-create-event": CreateEvent
   },
   props: {
     onDashboard: {
@@ -50,6 +54,14 @@ export default {
       this.loadReminders();
     }
   },
+  created() {
+    // Find all event from server.
+    this.findEvents({ query: {} })
+      .then()
+      .catch(err => {
+        this.handleError(err);
+      });
+  },
   computed: {
     ...mapState("auth", { user: "payload" }),
     ...mapGetters({ calendarState: "calendar" }),
@@ -60,8 +72,12 @@ export default {
     ...mapState("reminders", {
       loadingReminders: "isFindPending"
     }),
+    ...mapGetters("events", { findEventsInStore: "find" }),
+    ...mapState("events", {
+      loadingEvents: "isFindPending"
+    }),
     events() {
-      // TODO - placeholder
+      return this.user ? this.findEventsInStore({ query: {} }).data : [];
       return [];
     },
     reminders() {
@@ -70,6 +86,7 @@ export default {
   },
   methods: {
     ...mapActions("reminders", { findReminders: "find" }),
+    ...mapActions("events", { findEvents: "find" }),
     handleError(e) {
       console.error("Calendar Error: ", e);
       if (e.name === "NotAuthenticated") {
@@ -85,6 +102,49 @@ export default {
             reminders: this.reminders
           })
         )
+        .catch(err => {
+          this.handleError(err);
+        });
+    },
+    createEvent(newEvent) {
+      console.log("Create event ", newEvent);
+      // create event instance
+      const { Event } = this.$FeathersVuex;
+      const event = new Event(newEvent);
+      event
+        .save()
+        .then(event => {
+          console.log("Event created ", event);
+        })
+        .catch(err => {
+          this.handleError(err);
+        });
+    },
+    deleteEvent(event) {
+      console.log("Delete event ", event);
+      // delete the event
+      event
+        .remove()
+        .then(() => {
+          console.log("remove succesful");
+        })
+        .catch(err => {
+          this.handleError(err);
+        });
+    },
+    editEvent(props) {
+      console.log("Edit event ", props);
+      // save the modifictions
+      props.event.title = props.mod.title;
+      props.event.description = props.mod.description;
+      props.event.date = props.mod.date;
+      props.event.time = props.mod.time;
+      props.event.weekdays = props.mod.weekdays;
+      props.event
+        .update()
+        .then(event => {
+          console.log("edit succesful", event);
+        })
         .catch(err => {
           this.handleError(err);
         });
