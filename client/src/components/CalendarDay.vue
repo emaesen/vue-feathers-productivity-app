@@ -67,14 +67,7 @@ export default {
   data() {
     return {};
   },
-  mounted() {
-    // console.log("in CalendarDay mounted", {
-    //   day: this.day,
-    //   events: this.events,
-    //   reminders: this.reminders
-    // });
-    console.log(this.classes);
-  },
+  mounted() {},
   computed: {
     day() {
       return calendarUtils.formattedDate(this.date.date, {
