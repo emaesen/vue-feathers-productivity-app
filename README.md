@@ -93,8 +93,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
   - [ ] > ToDos service
   - [x] > Notes service
   - [ ] > Bookmarks service
-  - [ ] > Calendar service
-    - [ ] > Events service
+  - [ ] > Events service
   - [ ] > Archive service
   - [x] import vue-fontawesome icons
   - [ ] Each service has a dedicated view page.
@@ -105,6 +104,14 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     - [x] Notes applies filter to hide non-pinned items
   - [ ] Services can be associated with each other
   - [ ] Services can be archived
+- [ ] **calendar**
+  - [x] shows all days in selected month
+    - [x] can cycle through months
+    - [x] can jump back to current month
+  - [x] displays non-recurring reminders
+  - [x] displays recurring reminders
+  - [ ] displays events
+  - [x] can switch between month-view and day-view
 - [ ] **progressive web app**
   - [ ] app is operational when offline
   - [ ] app syncs when back online
