@@ -1,14 +1,14 @@
 <template>
-  <div class="container">
-    <div v-if="onCalendar" class="compact">
+  <div class="day-content" :class="classes">
+    <div v-if="onCalendar" class="day-compact">
       <div class="reminders">
         <div
           class="reminder"
           :class="{allday: !reminder.time, recurring: reminder.recurring}"
           v-for="reminder in todaysReminders"
-          :key="reminder.time"
+          :key="reminder._id"
         >
-          <font-awesome-icon icon="bell"/>
+          <font-awesome-icon v-if="!reminder.recurring" icon="bell"/>
           <font-awesome-icon v-if="reminder.recurring" icon="recycle"/>
           <span class="time" v-if="reminder.time">{{ reminder.time }}</span>
           <span class="text">{{ reminder.text }}</span>
@@ -16,7 +16,7 @@
       </div>
       <div class="events"></div>
     </div>
-    <div v-else>
+    <div v-else class="day-full">
       <button class="action button absolute top right spaced" @click="deFocus">
         <font-awesome-icon icon="check-circle"/>done
       </button>
@@ -27,9 +27,9 @@
             class="reminder"
             :class="{allday: !reminder.time, recurring: reminder.recurring}"
             v-for="reminder in todaysReminders"
-            :key="reminder.time"
+            :key="reminder._id"
           >
-            <font-awesome-icon icon="bell"/>
+            <font-awesome-icon v-if="!reminder.recurring" icon="bell"/>
             <font-awesome-icon v-if="reminder.recurring" icon="recycle"/>
             <span class="time" v-if="reminder.time">{{ reminder.time }}</span>
             <span class="text">{{ reminder.text }}</span>
@@ -59,6 +59,9 @@ export default {
     onCalendar: {
       type: Boolean,
       default: false
+    },
+    classes: {
+      type: Array
     }
   },
   data() {
@@ -70,6 +73,7 @@ export default {
     //   events: this.events,
     //   reminders: this.reminders
     // });
+    console.log(this.classes);
   },
   computed: {
     day() {
@@ -87,7 +91,8 @@ export default {
             rem.date === today ||
             (rem.weekdays &&
               rem.weekdays.includes(weekday) &&
-              calendarUtils.yyyymmdd(rem.date) >= todayNumeric)
+              (rem.date === "" ||
+                calendarUtils.yyyymmdd(rem.date) >= todayNumeric))
         )
         .map(rem => {
           return {
@@ -121,7 +126,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
+.day-content {
   position: relative;
 }
 .top {
@@ -138,24 +143,43 @@ h4 {
 .reminder {
   color: #dfcaa8;
 }
-.compact {
+.day-compact {
   font-size: 75%;
 }
-.compact .event,
-.compact .reminder {
+.day-compact .event,
+.day-compact .reminder {
   display: flex;
-  overflow: auto;
-  max-height: 2em;
+}
+.text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .time {
   margin-right: 0.5em;
+  color: #596583;
 }
-.allday,
-.allday .svg-inline--fa {
+.day-full .time {
+  color: #7685aa;
+}
+.allday {
   color: #b1bcdb;
 }
-.recurring,
-.recurring .svg-inline--fa {
+.recurring {
   color: #8c924082;
+}
+.day-full .recurring {
+  color: #8c9240;
+}
+.svg-inline--fa {
+  color: #596583;
+}
+.day-content.not-current * {
+  color: #84808a !important;
+  opacity: 0.7;
+}
+.day-content.past * {
+  color: #84808a !important;
+  opacity: 0.7;
 }
 </style>
