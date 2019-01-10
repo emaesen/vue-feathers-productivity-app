@@ -102,7 +102,11 @@ export default {
   },
   created() {
     // Find all notes from server. We'll filter/sort on the client.
-    this.findNotes({ query: {} }).then(this.setCategories);
+    this.findNotes({ query: {} })
+      .then(this.setCategories)
+      .catch(err => {
+        this.handleError(err);
+      });
     if (this.onDashboard) {
       this.filter.pins.push(true);
     }
