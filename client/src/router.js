@@ -32,6 +32,7 @@ function logOut(to, from, next) {
     // when one user logs out and another logs in, in the same tab.
     store.commit("notes/clearAll");
     store.commit("reminders/clearAll");
+    store.commit("events/clearAll");
     next();
   });
 }
