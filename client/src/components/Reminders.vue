@@ -82,7 +82,7 @@ export default {
     loadReminders() {
       // Find all reminders from server. We'll filter/sort on the client.
       this.findReminders({ query: {} })
-        .then(resp => console.log({ loadRemindersResp: resp }))
+        .then(resp => console.log({ findRemindersResp: resp }))
         .catch(err => {
           this.handleError(err);
         });
