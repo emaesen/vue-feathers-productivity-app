@@ -126,21 +126,21 @@ export default {
   grid-auto-columns: 14.286%;
   grid-template-areas: "a b c d e f g";
   background-color: #121017;
-  border-top: 1px solid #121017;
-  border-left: 1px solid #121017;
-  border-bottom: 1px solid #121017;
+  border-top: 1px solid #383247;
+  border-left: 1px solid #383247;
+  border-bottom: 1px solid #383247;
 }
 .days-body {
   display: grid;
   grid-template-rows: auto;
 }
 .day-number {
-  text-align: right;
+  text-align: center;
   margin-right: 10px;
 }
 .day-label {
   text-align: center;
-  border-right: 1px solid #121017;
+  border-right: 1px solid #383247;
 }
 .week-row {
   display: grid;
@@ -149,13 +149,13 @@ export default {
   grid-auto-columns: 14.286%;
 }
 .week-row {
-  border-left: 1px solid #121017;
+  border-left: 1px solid #383247;
 }
 .week-day {
-  min-height: 3em;
+  min-height: 6em;
   padding: 4px;
-  border-right: 1px solid #121017;
-  border-bottom: 1px solid #121017;
+  border-right: 1px solid #383247;
+  border-bottom: 1px solid #383247;
   overflow: hidden;
 }
 .week-day.today {
