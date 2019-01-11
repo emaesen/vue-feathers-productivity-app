@@ -2,7 +2,7 @@
   <div class="day-content" :class="classes">
     <div :class="{'day-compact':onCalendar, 'day-full':!onCalendar}">
       <button v-if="!onCalendar" class="action button absolute top right spaced" @click="deFocus">
-        <font-awesome-icon icon="check-circle"/>done
+        <font-awesome-icon icon="check-circle"/>close
       </button>
       <h4 v-if="!onCalendar">{{ day }}</h4>
       <div class="reminders">
