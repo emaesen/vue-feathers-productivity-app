@@ -166,6 +166,9 @@ h2.calendar {
   position: relative;
   top: -5px;
 }
+#calendar {
+  min-height: 48em;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: all 0.4s ease-in-out, transform 0.4s ease-in-out;

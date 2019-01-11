@@ -84,7 +84,8 @@ export default {
     },
     weekClasses(week) {
       const classes = {
-        past: week[6].isPast
+        past: week[6].isPast,
+        "not-current": !week[0].isCurrentMonth && !week[6].isCurrentMonth
       };
       return Object.keys(classes).filter(key => classes[key] === true);
     },
@@ -125,7 +126,7 @@ export default {
   display: grid;
   grid-auto-columns: 14.286%;
   grid-template-areas: "a b c d e f g";
-  background-color: #121017;
+  background-color: #0a080e;
   border-top: 1px solid #383247;
   border-left: 1px solid #383247;
   border-bottom: 1px solid #383247;
@@ -151,12 +152,16 @@ export default {
 .week-row {
   border-left: 1px solid #383247;
 }
+.week-row.not-current {
+  display: none;
+}
 .week-day {
   min-height: 6em;
   padding: 4px;
   border-right: 1px solid #383247;
   border-bottom: 1px solid #383247;
   overflow: hidden;
+  background-color: #121017;
 }
 .week-day.today {
   border: 1px dashed #91948b;
@@ -171,11 +176,12 @@ export default {
 .day-label .current {
   font-style: italic;
 }
-.week-row.past {
-  opacity: 0.7;
+.week-day.past {
+  opacity: 0.5;
 }
 .week-day.not-current {
   color: #84808a;
+  background-color: #1e1d21;
 }
 .week-day.past {
   color: #84808a;
