@@ -9,6 +9,7 @@ module.exports = function(app) {
     autoload: true
   });
 
+  // eslint-disable-next-line no-unused-vars
   Model.ensureIndex({ fieldName: 'username', unique: true }, function(err) {
     // handle errors...
     // err.errorType, err.key, err.message
