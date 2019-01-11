@@ -5,19 +5,6 @@
         <font-awesome-icon icon="check-circle"/>close
       </button>
       <h4 v-if="!onCalendar">{{ day }}</h4>
-      <div class="reminders">
-        <div
-          class="reminder"
-          :class="{allday: !reminder.time, recurring: reminder.recurring}"
-          v-for="reminder in todaysReminders"
-          :key="reminder._id"
-        >
-          <font-awesome-icon v-if="!reminder.recurring" icon="bell" class="deemph"/>
-          <font-awesome-icon v-if="reminder.recurring" icon="recycle" class="deemph"/>
-          <span class="time" v-if="reminder.time">{{ reminder.time }}</span>
-          <span class="text">{{ reminder.text }}</span>
-        </div>
-      </div>
       <div class="events">
         <div v-if="onCalendar">
           <div
@@ -44,6 +31,19 @@
             @edit-event="editEvent"
           />
         </transition-group>
+      </div>
+      <div class="reminders">
+        <div
+          class="reminder"
+          :class="{allday: !reminder.time, recurring: reminder.recurring}"
+          v-for="reminder in todaysReminders"
+          :key="reminder._id"
+        >
+          <font-awesome-icon v-if="!reminder.recurring" icon="bell" class="deemph"/>
+          <font-awesome-icon v-if="reminder.recurring" icon="recycle" class="deemph"/>
+          <span class="time" v-if="reminder.time">{{ reminder.time }}</span>
+          <span class="text">{{ reminder.text }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -181,6 +181,12 @@ h4 {
   border: 1px solid #555;
   padding: 3px;
   border-radius: 5px;
+}
+.events {
+  min-height: 4em;
+}
+.reminders {
+  min-height: 2em;
 }
 .event,
 .reminder {
