@@ -96,19 +96,20 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     - [x] prepare client side
       - [x] add events service to the store
       - [x] add events service scaffold to the app
-    - [ ] CRUD operations
+    - [x] CRUD operations
       - [x] Create
-      - [ ] Read
-      - [ ] Update
-      - [ ] Delete
+      - [x] Read
+      - [x] Update
+      - [x] Delete
       - [x] redirects to login when session has expired
-    - [ ] events are integrated with the calendar
+    - [x] events are integrated with the calendar
     - [ ] event can be associated with a reminder
     - [x] the logged-in user can access only their own events
     - [x] real-time update events are send only to the authenticated user
     - [x] when user logs out, their events data are cleared from store
     - [ ] changes in one browser are immediately reflected in another
     - [x] event has title, description and start/end date & time properties
+    - [ ] event has color and category properties
     - [ ] event has recurring scheduling properties
       - [ ] start date of recurring schedule
       - [ ] day of the week recurring
