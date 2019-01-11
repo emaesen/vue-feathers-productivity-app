@@ -9,17 +9,5 @@ module.exports = function(app) {
     autoload: true
   });
 
-  // schema:
-  /*
-  note: {
-    _id: '',
-    ownerId: user._id,
-    text: '',
-    category: '',
-    color: '',
-    createdAt: {},
-    updatedAt: {}
-  }
-  */
   return Model;
 };

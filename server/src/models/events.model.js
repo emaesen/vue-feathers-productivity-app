@@ -9,18 +9,5 @@ module.exports = function(app) {
     autoload: true
   });
 
-  // schema:
-  /*
-  event: {
-    _id: '',
-    ownerId: user._id,
-    title: '',
-    description: '',
-    date: '',
-    time: '',
-    createdAt: {},
-    updatedAt: {}
-  }
-  */
   return Model;
 };
