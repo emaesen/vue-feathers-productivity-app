@@ -30,14 +30,13 @@
           </div>
           <div class>
             <label for="text">Event description</label>
-            <input
+            <textarea
               id="description"
               name="description"
-              type="text"
-              maxlength="108"
               v-model="description"
+              :style="{height: textAreaHeight + 'px'}"
               placeholder="Event description"
-            >
+            />
           </div>
           <div class>
             <label for="date">
@@ -61,7 +60,7 @@
               placeholder="hh:mm"
               step="300"
             >
-            <span class="to">to</span>
+            <span class="divider-word">to</span>
             <input
               id="time-end"
               name="time-end"
@@ -178,8 +177,8 @@ export default {
     clearEventForm() {
       this.title = "";
       this.description = "";
-      this.date = "";
-      this.time = "";
+      this.date = { start: "", end: "" };
+      this.time = { start: "", end: "" };
       this.weekdays = [];
       this.showForm = false;
     },
@@ -225,6 +224,9 @@ input[type="number"] {
 }
 .date {
   display: inline-block;
+}
+.divider-word {
+  margin: 0 1em;
 }
 .req,
 .error {
