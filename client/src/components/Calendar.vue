@@ -57,7 +57,7 @@ export default {
   created() {
     // Find all event from server.
     this.findEvents({ query: {} })
-      .then()
+      .then(resp => console.log({ findEventsResp: resp }))
       .catch(err => {
         this.handleError(err);
       });
