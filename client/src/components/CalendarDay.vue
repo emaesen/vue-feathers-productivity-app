@@ -1,6 +1,10 @@
 <template>
   <div class="day-content" :class="classes">
-    <div v-if="onCalendar" class="day-compact">
+    <div :class="{'day-compact':onCalendar, 'day-full':!onCalendar}">
+      <button v-if="!onCalendar" class="action button absolute top right spaced" @click="deFocus">
+        <font-awesome-icon icon="check-circle"/>done
+      </button>
+      <h4 v-if="!onCalendar">{{ day }}</h4>
       <div class="reminders">
         <div
           class="reminder"
@@ -8,34 +12,22 @@
           v-for="reminder in todaysReminders"
           :key="reminder._id"
         >
-          <font-awesome-icon v-if="!reminder.recurring" icon="bell"/>
-          <font-awesome-icon v-if="reminder.recurring" icon="recycle"/>
+          <font-awesome-icon v-if="!reminder.recurring" icon="bell" class="deemph"/>
+          <font-awesome-icon v-if="reminder.recurring" icon="recycle" class="deemph"/>
           <span class="time" v-if="reminder.time">{{ reminder.time }}</span>
           <span class="text">{{ reminder.text }}</span>
         </div>
       </div>
-      <div class="events"></div>
-    </div>
-    <div v-else class="day-full">
-      <button class="action button absolute top right spaced" @click="deFocus">
-        <font-awesome-icon icon="check-circle"/>done
-      </button>
-      <h4>{{ day }}</h4>
-      <div class="day">
-        <div class="reminders">
-          <div
-            class="reminder"
-            :class="{allday: !reminder.time, recurring: reminder.recurring}"
-            v-for="reminder in todaysReminders"
-            :key="reminder._id"
-          >
-            <font-awesome-icon v-if="!reminder.recurring" icon="bell"/>
-            <font-awesome-icon v-if="reminder.recurring" icon="recycle"/>
-            <span class="time" v-if="reminder.time">{{ reminder.time }}</span>
-            <span class="text">{{ reminder.text }}</span>
-          </div>
+      <div class="events">
+        <div
+          class="event"
+          :class="{allday: !event.time.start && !event.time.end}"
+          v-for="event in todaysEvents"
+          :key="event._id"
+        >
+          <span class="time" v-if="event.time.start">{{ event.time.start }}-{{event.time.end}}</span>
+          <span class="title">{{ event.title }}</span>
         </div>
-        <div class="events"></div>
       </div>
     </div>
   </div>
@@ -98,6 +90,40 @@ export default {
           (a, b) => 1 * a.time.replace(":", ".") - 1 * b.time.replace(":", ".")
         );
       return reminders;
+    },
+    todaysEvents() {
+      let today = this.date.date;
+      let todayString = calendarUtils.yyyy_mm_dd(today);
+      let todayNumeric = calendarUtils.yyyymmdd(today);
+      let weekday = today.getDay();
+      const occursToday = event => {
+        return (
+          todayString === event.date.start ||
+          (todayNumeric >= event.date.start.replace(/-/g, "") &&
+            todayNumeric <= event.date.end.replace(/-/g, ""))
+        );
+      };
+      let events = this.events
+        .filter(
+          evt =>
+            occursToday(evt) ||
+            (evt.weekdays &&
+              evt.weekdays.includes(weekday) &&
+              (evt.date === "" ||
+                calendarUtils.yyyymmdd(evt.date) >= todayNumeric))
+        )
+        .map(evt => {
+          return {
+            title: evt.title,
+            time: evt.time
+          };
+        })
+        .sort(
+          (a, b) =>
+            1 * a.time.start.replace(":", ".") -
+            1 * b.time.start.replace(":", ".")
+        );
+      return events;
     }
   },
   methods: {
@@ -122,15 +148,15 @@ export default {
 .day-content {
   position: relative;
 }
-.top {
-  top: -2.8em;
-}
 h4 {
   text-align: center;
   margin-top: 0;
 }
-.day {
+.day-full {
   min-height: 300px;
+  border: 1px solid #555;
+  padding: 3px;
+  border-radius: 5px;
 }
 .event,
 .reminder {
@@ -164,7 +190,7 @@ h4 {
 .day-full .recurring {
   color: #8c9240;
 }
-.svg-inline--fa {
+.svg-inline--fa.deemph {
   color: #596583;
 }
 .day-content.not-current * {
