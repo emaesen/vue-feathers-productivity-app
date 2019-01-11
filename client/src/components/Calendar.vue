@@ -12,6 +12,8 @@
         :date="dayInFocus"
         :events="events"
         :reminders="reminders"
+        @delete-event="deleteEvent"
+        @edit-event="editEvent"
       />
       <pa-calendar-month v-if="!dayInFocus" key="month" :events="events" :reminders="reminders"/>
     </transition>
@@ -78,7 +80,6 @@ export default {
     }),
     events() {
       return this.user ? this.findEventsInStore({ query: {} }).data : [];
-      return [];
     },
     reminders() {
       return this.user ? this.findRemindersInStore({ query: {} }).data : [];
