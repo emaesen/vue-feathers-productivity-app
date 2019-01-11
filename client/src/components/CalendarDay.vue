@@ -19,25 +19,46 @@
         </div>
       </div>
       <div class="events">
-        <div
-          class="event"
-          :class="{allday: !event.time.start && !event.time.end}"
-          v-for="event in todaysEvents"
-          :key="event._id"
-        >
-          <span class="time" v-if="event.time.start">{{ event.time.start }}-{{event.time.end}}</span>
-          <span class="title">{{ event.title }}</span>
+        <div v-if="onCalendar">
+          <div
+            class="event"
+            :class="{allday: !event.time.start && !event.time.end}"
+            v-for="event in todaysEvents"
+            :key="event._id"
+          >
+            <span class="time" v-if="event.time.start">{{ event.time.start }}-{{event.time.end}}</span>
+            <span class="title">{{ event.title }}</span>
+          </div>
         </div>
+        <transition-group
+          v-if="!onCalendar && todaysEvents && todaysEvents[0]"
+          tag="div"
+          name="events-list"
+          class="events-list"
+        >
+          <pa-event
+            v-for="event in todaysEvents"
+            :event="event"
+            :key="event._id"
+            @delete-event="deleteEvent"
+            @edit-event="editEvent"
+          />
+        </transition-group>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Event from "./Event";
 import { mapMutations } from "vuex";
 import calendarUtils from "../utils/calendar";
 
 export default {
+  name: "CalendarDay",
+  components: {
+    "pa-event": Event
+  },
   props: {
     date: {
       type: Object
@@ -81,6 +102,7 @@ export default {
         )
         .map(rem => {
           return {
+            _id: rem._id,
             text: rem.text,
             time: rem.time,
             recurring: rem.weekdays && rem.weekdays.length > 0
@@ -112,12 +134,6 @@ export default {
               (evt.date === "" ||
                 calendarUtils.yyyymmdd(evt.date) >= todayNumeric))
         )
-        .map(evt => {
-          return {
-            title: evt.title,
-            time: evt.time
-          };
-        })
         .sort(
           (a, b) =>
             1 * a.time.start.replace(":", ".") -
@@ -130,6 +146,14 @@ export default {
     ...mapMutations(["SET_CALENDAR_DAYINFOCUS"]),
     deFocus() {
       this.SET_CALENDAR_DAYINFOCUS(null);
+    },
+    deleteEvent(props) {
+      // pass-through event
+      this.$emit("delete-event", props);
+    },
+    editEvent(props) {
+      // pass-through event
+      this.$emit("edit-event", props);
     }
   },
   watch: {
@@ -200,5 +224,11 @@ h4 {
 .day-content.past * {
   color: #84808a !important;
   opacity: 0.7;
+}
+.events-list-cell:nth-child(odd) {
+  background-color: #1e1d21;
+}
+.events-list-cell {
+  border: 1px dashed #454545;
 }
 </style>
