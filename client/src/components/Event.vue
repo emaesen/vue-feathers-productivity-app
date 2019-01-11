@@ -13,6 +13,18 @@
           }"
         >
           <div ref="content">
+            <div class="date-time">
+              {{ time.startTime }}
+              <span
+                class="ampm"
+                v-if="time.startTime && time.startAmPm !== time.endAmPm"
+              >{{ time.startAmPm }}</span>
+              {{ time.startTime && time.endTime ? " - " : "" }}{{ time.endTime }}
+              <span
+                class="ampm"
+                v-if="time.endTime"
+              >{{ time.endAmPm }}</span>
+            </div>
             <div class="category">{{ event.category }}</div>
             <div class="content-text" :class="'clr-' + event.color">
               <div class="event-title">{{ event.title }}</div>
@@ -145,6 +157,35 @@ export default {
   computed: {
     descriptionAsHtml() {
       return simpleFormat(this.event.description);
+    },
+    time() {
+      let timeStart = this.event.time.start.split(":");
+      let timeEnd = this.event.time.end.split(":");
+      let timeStartTxt = "all day";
+      let timeEndTxt = "";
+      let ampmStartTxt = "";
+      let ampmEndTxt = "";
+      if (timeStart[1]) {
+        timeStartTxt =
+          (1 * timeStart[0] > 12 ? 1 * timeStart[0] - 12 : 1 * timeStart[0]) +
+          ":" +
+          timeStart[1];
+        ampmStartTxt = 1 * timeStart[0] > 12 ? "PM" : "AM";
+      }
+      if (timeEnd[1]) {
+        timeEndTxt =
+          (1 * timeEnd[0] > 12 ? 1 * timeEnd[0] - 12 : 1 * timeEnd[0]) +
+          ":" +
+          timeEnd[1];
+        ampmEndTxt = 1 * timeEnd[0] > 12 ? "PM" : "AM";
+      }
+      console.log({ timeStart, timeStartTxt, timeEnd, timeEndTxt });
+      return {
+        startTime: timeStartTxt,
+        endTime: timeEndTxt,
+        startAmPm: ampmStartTxt,
+        endAmPm: ampmEndTxt
+      };
     }
   },
   methods: {
@@ -232,16 +273,10 @@ export default {
 .event {
   padding: 5px;
 }
-.grid .event {
-  min-height: 15rem;
-}
 .content-text {
   padding: 0 5px;
   border-left: 3px solid #000;
   border-right: 3px solid #000;
-}
-.grid .content-text {
-  border-right: 0;
 }
 .content-text.clr-red {
   border-color: #f91414;
@@ -262,6 +297,7 @@ export default {
 .event hr {
   border-style: groove;
 }
+.date-time,
 .category {
   float: right;
   font-style: italic;
@@ -269,6 +305,11 @@ export default {
   font-size: 90%;
   padding: 0 10px;
 }
+.ampm {
+  margin-left: 0.3em;
+  font-size: 80%;
+}
+
 .trans {
   /* use max-height to transition the height */
   /* the duration is calculated and set as inline style */
