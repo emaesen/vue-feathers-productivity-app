@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{alert:alert}">
     <div id="header">
       <div class="header">Personal Assistant Suite</div>
       <pa-clock/>
@@ -22,7 +22,7 @@
 
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 import Clock from "./components/Clock";
 
 export default {
@@ -35,9 +35,13 @@ export default {
   },
   computed: {
     ...mapState("auth", { user: "user" }),
+    ...mapGetters(["nrPastDueReminders"]),
     userName() {
       console.log({ user: this.user });
       return "“" + this.user.username + "” ➔ ";
+    },
+    alert() {
+      return this.nrPastDueReminders > 0;
     }
   },
   methods: {
@@ -80,6 +84,9 @@ h1 {
 }
 h2 {
   margin: 0 0 0.5em 0.2em;
+}
+#app {
+  position: relative;
 }
 #header {
   position: fixed;
@@ -255,6 +262,11 @@ button,
 }
 .info {
   color: #e9e4f272;
+}
+.alert {
+  background-color: #300;
+  margin: 0 -10px -10px;
+  padding: 0 10px 10px;
 }
 /* "clearfix" */
 .group:after {
