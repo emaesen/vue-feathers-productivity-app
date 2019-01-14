@@ -192,6 +192,11 @@ h4 {
 .reminder {
   color: #dfcaa8;
 }
+.event {
+  background-color: #462d2d;
+  padding: 1px 3px;
+  margin-bottom: 1px;
+}
 .day-compact {
   font-size: 75%;
 }
@@ -229,7 +234,7 @@ h4 {
 }
 .day-content.past * {
   color: #84808a !important;
-  opacity: 0.7;
+  opacity: 0.9;
 }
 .events-list-cell:nth-child(odd) {
   background-color: #1e1d21;
