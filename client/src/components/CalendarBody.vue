@@ -164,14 +164,17 @@ export default {
   background-color: #121017;
 }
 .week-day.today {
-  border: 1px dashed #91948b;
+  background-color: #200;
+  border: 1px solid #91534b;
   border-radius: 5px;
 }
 .day-number {
   font-style: italic;
 }
-.week-day.today > .day-number {
-  color: #d5c4ff;
+.week-day.today .day-number {
+  color: #ffcbc4;
+  font-style: normal;
+  font-weight: bold;
 }
 .day-label .current {
   font-style: italic;
