@@ -253,6 +253,10 @@ input[type="checkbox"]:checked + label::before {
   margin-left: -1.2em;
   color: #29dc58;
 }
+input[type="text"] {
+  min-width: 250px;
+  width: 75%;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 1s, transform 1s;
