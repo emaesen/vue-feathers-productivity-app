@@ -260,6 +260,10 @@ button,
 .actionable {
   cursor: pointer;
 }
+button:hover,
+.action.button:hover {
+  background-color: #160000;
+}
 .info {
   color: #e9e4f272;
 }
