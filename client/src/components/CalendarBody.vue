@@ -26,6 +26,7 @@
                 :onCalendar="true"
                 :events="events"
                 :reminders="reminders"
+                :eventCategories="eventCategories"
                 :classes="dayClasses(day)"
               ></pa-calendar-day>
             </div>
@@ -51,6 +52,9 @@ export default {
       type: Array
     },
     reminders: {
+      type: Array
+    },
+    eventCategories: {
       type: Array
     }
   },

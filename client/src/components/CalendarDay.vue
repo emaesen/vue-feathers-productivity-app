@@ -27,6 +27,7 @@
             v-for="event in todaysEvents"
             :event="event"
             :key="event._id"
+            :categories="eventCategories"
             @delete-event="deleteEvent"
             @edit-event="editEvent"
           />
@@ -67,6 +68,9 @@ export default {
       type: Array
     },
     reminders: {
+      type: Array
+    },
+    eventCategories: {
       type: Array
     },
     onCalendar: {

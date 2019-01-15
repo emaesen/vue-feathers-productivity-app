@@ -1,7 +1,7 @@
 <template>
   <div class="calendar-container">
     <pa-calendar-head/>
-    <pa-calendar-body :events="events" :reminders="reminders"/>
+    <pa-calendar-body :events="events" :reminders="reminders" :eventCategories="eventCategories"/>
   </div>
 </template>
 
@@ -20,6 +20,9 @@ export default {
       type: Array
     },
     reminders: {
+      type: Array
+    },
+    eventCategories: {
       type: Array
     }
   },
