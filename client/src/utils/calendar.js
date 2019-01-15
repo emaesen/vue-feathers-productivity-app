@@ -217,7 +217,9 @@ const upcomingDate = dateAttr => {
   // dateAttr: { date: 'yyyy-mm-dd', time: 'hh:mm', weekdays: [daynr{1,7}] }
   let now = new Date();
   let timeArr = dateAttr.time.split(":");
-  let skipToday = now.getHours() > timeArr[0] && now.getMinutes > timeArr[1];
+  let skipToday =
+    now.getHours() > 1 * timeArr[0] &&
+    60 * now.getHours() + now.getMinutes() > 60 * timeArr[0] + 1 * timeArr[1];
   let dayOfTheWeek = now.getDay();
   let offset = skipToday ? 1 : 0;
   // taking into account the time of the day (offset),
