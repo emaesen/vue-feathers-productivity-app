@@ -47,7 +47,7 @@
           <div class="categories">
             <span class="expl">└ select ➔</span>
             <div class="category" v-for="cat in categories" :key="cat">
-              <button class="action cat" v-if="cat.length>0" @click="category=cat">{{ cat }}</button>
+              <button class="action cat" v-if="cat && cat.length>0" @click="category=cat">{{ cat }}</button>
             </div>
           </div>
         </div>
