@@ -9,6 +9,7 @@ import {
   faAngleRight, // angle right
   faBan, // cancel
   faBell, // reminders
+  faBellSlash, // dismiss
   faCalendarAlt, // calendar
   faCheck, // check
   faCheckCircle, // save, ok
@@ -34,7 +35,8 @@ import {
   faWindowMinimize // single list item
 } from "@fortawesome/free-solid-svg-icons";
 import {
-  faWindowMinimize as farWindowMinimize // single list item
+  faWindowMinimize as farWindowMinimize, // single list item
+  faBellSlash as farBellSlash // dismiss
 } from "@fortawesome/free-regular-svg-icons";
 
 import router from "./router";
@@ -48,6 +50,8 @@ library.add(
   faAngleRight,
   faBan,
   faBell,
+  faBellSlash,
+  farBellSlash,
   faCalendarAlt,
   faCheck,
   faCheckCircle,
