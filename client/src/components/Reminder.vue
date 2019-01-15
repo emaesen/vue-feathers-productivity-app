@@ -46,6 +46,15 @@
               <button class="action button" title="edit" @click="showForm">
                 <font-awesome-icon icon="edit"/>edit
               </button>
+              
+              <button
+                v-if="isDismissable"
+                class="action button"
+                title="dismiss"
+                @click="dismissReminder"
+              >
+                <font-awesome-icon :icon="['far','bell-slash']"/>dismiss
+              </button>
 
               <transition name="fade" mode="out-in">
                 <button
@@ -158,7 +167,8 @@ export default {
         "Oct",
         "Nov",
         "Dec"
-      ]
+      ],
+      tock: 1
     };
   },
   mounted: function() {
@@ -178,6 +188,9 @@ export default {
         this.reminder.weekdays &&
         this.reminder.weekdays.length > 0
       );
+    },
+    isDismissable() {
+      return this.isRecurring && this.isPastDue;
     },
     due() {
       //let today = new Date();
@@ -270,7 +283,7 @@ export default {
     reminderDate() {
       if (this.reminder.weekdays && this.reminder.weekdays.length > 0) {
         // in case this is a recurring reminder, calculate next reminder date
-        return calendarUtils.upcomingDate(this.reminder);
+        return this.tock && calendarUtils.upcomingDate(this.reminder);
       } else {
         return calendarUtils.dateObj(this.reminder);
       }
@@ -376,6 +389,12 @@ export default {
           navigator.clipboard && navigator.clipboard.writeText(sel);
         }
       });
+    },
+    dismissReminder() {
+      // update a dummy property to force a re-evaluation of this.reminderDate
+      this.tock += 1;
+      // emit an event so that the list can be re-rendered as well
+      this.$emit("tock", this.tock);
     },
     deleteReminder(reminder, isConfirmed) {
       if (typeof isConfirmed === "undefined") {

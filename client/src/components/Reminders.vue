@@ -26,6 +26,7 @@
           :key="reminder._id"
           @delete-reminder="deleteReminder"
           @edit-reminder="editReminder"
+          @tock="updateList"
         />
       </transition-group>
     </div>
@@ -63,7 +64,8 @@ export default {
     return {
       minimize: this.onDashboard,
       displayOnlyOne: false,
-      correctDateForReminderWindow: true
+      correctDateForReminderWindow: true,
+      tock: 1
     };
   },
   created() {
@@ -175,6 +177,9 @@ export default {
       } else {
         return false;
       }
+    },
+    updateList() {
+      this.tock += 1;
     }
   },
   computed: {
@@ -218,7 +223,7 @@ export default {
       }
     },
     remindersUnfiltered() {
-      return this.user
+      return this.user && this.tock
         ? this.findRemindersInStore({
             query: this.query
           })
