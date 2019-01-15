@@ -3,7 +3,7 @@
     <h2 class="calendar">
       <font-awesome-icon icon="calendar-alt"/>Calendar
     </h2>
-    <pa-create-event @create-event="createEvent"/>
+    <pa-create-event @create-event="createEvent" :categories="eventCategories"/>
 
     <transition name="fade" mode="out-in">
       <pa-calendar-day
@@ -12,10 +12,17 @@
         :date="dayInFocus"
         :events="events"
         :reminders="reminders"
+        :eventCategories="eventCategories"
         @delete-event="deleteEvent"
         @edit-event="editEvent"
       />
-      <pa-calendar-month v-if="!dayInFocus" key="month" :events="events" :reminders="reminders"/>
+      <pa-calendar-month
+        v-if="!dayInFocus"
+        key="month"
+        :events="events"
+        :reminders="reminders"
+        :eventCategories="eventCategories"
+      />
     </transition>
   </section>
 </template>
@@ -40,7 +47,7 @@ export default {
     }
   },
   data() {
-    return {};
+    return { eventCategories: [] };
   },
   mounted() {
     // If the calendar is viewed on the dashboard,
@@ -54,7 +61,10 @@ export default {
   created() {
     // Find all event from server.
     this.findEvents({ query: {} })
-      .then(resp => console.log({ findEventsResp: resp }))
+      .then(resp => {
+        console.log({ findEventsResp: resp });
+        this.setEventCategories();
+      })
       .catch(err => {
         this.handleError(err);
       });
@@ -111,6 +121,7 @@ export default {
         .save()
         .then(event => {
           console.log("Event created ", event);
+          this.setEventCategories();
         })
         .catch(err => {
           this.handleError(err);
@@ -123,6 +134,7 @@ export default {
         .remove()
         .then(() => {
           console.log("remove succesful");
+          this.setEventCategories();
         })
         .catch(err => {
           this.handleError(err);
@@ -136,14 +148,25 @@ export default {
       props.event.date = props.mod.date;
       props.event.time = props.mod.time;
       props.event.weekdays = props.mod.weekdays;
+      props.event.category = props.mod.category;
+      props.event.color = props.mod.color;
       props.event
         .update()
         .then(event => {
           console.log("edit succesful", event);
+          this.setEventCategories();
         })
         .catch(err => {
           this.handleError(err);
         });
+    },
+    setEventCategories() {
+      // get list of user-defined eventCategories and remove duplicates
+      this.eventCategories = this.events
+        .map(e => e.category)
+        .filter((c, i, s) => s.indexOf(c) === i)
+        .sort();
+      //console.log({ eventCategories: this.eventCategories });
     }
   }
 };
