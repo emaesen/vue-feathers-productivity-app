@@ -10,7 +10,7 @@
       </button>
     </transition>
     <transition name="slidefade">
-      <div v-if="showForm" class>
+      <div v-if="showForm" @keydown.s="onKeydownS">
         <div class>
           <div class>
             <label for="text">
@@ -21,6 +21,7 @@
             <input
               id="title"
               name="title"
+              class="title"
               type="text"
               maxlength="108"
               v-model="title"
@@ -38,6 +39,17 @@
               placeholder="Event description"
             />
           </div>
+
+          <div class="clr-selector">
+            <span v-for="clr in colors" :key="clr" class="action button" @click="selectClr(clr)">
+              <span
+                class="clr check"
+                :class="'clr-' + clr"
+                :title="clr"
+              >{{ clr===color ? "✔" : "" }}</span>
+            </span>
+          </div>
+
           <div class>
             <label for="date">
               Date &amp; time
@@ -82,11 +94,33 @@
           <div class="group">
             <div class="cell">
               <label>Repeat every week</label>
+              <span class="expl">└ on ➔</span>
               <div class="weekday" v-for="(day, index) in week" :key="day">
                 <input type="checkbox" :id="day" :value="index" v-model="weekdays">
                 <label :for="day" class="action button checkbox">
                   <span class="day" :class="day">{{ day }}</span>
                 </label>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <label for="category">Category</label>
+            <input
+              id="category"
+              name="category"
+              type="text"
+              v-model="category"
+              placeholder="type new or select below"
+            >
+            <div class="categories">
+              <span class="expl">└ select ➔</span>
+              <div class="category" v-for="cat in categories" :key="cat">
+                <button
+                  class="action cat"
+                  v-if="cat && cat.length>0"
+                  @click="category=cat"
+                >{{ cat }}</button>
               </div>
             </div>
           </div>
@@ -138,9 +172,12 @@ export default {
         end: (this.event && this.event.time && this.event.time.end) || ""
       },
       weekdays: (this.event && this.event.weekdays) || [],
+      category: (this.event && this.event.category) || "",
+      color: (this.event && this.event.color) || "",
       showForm: !!(this.event && this.event.title),
       showError: false,
-      week: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+      week: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+      colors: ["", "red", "blue", "green", "yellow", "purple"]
     };
   },
   updated() {
@@ -169,6 +206,9 @@ export default {
       this.showForm = true;
       this.showError = false;
     },
+    selectClr(clr) {
+      this.color = clr;
+    },
     cancel() {
       if (this.isEdit) {
         this.$emit("cancel-edit");
@@ -188,6 +228,8 @@ export default {
       this.date = this.event.date;
       this.time = this.event.time;
       this.weekdays = this.event.weekdays;
+      this.category = this.event.category;
+      this.color = this.event.color;
     },
     clearEventForm() {
       this.title = "";
@@ -195,6 +237,8 @@ export default {
       this.date = { start: "", end: "" };
       this.time = { start: "", end: "" };
       this.weekdays = [];
+      this.category = "";
+      this.color = "";
       this.showForm = false;
     },
     save() {
@@ -206,11 +250,20 @@ export default {
           description: this.description,
           date: this.date,
           time: this.time,
-          weekdays: this.weekdays
+          weekdays: this.weekdays,
+          category: this.category,
+          color: this.color
         });
         this.closeEventForm();
       } else {
         this.showError = true;
+      }
+    },
+    onKeydownS(evt) {
+      if (evt.ctrlKey) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        this.save();
       }
     }
   }
@@ -254,6 +307,10 @@ input[type="number"] {
 .error {
   color: #ffbc00;
 }
+.expl {
+  margin-left: 0.5em;
+  color: #929292;
+}
 .weekday,
 label.checkbox,
 input[type="checkbox"] {
@@ -268,10 +325,26 @@ input[type="checkbox"]:checked + label::before {
   margin-left: -1.2em;
   color: #29dc58;
 }
-input[type="text"] {
+input.title {
   min-width: 250px;
   width: 75%;
 }
+.categories {
+  margin-top: -0.75em;
+}
+.category {
+  display: inline-block;
+}
+.clr-selector {
+  margin-bottom: 1em;
+}
+button.action.cat {
+  margin-left: 0.3em;
+}
+.clr.check {
+  color: #29dc58;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 1s, transform 1s;
