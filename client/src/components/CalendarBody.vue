@@ -189,6 +189,10 @@ export default {
 .week-day.past {
   color: #84808a;
 }
+.week-day:hover {
+  cursor: pointer;
+  background-color: #160000;
+}
 .day-container {
   transition: all 0.2s;
 }
