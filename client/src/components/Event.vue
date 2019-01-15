@@ -179,7 +179,6 @@ export default {
           timeEnd[1];
         ampmEndTxt = 1 * timeEnd[0] > 12 ? "PM" : "AM";
       }
-      console.log({ timeStart, timeStartTxt, timeEnd, timeEndTxt });
       return {
         startTime: timeStartTxt,
         endTime: timeEndTxt,
