@@ -43,11 +43,6 @@ export default {
     return {};
   },
   mounted() {
-    console.log("in Calendar mounted ", {
-      events: this.events,
-      reminders: this.reminders,
-      loadingReminders: this.loadingReminders
-    });
     // If the calendar is viewed on the dashboard,
     //    then the reminders are loaded by the Reminders widget.
     // If the calendar is viewed stand-alone,
