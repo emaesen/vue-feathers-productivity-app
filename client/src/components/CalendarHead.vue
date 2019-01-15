@@ -68,7 +68,11 @@ export default {
   methods: {
     ...mapMutations(["SET_CALENDAR_MONTH"]),
     setMonthStart() {
-      this.monthStart = calendarUtils.firstDateOfMonth();
+      this.monthStart =
+        (this.calendarState &&
+          this.calendarState.month &&
+          this.calendarState.month.start) ||
+        calendarUtils.firstDateOfMonth();
     },
     blurTargetButton(evt) {
       if (evt.target.localName === "button") {
