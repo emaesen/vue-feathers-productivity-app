@@ -9,7 +9,7 @@
         <div v-if="onCalendar">
           <div
             class="event"
-            :class="{allday: !event.time.start && !event.time.end}"
+            :class="[{allday: !event.time.start && !event.time.end}, 'clr-' + event.color]"
             v-for="event in todaysEvents"
             :key="event._id"
           >
@@ -198,9 +198,32 @@ h4 {
 }
 .event {
   background-color: #462d2d;
-  padding: 1px 3px;
-  margin-bottom: 1px;
+  padding: 2px;
+  margin-bottom: 2px;
+  border-left: 2px solid #000;
+  border-right: 2px solid #000;
 }
+.event.clr-red {
+  border-color: #f91414;
+  background-color: #f9141418;
+}
+.event.clr-blue {
+  border-color: #2b2bff;
+  background-color: #2b2bff36;
+}
+.event.clr-green {
+  border-color: #14f926;
+  background-color: #14f92618;
+}
+.event.clr-yellow {
+  border-color: #ffea02;
+  background-color: #ffea0218;
+}
+.event.clr-purple {
+  border-color: #c114f9;
+  background-color: #c114f918;
+}
+
 .day-compact {
   font-size: 75%;
 }
