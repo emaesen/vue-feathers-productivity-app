@@ -88,6 +88,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       - [x] day of the week recurring
       - [ ] day of the month recurring
     - [x] reminder has countdown when end time is close
+    - [x] a past-due notification for a recurring reminder can be dismissed
 - [ ] **Events service**
   - [ ] add Events service
     - [x] prepare server side
