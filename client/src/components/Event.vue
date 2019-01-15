@@ -281,7 +281,7 @@ export default {
   border-color: #f91414;
 }
 .content-text.clr-blue {
-  border-color: #141bf9;
+  border-color: #2b2bff;
 }
 .content-text.clr-green {
   border-color: #14f926;

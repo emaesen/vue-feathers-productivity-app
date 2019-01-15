@@ -377,7 +377,7 @@ h2.notes {
   border-color: #f91414;
 }
 .clr.clr-blue {
-  border-color: #141bf9;
+  border-color: #2b2bff;
 }
 .clr.clr-green {
   border-color: #14f926;
