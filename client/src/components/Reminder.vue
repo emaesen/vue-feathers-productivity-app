@@ -394,7 +394,7 @@ export default {
       // update a dummy property to force a re-evaluation of this.reminderDate
       this.tock += 1;
       // emit an event so that the list can be re-rendered as well
-      this.$emit("tock", this.tock);
+      this.$emit("dismiss-reminder");
     },
     deleteReminder(reminder, isConfirmed) {
       if (typeof isConfirmed === "undefined") {

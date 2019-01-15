@@ -26,7 +26,7 @@
           :key="reminder._id"
           @delete-reminder="deleteReminder"
           @edit-reminder="editReminder"
-          @tock="updateList"
+          @dismiss-reminder="dismissReminder"
         />
       </transition-group>
     </div>
@@ -178,7 +178,9 @@ export default {
         return false;
       }
     },
-    updateList() {
+    dismissReminder() {
+      // on receiving a "dismissed reminder" event, force an update of
+      // the reminders list by changing a dependent dummy property
       this.tock += 1;
     }
   },
