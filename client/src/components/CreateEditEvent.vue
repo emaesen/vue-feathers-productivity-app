@@ -106,6 +106,9 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import calendarUtils from "../utils/calendar";
+
 export default {
   name: "CreateEditEvent",
   props: {
@@ -126,15 +129,27 @@ export default {
     return {
       title: (this.event && this.event.title) || "",
       description: (this.event && this.event.description) || "",
-      date: (this.event && this.event.date) || { start: "", end: "" },
-      time: (this.event && this.event.time) || { start: "", end: "" },
+      date: {
+        start: (this.event && this.event.date && this.event.date.start) || "",
+        end: (this.event && this.event.date && this.event.date.end) || ""
+      },
+      time: {
+        start: (this.event && this.event.time && this.event.time.start) || "",
+        end: (this.event && this.event.time && this.event.time.end) || ""
+      },
       weekdays: (this.event && this.event.weekdays) || [],
       showForm: !!(this.event && this.event.title),
       showError: false,
       week: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
     };
   },
+  updated() {
+    if (this.calendar && this.calendar.dayInFocus && !this.date.start) {
+      this.date.start = calendarUtils.yyyy_mm_dd(this.calendar.dayInFocus.date);
+    }
+  },
   computed: {
+    ...mapGetters(["calendar"]),
     isEdit() {
       return !!(this.event && this.event.title);
     },
