@@ -108,9 +108,9 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     - [x] the logged-in user can access only their own events
     - [x] real-time update events are send only to the authenticated user
     - [x] when user logs out, their events data are cleared from store
-    - [ ] changes in one browser are immediately reflected in another
+    - [x] changes in one browser are immediately reflected in another
     - [x] event has title, description and start/end date & time properties
-    - [ ] event has color and category properties
+    - [x] event has color and category properties
     - [ ] event has recurring scheduling properties
       - [ ] start date of recurring schedule
       - [ ] day of the week recurring
@@ -137,7 +137,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     - [x] can jump back to current month
   - [x] displays non-recurring reminders
   - [x] displays recurring reminders
-  - [ ] displays events
+  - [x] displays events
   - [x] can switch between month-view and day-view
 - [ ] **progressive web app**
   - [ ] app is operational when offline
