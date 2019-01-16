@@ -165,12 +165,22 @@
           <div class="group">
             <div class="cell">
               <label>Repeat every week</label>
+              <span class="expl">└ on ➔</span>
               <div class="weekday" v-for="(day, index) in week" :key="day">
                 <input type="checkbox" :id="day" :value="index" v-model="weekdays">
                 <label :for="day" class="action button checkbox">
                   <span class="day" :class="day">{{ day }}</span>
                 </label>
               </div>
+              <span class="divider-word">starting on</span>
+              <input
+                id="start-date"
+                name="start-date"
+                v-model="startDate"
+                type="date"
+                placeholder="yyyy-mm-dd"
+                min="new Date()"
+              >
             </div>
           </div>
           <div class>
@@ -218,6 +228,7 @@ export default {
         null
       ],
       weekdays: (this.reminder && this.reminder.weekdays) || [],
+      startDate: (this.reminder && this.reminder.startDate) || "",
       showForm: !!(this.reminder && this.reminder.text),
       showError: false,
       colors: ["", "red", "blue", "green", "yellow", "purple"],
@@ -266,6 +277,7 @@ export default {
       this.time = this.reminder.time;
       this.window = this.reminder.window;
       this.weekdays = this.reminder.weekdays;
+      this.startDate = this.reminder.startDate;
     },
     clearReminderForm() {
       this.text = "";
@@ -273,6 +285,7 @@ export default {
       this.time = "";
       this.window = [null, null, null, null, null, null];
       this.weekdays = [];
+      this.startDate = "";
       this.showForm = false;
     },
     save() {
@@ -284,7 +297,8 @@ export default {
           date: this.date,
           time: this.time,
           window: this.window,
-          weekdays: this.weekdays
+          weekdays: this.weekdays,
+          startDate: this.startDate
         });
         this.closeReminderForm();
       } else {
@@ -363,6 +377,9 @@ input[type="number"] {
 }
 label:hover .hover-info {
   display: inline-block;
+}
+.divider-word {
+  margin: 0 1em;
 }
 .expl {
   margin-left: 0.5em;

@@ -79,7 +79,8 @@ export default new Vuex.Store({
         date: "",
         time: "",
         window: [],
-        weekdays: []
+        weekdays: [],
+        startDate: ""
       }
     }),
     service("events", {

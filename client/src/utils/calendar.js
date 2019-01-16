@@ -214,13 +214,16 @@ const timeDiff = (d1, d2) => {
 };
 
 const upcomingDate = dateAttr => {
-  // dateAttr: { date: 'yyyy-mm-dd', time: 'hh:mm', weekdays: [daynr{1,7}] }
-  let now = new Date();
+  // dateAttr: { date: 'yyyy-mm-dd', time: 'hh:mm', weekdays: [daynr{1,7}], startDate:'yyyy-mm-dd' }
+  let startDate = dateAttr.startDate
+    ? new Date(dateAttr.startDate + "T00:00:00")
+    : new Date();
   let timeArr = dateAttr.time.split(":");
   let skipToday =
-    now.getHours() >= 1 * timeArr[0] &&
-    60 * now.getHours() + now.getMinutes() >= 60 * timeArr[0] + 1 * timeArr[1];
-  let dayOfTheWeek = now.getDay();
+    startDate.getHours() >= 1 * timeArr[0] &&
+    60 * startDate.getHours() + startDate.getMinutes() >=
+      60 * timeArr[0] + 1 * timeArr[1];
+  let dayOfTheWeek = startDate.getDay();
   let offset = skipToday ? 1 : 0;
   // taking into account the time of the day (offset),
   // find the lowest number that's higher or equal than the current day number (relMin)
@@ -242,7 +245,7 @@ const upcomingDate = dateAttr => {
   let dayDelta = reminderWeekday - dayOfTheWeek;
   if (dayDelta < 0) dayDelta = dayDelta + 7;
   let nextReminderDate = new Date();
-  nextReminderDate.setDate(now.getDate() + dayDelta);
+  nextReminderDate.setDate(startDate.getDate() + dayDelta);
   nextReminderDate.setHours(timeArr[0], timeArr[1], 0, 0);
 
   return nextReminderDate;

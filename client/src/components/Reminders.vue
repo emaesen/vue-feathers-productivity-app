@@ -123,6 +123,7 @@ export default {
       props.reminder.time = props.mod.time;
       props.reminder.window = props.mod.window;
       props.reminder.weekdays = props.mod.weekdays;
+      props.reminder.startDate = props.mod.startDate;
       props.reminder
         .update()
         .then(reminder => {

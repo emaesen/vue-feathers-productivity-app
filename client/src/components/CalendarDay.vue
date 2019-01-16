@@ -103,6 +103,8 @@ export default {
           rem =>
             rem.date === today ||
             (rem.weekdays &&
+              (rem.startDate === "" ||
+                calendarUtils.yyyymmdd(rem.startDate) <= todayNumeric) &&
               rem.weekdays.includes(weekday) &&
               (rem.date === "" ||
                 calendarUtils.yyyymmdd(rem.date) >= todayNumeric))

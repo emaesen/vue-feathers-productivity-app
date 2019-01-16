@@ -422,6 +422,7 @@ export default {
       this.reminder.time = this.origReminder.time;
       this.reminder.window = this.origReminder.window;
       this.reminder.weekdays = this.origReminder.weekdays;
+      this.reminder.startDate = this.origReminder.startDate;
       this.isEditing = false;
     },
     editReminderWarning(warning) {
