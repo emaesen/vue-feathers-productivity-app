@@ -51,7 +51,7 @@
                 v-if="isDismissable"
                 class="action button"
                 title="dismiss"
-                @click="dismissReminder"
+                @click="dismissReminder(reminder)"
               >
                 <font-awesome-icon :icon="['far','bell-slash']"/>dismiss
               </button>
@@ -167,8 +167,7 @@ export default {
         "Oct",
         "Nov",
         "Dec"
-      ],
-      tock: 1
+      ]
     };
   },
   mounted: function() {
@@ -283,7 +282,7 @@ export default {
     reminderDate() {
       if (this.reminder.weekdays && this.reminder.weekdays.length > 0) {
         // in case this is a recurring reminder, calculate next reminder date
-        return this.tock && calendarUtils.upcomingDate(this.reminder);
+        return calendarUtils.upcomingDate(this.reminder);
       } else {
         return calendarUtils.dateObj(this.reminder);
       }
@@ -390,11 +389,12 @@ export default {
         }
       });
     },
-    dismissReminder() {
-      // update a dummy property to force a re-evaluation of this.reminderDate
-      this.tock += 1;
-      // emit an event so that the list can be re-rendered as well
-      this.$emit("dismiss-reminder");
+    dismissReminder(reminder) {
+      // perform an update to force a re-evaluation
+      // of this.reminderDate and a re-render of the full list of
+      // reminders in all open clients
+      reminder.dismissedAt = Date.now();
+      this.editReminder(reminder);
     },
     deleteReminder(reminder, isConfirmed) {
       if (typeof isConfirmed === "undefined") {

@@ -26,7 +26,6 @@
           :key="reminder._id"
           @delete-reminder="deleteReminder"
           @edit-reminder="editReminder"
-          @dismiss-reminder="dismissReminder"
         />
       </transition-group>
     </div>
@@ -64,8 +63,7 @@ export default {
     return {
       minimize: this.onDashboard,
       displayOnlyOne: false,
-      correctDateForReminderWindow: true,
-      tock: 1
+      correctDateForReminderWindow: true
     };
   },
   created() {
@@ -124,6 +122,7 @@ export default {
       props.reminder.window = props.mod.window;
       props.reminder.weekdays = props.mod.weekdays;
       props.reminder.startDate = props.mod.startDate;
+      props.reminder.dismissedAt = props.mod.dismissedAt;
       props.reminder
         .update()
         .then(reminder => {
@@ -178,11 +177,6 @@ export default {
       } else {
         return false;
       }
-    },
-    dismissReminder() {
-      // on receiving a "dismissed reminder" event, force an update of
-      // the reminders list by changing a dependent dummy property
-      this.tock += 1;
     }
   },
   computed: {
@@ -226,7 +220,7 @@ export default {
       }
     },
     remindersUnfiltered() {
-      return this.user && this.tock
+      return this.user
         ? this.findRemindersInStore({
             query: this.query
           })
