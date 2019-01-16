@@ -269,7 +269,7 @@ button:hover,
   padding: 4px;
 }
 .actionable:hover {
-  background-color: #16000090;
+  background-color: #201818;
 }
 .info {
   color: #e9e4f272;

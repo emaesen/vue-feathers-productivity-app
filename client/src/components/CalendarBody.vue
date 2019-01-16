@@ -189,7 +189,7 @@ export default {
 }
 .week-day:hover {
   cursor: pointer;
-  background-color: #160000;
+  background-color: #090000;
 }
 .day-container {
   transition: all 0.2s;
