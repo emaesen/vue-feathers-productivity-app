@@ -37,7 +37,6 @@ export default {
 
 <style scoped>
 .calendar-container {
-  display: grid;
   margin: 0 auto;
   border: 1px solid #555;
   padding: 3px;
