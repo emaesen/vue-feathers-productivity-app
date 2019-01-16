@@ -264,6 +264,13 @@ button:hover,
 .action.button:hover {
   background-color: #160000;
 }
+.actionable {
+  margin: -4px;
+  padding: 4px;
+}
+.actionable:hover {
+  background-color: #16000090;
+}
 .info {
   color: #e9e4f272;
 }
