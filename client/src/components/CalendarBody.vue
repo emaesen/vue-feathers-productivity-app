@@ -122,7 +122,6 @@ export default {
 
 <style>
 .calendar-body {
-  display: grid;
   background-color: #1e1d21;
 }
 .days-header {
@@ -135,10 +134,6 @@ export default {
   border-left: 1px solid #383247;
   border-bottom: 1px solid #383247;
 }
-.days-body {
-  display: grid;
-  grid-template-rows: auto;
-}
 .day-number {
   text-align: center;
   margin-right: 10px;
@@ -149,8 +144,7 @@ export default {
 }
 .week-row {
   display: grid;
-  grid-template-areas: "a b c d e f g";
-  grid-row-gap: 5px;
+  grid-template-areas: "k l m n o p q";
   grid-auto-columns: 14.286%;
 }
 .week-row {
