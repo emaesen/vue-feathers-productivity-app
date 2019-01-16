@@ -33,7 +33,7 @@
           />
         </transition-group>
       </div>
-      <div class="reminders">
+      <div class="reminders" v-if="!(onCalendar && isDayInThePast)">
         <div
           class="reminder"
           :class="{allday: !reminder.time, recurring: reminder.recurring}"
@@ -90,6 +90,9 @@ export default {
       return calendarUtils.formattedDate(this.date.date, {
         showYear: true
       });
+    },
+    isDayInThePast() {
+      return this.classes && this.classes.includes("past");
     },
     todaysReminders() {
       let today = calendarUtils.yyyy_mm_dd(this.date.date);
