@@ -293,7 +293,8 @@ export default {
     },
     revealInfo(evt) {
       // the info icon is an SVG element.
-      // Sometimes the target is a path instead of the svg element
+      // Depending on exactly where the user clicks,
+      // sometimes the clicked target is a path instead of the svg element
       let ancestor;
       if (evt.path) {
         ancestor = evt.path[1].parentElement.parentElement;
