@@ -332,7 +332,7 @@ button:hover,
   background-color: #ada0a0;
   border-radius: 6px;
 }
-@media all and (max-width: 600px) {
+@media all and (max-width: 700px) {
   .remove-on-small-device {
     display: none !important;
   }
