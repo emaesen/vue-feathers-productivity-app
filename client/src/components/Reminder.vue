@@ -469,6 +469,7 @@ export default {
   font-size: 125%;
   text-align: right;
   cursor: pointer;
+  z-index: 9;
 }
 .grace-indicator {
   margin-left: 15px;
