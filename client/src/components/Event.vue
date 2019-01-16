@@ -272,6 +272,9 @@ export default {
 .event {
   padding: 5px;
 }
+.event-title {
+  margin-bottom: 0.5em;
+}
 .content-text {
   padding: 0 5px;
   border-left: 3px solid #000;
