@@ -328,11 +328,6 @@ h2.notes {
   align-items: stretch;
   margin: 0 -0.2rem;
 }
-*,
-*::after,
-*::before {
-  box-sizing: inherit;
-}
 .grid-list .cell {
   width: 100%;
 }
