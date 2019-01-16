@@ -65,6 +65,7 @@ export default {
   transition: all 0.6s;
 }
 .section-collapsed {
+  min-height: 1em !important;
   max-height: 2em !important;
   overflow: hidden;
 }
