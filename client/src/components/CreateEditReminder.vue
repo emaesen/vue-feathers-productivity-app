@@ -42,8 +42,9 @@
           -->
           <div class>
             <label for="date">
-              Due date &amp; time
-              <span v-if="!showError && !isValid" class="req">(required)</span>
+              Due date
+              <span v-if="!showError && !isValid" class="req">(required) &nbsp;</span>
+              &amp; time
               <span v-if="showError" class="error">Please provide a due date</span>
             </label>
             <input
@@ -164,7 +165,17 @@
           </div>
           <div class="group">
             <div class="cell">
-              <label>Repeat every week</label>
+              <label>
+                Repeat every week
+                <span
+                  v-if="!showError && !isValid"
+                  class="req"
+                >(select none or day(s) + date)</span>
+                <span
+                  v-if="showError"
+                  class="error"
+                >Please select one or more days, and a start date</span>
+              </label>
               <span class="expl">└ on ➔</span>
               <div class="weekday" v-for="(day, index) in week" :key="day">
                 <input type="checkbox" :id="day" :value="index" v-model="weekdays">
@@ -192,6 +203,8 @@
             <button class="action button" @click="cancel">
               <font-awesome-icon icon="ban"/>cancel
             </button>
+            <span v-if="isIncomplete" class="req">(is incomplete)</span>
+            <span v-if="hasConflict" class="req">(has conflict)</span>
           </div>
         </div>
       </div>
@@ -242,10 +255,21 @@ export default {
       return !!(this.reminder && this.reminder.text);
     },
     isValid() {
-      return (
-        this.text &&
-        (this.date || (this.weekdays.length > 0 && (this.date || this.time)))
-      );
+      // cover basic isValid conditions
+      const hasText = !!(this.text && this.text !== "");
+      const hasDueDate = !!(this.date && this.date !== "");
+      const hasStartDate = !!(this.startDate && this.startDate !== "");
+      const isRecurring = this.weekdays.length > 0;
+      const recurringStartDateIsBeforeDueDate =
+        new Date(this.startDate + "T00:00:00") <
+        new Date(this.date + "T00:00:00");
+      const hasConflict =
+        (hasDueDate && hasStartDate && !isRecurring) ||
+        (isRecurring && !recurringStartDateIsBeforeDueDate) ||
+        (isRecurring && !hasStartDate);
+      this.isIncomplete = !(hasText && hasDueDate);
+      this.hasConflict = hasConflict;
+      return hasText && hasDueDate && !hasConflict;
     },
     textAreaHeight() {
       const minHeight = 150;
@@ -392,8 +416,10 @@ label:hover .hover-info {
 }
 .req,
 .error {
+  font-weight: normal;
   font-style: italic;
   margin-left: 1em;
+  letter-spacing: normal;
 }
 .req {
   color: #ffbc00ab;
