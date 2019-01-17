@@ -13,6 +13,7 @@ import {
   faCalendarAlt, // calendar
   faCheck, // check
   faCheckCircle, // save, ok
+  faClipboardList, // to do list
   faEdit, // edit
   faEllipsisV, // ellipsis vertical
   faFilter, // filter
@@ -55,6 +56,7 @@ library.add(
   faCalendarAlt,
   faCheck,
   faCheckCircle,
+  faClipboardList,
   faEdit,
   faEllipsisV,
   faFilter,
