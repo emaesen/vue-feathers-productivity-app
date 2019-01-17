@@ -96,6 +96,18 @@ export default new Vuex.Store({
         endDate: ""
       }
     }),
+    service("todos", {
+      instanceDefaults: {
+        title: "",
+        description: "",
+        note: "",
+        due: "",
+        status: "",
+        category: "",
+        color: "",
+        isPinned: false
+      }
+    }),
     // Setup the auth plugin.
     auth({ userService: "users" })
   ]
