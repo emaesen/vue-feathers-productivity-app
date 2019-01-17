@@ -253,22 +253,22 @@ export default {
       );
       const hasRecurringDateProperty =
         !!this.startDate || !!this.endDate || this.weekdays.length > 0;
-      const endDateIsBeforeStartDate =
+      const endDateIsAfterStartDate =
         new Date(
           this.date.end + "T" + (this.time.end || "00:00") + ":00"
-        ).getTime() <
+        ).getTime() >
         new Date(
           this.date.start + "T" + (this.time.start || "00:00") + ":00"
         ).getTime();
-      const recurringEndDateIsBeforeStartDate =
-        new Date(this.endDate + "T00:00:00") <
+      const recurringEndDateIsAfterStartDate =
+        new Date(this.endDate + "T00:00:00") >
         new Date(this.startDate + "T00:00:00");
       const hasConflict =
         (hasRegularDate && hasRecurringDate) ||
         !!(this.time.end && !this.time.start) ||
         !!(this.date.end && !this.date.start) ||
-        endDateIsBeforeStartDate ||
-        recurringEndDateIsBeforeStartDate ||
+        !endDateIsAfterStartDate ||
+        !recurringEndDateIsAfterStartDate ||
         (hasRegularDateProperty && hasRecurringDateProperty);
 
       return hasTitle && (hasRegularDate || hasRecurringDate) && !hasConflict;
