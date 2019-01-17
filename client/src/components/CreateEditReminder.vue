@@ -42,9 +42,8 @@
           -->
           <div class>
             <label for="date">
-              Due date
-              <span v-if="!showError && !isValid" class="req">(required) &nbsp;</span>
-              &amp; time
+              Due date &amp; time
+              <span v-if="!showError && !isValid" class="req">(required)</span>
               <span v-if="showError" class="error">Please provide a due date</span>
             </label>
             <input
@@ -256,6 +255,7 @@ export default {
       // cover basic isValid conditions
       const hasText = !!(this.text && this.text !== "");
       const hasDueDate = !!(this.date && this.date !== "");
+      const hasDueTime = !!(this.time && this.time !== "");
       const hasStartDate = !!(this.startDate && this.startDate !== "");
       const isRecurring = this.weekdays.length > 0;
       const recurringStartDateIsBeforeDueDate =
@@ -264,7 +264,8 @@ export default {
       const hasConflict =
         (hasDueDate && hasStartDate && !isRecurring) ||
         (isRecurring && !recurringStartDateIsBeforeDueDate) ||
-        (isRecurring && !hasStartDate);
+        (isRecurring && !hasStartDate) ||
+        (isRecurring && !hasDueTime);
       return hasText && hasDueDate && !hasConflict;
     },
     textAreaHeight() {
