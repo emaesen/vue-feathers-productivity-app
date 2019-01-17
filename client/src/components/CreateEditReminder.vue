@@ -28,18 +28,7 @@
               required
             >
           </div>
-          <!--
-          <div class="clr-selector">
-            <span
-              v-for="clr in colors"
-              :key="clr"
-              class="clr"
-              :class="'clr-' + clr"
-              :title="clr"
-              @click="selectClr(clr)"
-            >&nbsp;</span>
-          </div>
-          -->
+
           <div class>
             <label for="date">
               Due date &amp; time
