@@ -279,6 +279,12 @@ button:hover,
   margin: 0 -10px -10px;
   padding: 0 10px 10px;
 }
+.nowrap {
+  white-space: nowrap;
+}
+.inline-block {
+  display: inline-block;
+}
 /* "clearfix" */
 .group:after {
   content: "";
