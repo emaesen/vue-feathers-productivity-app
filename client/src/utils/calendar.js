@@ -215,9 +215,13 @@ const timeDiff = (d1, d2) => {
 
 const upcomingDate = dateAttr => {
   // dateAttr: { date: 'yyyy-mm-dd', time: 'hh:mm', weekdays: [daynr{1,7}], startDate:'yyyy-mm-dd' }
+  let today = new Date();
   let startDate = dateAttr.startDate
     ? new Date(dateAttr.startDate + "T00:00:00")
-    : new Date();
+    : today;
+  if (timeDiff(startDate, today) < 0) {
+    startDate = today;
+  }
   let timeArr = dateAttr.time.split(":");
   let skipToday =
     startDate.getHours() >= 1 * timeArr[0] &&
