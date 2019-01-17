@@ -87,8 +87,13 @@ export default new Vuex.Store({
       instanceDefaults: {
         title: "",
         description: "",
-        date: "",
-        time: ""
+        date: { start: "", end: "" },
+        time: { start: "", end: "" },
+        category: "",
+        color: "",
+        weekdays: [],
+        startDate: "",
+        endDate: ""
       }
     }),
     // Setup the auth plugin.
