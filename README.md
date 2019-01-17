@@ -84,7 +84,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       - [x] count-down window (hours & minutes)
       - [x] grace/snooze window (days, hours & minutes)
     - [ ] reminder has recurring scheduling properties
-      - [ ] start date of recurring schedule
+      - [x] start date of recurring schedule
       - [x] day of the week recurring
       - [ ] day of the month recurring
     - [x] reminder has countdown when end time is close
@@ -111,9 +111,32 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     - [x] changes in one browser are immediately reflected in another
     - [x] event has title, description and start/end date & time properties
     - [x] event has color and category properties
-    - [ ] event has recurring scheduling properties
-      - [ ] start date of recurring schedule
-      - [ ] day of the week recurring
+    - [x] event has recurring scheduling properties
+      - [x] start date of recurring schedule
+      - [x] day of the week recurring
+- [ ] **Todos service**
+  - [ ] add Todos service
+    - [ ] prepare server side
+      - [x] generate feathers service
+      - [ ] add authentication hooks
+    - [ ] prepare client side
+      - [ ] add todos service to the store
+      - [ ] add todos service scaffold to the app
+    - [ ] CRUD operations
+      - [ ] Create
+      - [ ] Read
+      - [ ] Update
+      - [ ] Delete
+      - [ ] redirects to login when session has expired
+    - [ ] todos board has "open tasks", "tasks in progress" and "completed tasks" lanes
+    - [ ] todos are integrated with the calendar
+    - [ ] todo can be associated with a reminder
+    - [ ] the logged-in user can access only their own todos
+    - [ ] real-time update todos are send only to the authenticated user
+    - [ ] when user logs out, their todos data are cleared from store
+    - [ ] changes in one browser are immediately reflected in another
+    - [ ] todo has title, description, note, and due date properties
+    - [ ] todo has color and category properties
 - [ ] **services**
   - [x] > Reminders service
   - [ ] > ToDos service
@@ -125,19 +148,19 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
   - [x] import vue-fontawesome icons
   - [ ] Each service has a dedicated view page.
   - [ ] Each service has a summary view on the Dashboard page
-    - [ ] Dashboard page from top to bottom: Reminders, ToDos, Notes, Bookmarks, Calendar, Archive
+    - [ ] Dashboard page from top to bottom: Reminders, ToDos, Calendar, Notes, Bookmarks, Archive
     - [x] Reminders has small strip on top of Dashboard page with upcoming reminder
     - [x] Reminders has countdown when next reminder is close
     - [x] Notes applies filter to hide non-pinned items
-  - [ ] Services can be associated with each other
   - [ ] Services can be archived
-- [ ] **calendar**
+- [x] **calendar**
   - [x] shows all days in selected month
     - [x] can cycle through months
     - [x] can jump back to current month
   - [x] displays non-recurring reminders
   - [x] displays recurring reminders
   - [x] displays events
+  - [x] displays recurring events
   - [x] can switch between month-view and day-view
 - [ ] **progressive web app**
   - [ ] app is operational when offline
