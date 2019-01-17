@@ -110,9 +110,9 @@
                 >Please select one or more days, with start and end date</span>
               </label>
               <span class="expl">└ on ➔</span>
-              <div class="weekday" v-for="(day, index) in week" :key="day">
-                <input type="checkbox" :id="day" :value="index" v-model="weekdays">
-                <label :for="day" class="action button checkbox">
+              <div class="weekday" v-for="(day, index) in week" :key="'evt'+day">
+                <input type="checkbox" :id="'evt'+day" :value="index" v-model="weekdays">
+                <label :for="'evt'+day" class="action button checkbox">
                   <span class="day" :class="day">{{ day }}</span>
                 </label>
               </div>
