@@ -203,8 +203,6 @@
             <button class="action button" @click="cancel">
               <font-awesome-icon icon="ban"/>cancel
             </button>
-            <span v-if="isIncomplete" class="req">(is incomplete)</span>
-            <span v-if="hasConflict" class="req">(has conflict)</span>
           </div>
         </div>
       </div>
@@ -267,8 +265,6 @@ export default {
         (hasDueDate && hasStartDate && !isRecurring) ||
         (isRecurring && !recurringStartDateIsBeforeDueDate) ||
         (isRecurring && !hasStartDate);
-      this.isIncomplete = !(hasText && hasDueDate);
-      this.hasConflict = hasConflict;
       return hasText && hasDueDate && !hasConflict;
     },
     textAreaHeight() {
