@@ -148,6 +148,8 @@ export default {
       props.event.date = props.mod.date;
       props.event.time = props.mod.time;
       props.event.weekdays = props.mod.weekdays;
+      props.event.startDate = props.mod.startDate;
+      props.event.endDate = props.mod.endDate;
       props.event.category = props.mod.category;
       props.event.color = props.mod.color;
       props.event

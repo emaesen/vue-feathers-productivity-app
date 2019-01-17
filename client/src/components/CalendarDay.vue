@@ -139,9 +139,11 @@ export default {
           evt =>
             occursToday(evt) ||
             (evt.weekdays &&
+              (evt.startDate === "" ||
+                calendarUtils.yyyymmdd(evt.startDate) <= todayNumeric) &&
               evt.weekdays.includes(weekday) &&
-              (evt.date === "" ||
-                calendarUtils.yyyymmdd(evt.date) >= todayNumeric))
+              (evt.endDate === "" ||
+                calendarUtils.yyyymmdd(evt.endDate) >= todayNumeric))
         )
         .sort(
           (a, b) =>
