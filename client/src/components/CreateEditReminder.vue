@@ -172,15 +172,17 @@
                   <span class="day" :class="day">{{ day }}</span>
                 </label>
               </div>
-              <span class="divider-word">starting on</span>
-              <input
-                id="start-date"
-                name="start-date"
-                v-model="startDate"
-                type="date"
-                placeholder="yyyy-mm-dd"
-                min="new Date()"
-              >
+              <div class="inline-block nowrap">
+                <span class="divider-word">starting on</span>
+                <input
+                  id="start-date"
+                  name="start-date"
+                  v-model="startDate"
+                  type="date"
+                  placeholder="yyyy-mm-dd"
+                  min="new Date()"
+                >
+              </div>
             </div>
           </div>
           <div class>
@@ -383,6 +385,9 @@ label:hover .hover-info {
 }
 .expl {
   margin-left: 0.5em;
+}
+.divider-word,
+.expl {
   color: #929292;
 }
 .req,
