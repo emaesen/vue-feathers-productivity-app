@@ -42,7 +42,7 @@
           <span
             class="action button dashboard"
             :class="{checked: isPinned}"
-            @click="toggleDashboard"
+            @click="toggleIsPinned"
           >{{ isPinned ? "pinned" : "pin" }} on dashboard</span>
           <div class="categories">
             <span class="expl">└ select ➔</span>
@@ -138,7 +138,7 @@ export default {
       this.isPinned = false;
       this.showForm = false;
     },
-    toggleDashboard() {
+    toggleIsPinned() {
       this.isPinned = !this.isPinned;
     },
     save() {
