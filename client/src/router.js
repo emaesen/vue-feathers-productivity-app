@@ -33,6 +33,7 @@ function logOut(to, from, next) {
     store.commit("notes/clearAll");
     store.commit("reminders/clearAll");
     store.commit("events/clearAll");
+    store.commit("todos/clearAll");
     next();
   });
 }
