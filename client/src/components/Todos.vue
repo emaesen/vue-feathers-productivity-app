@@ -37,7 +37,13 @@ import Clock from "./Clock";
 
 // Get todos as "Reactive Lists with Live Queries"
 // https://feathers-plus.github.io/v1/feathers-vuex/common-patterns.html
-import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
+
+const STATUS = {
+  OPEN: "open",
+  PROGRESS: "progress",
+  COMPLETE: "complete"
+};
 
 export default {
   name: "Todos",
@@ -79,6 +85,7 @@ export default {
         });
     },
     createTodo(newTodo) {
+      newTodo.status = STATUS.OPEN;
       console.log("Create todo ", newTodo);
       // create todo instance
       const { Todo } = this.$FeathersVuex;
@@ -126,13 +133,21 @@ export default {
     },
     sortByDate(a, b) {
       // a and b are todos
-      return calendarUtils.timeDiff(a._dateObj, b._dateObj);
+      if (a._dateObj && b._dateObj) {
+        return calendarUtils.timeDiff(a._dateObj, b._dateObj);
+      } else {
+        // TODO!
+        return 1;
+      }
     },
     isPastDue(d1) {
       // d1 must be a date object
       return calendarUtils.timeDiff(d1, new Date()) < 0;
     },
     uiFilter(todo) {
+      return todo ? true : false;
+    },
+    uiPreviewFilter(todo) {
       return todo ? true : false;
     }
   },
@@ -187,7 +202,9 @@ export default {
             query: this.query
           })
             .data.map(td => {
-              td._dateObj = new Date(td.due + "T00:00:00");
+              if (td.due) {
+                td._dateObj = new Date(td.due + "T00:00:00");
+              }
               return td;
             })
             .sort(this.sortByDate)
