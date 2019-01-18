@@ -4,6 +4,7 @@
       <font-awesome-icon icon="tachometer-alt"/>Dashboard
     </h1>
     <pa-reminders view="dashboard" :onDashboard="true" class="section"/>
+    <pa-todos view="dashboard" :onDashboard="true" class="section"/>
     <pa-calendar view="dashboard" :onDashboard="true" class="section"/>
     <pa-notes view="dashboard" :onDashboard="true" class="section"/>
   </div>
@@ -13,6 +14,7 @@
 <script>
 // @ is an alias to /src
 import Reminders from "@/components/Reminders.vue";
+import Todos from "@/components/Todos.vue";
 import Notes from "@/components/Notes.vue";
 import Calendar from "@/components/Calendar.vue";
 
@@ -20,6 +22,7 @@ export default {
   name: "Dashboard",
   components: {
     "pa-reminders": Reminders,
+    "pa-todos": Todos,
     "pa-notes": Notes,
     "pa-calendar": Calendar
   },
