@@ -267,8 +267,8 @@ export default {
         (hasRegularDate && hasRecurringDate) ||
         !!(this.time.end && !this.time.start) ||
         !!(this.date.end && !this.date.start) ||
-        !endDateIsAfterStartDate ||
-        !recurringEndDateIsAfterStartDate ||
+        (hasRegularDate && !endDateIsAfterStartDate) ||
+        (hasRecurringDate && !recurringEndDateIsAfterStartDate) ||
         (hasRegularDateProperty && hasRecurringDateProperty);
 
       return hasTitle && (hasRegularDate || hasRecurringDate) && !hasConflict;
