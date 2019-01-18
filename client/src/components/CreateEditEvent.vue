@@ -255,7 +255,10 @@ export default {
         !!this.startDate || !!this.endDate || this.weekdays.length > 0;
       const endDateIsAfterStartDate =
         new Date(
-          this.date.end + "T" + (this.time.end || "00:00") + ":00"
+          (this.date.end || this.date.start) +
+            "T" +
+            (this.time.end || "00:00") +
+            ":00"
         ).getTime() >
         new Date(
           this.date.start + "T" + (this.time.start || "00:00") + ":00"
