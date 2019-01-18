@@ -3,7 +3,7 @@
     <h2 class="reminders">
       <font-awesome-icon icon="bell"/>Reminders
     </h2>
-    <div class="controls convert-to-block-on-small-device">
+    <div v-if="resultsFound" class="controls convert-to-block-on-small-device">
       <button @click="minimize=!minimize" class="action button">
         <font-awesome-icon
           :icon="minimize? 'align-justify' : ['far','window-minimize']"
@@ -15,11 +15,8 @@
     <div class>
       <pa-create-reminder @create-reminder="createReminder"/>
       <div v-if="loading" class="loading">loading...</div>
-      <transition-group
-        v-if="!loading && reminders && reminders[0]"
-        tag="div"
-        name="reminders-list"
-      >
+      <div v-if="!resultsFound" class="noresults">No reminders found...</div>
+      <transition-group v-if="resultsFound" tag="div" name="reminders-list">
         <pa-reminder
           v-for="reminder in reminders"
           :reminder="reminder"
@@ -187,6 +184,9 @@ export default {
     }),
     ...mapGetters("reminders", { findRemindersInStore: "find" }),
     ...mapGetters({ calendarState: "calendar" }),
+    resultsFound() {
+      return !this.loading && this.reminders && this.reminders[0];
+    },
     today() {
       return this.calendarState.today;
     },
@@ -205,18 +205,22 @@ export default {
       return query;
     },
     reminders() {
-      let nextReminder = this.remindersUnfiltered[0];
-      if (this.minimize) {
-        if (this.displayOnlyOne) {
-          return [nextReminder];
+      if (this.remindersUnfiltered && this.remindersUnfiltered.length > 0) {
+        let nextReminder = this.remindersUnfiltered[0];
+        if (this.minimize) {
+          if (this.displayOnlyOne) {
+            return [nextReminder];
+          } else {
+            let remindersArray = this.remindersUnfiltered.filter(
+              this.uiPreviewFilter
+            );
+            return remindersArray.length > 0 ? remindersArray : [nextReminder];
+          }
         } else {
-          let remindersArray = this.remindersUnfiltered.filter(
-            this.uiPreviewFilter
-          );
-          return remindersArray.length > 0 ? remindersArray : [nextReminder];
+          return this.remindersUnfiltered.filter(this.uiFilter);
         }
       } else {
-        return this.remindersUnfiltered.filter(this.uiFilter);
+        return [];
       }
     },
     remindersUnfiltered() {

@@ -3,7 +3,7 @@
     <h2 class="todos">
       <font-awesome-icon icon="clipboard-list"/>Todos
     </h2>
-    <div class="controls convert-to-block-on-small-device">
+    <div v-if="resultsFound" class="controls convert-to-block-on-small-device">
       <button @click="minimize=!minimize" class="action button">
         <font-awesome-icon
           :icon="minimize? 'align-justify' : ['far','window-minimize']"
@@ -15,8 +15,8 @@
     <div class>
       <pa-create-todo @create-todo="createTodo"/>
       <div v-if="loading" class="loading">loading...</div>
-      <div v-if="!loading && todos && todos.length === 0" class="noresults">No todos found...</div>
-      <transition-group v-if="!loading && todos && todos[0]" tag="div" name="todos-list">
+      <div v-if="!resultsFound" class="noresults">No todos found...</div>
+      <transition-group v-if="resultsFound" tag="div" name="todos-list">
         <pa-todo
           v-for="todo in todos"
           :todo="todo"
@@ -144,6 +144,9 @@ export default {
     }),
     ...mapGetters("todos", { findTodosInStore: "find" }),
     ...mapGetters({ calendarState: "calendar" }),
+    resultsFound() {
+      return !this.loading && this.todos && this.todos[0];
+    },
     today() {
       return this.calendarState.today;
     },
@@ -162,8 +165,8 @@ export default {
       return query;
     },
     todos() {
-      let nextTodo = this.todosUnfiltered[0];
       if (this.todosUnfiltered && this.todosUnfiltered.length > 0) {
+        let nextTodo = this.todosUnfiltered[0];
         if (this.minimize) {
           if (this.displayOnlyOne) {
             return [nextTodo];

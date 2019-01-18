@@ -3,7 +3,7 @@
     <h2 class="notes">
       <font-awesome-icon icon="sticky-note"/>Notes
     </h2>
-    <div class="controls convert-to-block-on-small-device">
+    <div v-if="resultsFound" class="controls convert-to-block-on-small-device">
       <button @click="displayGrid=!displayGrid" class="action button">
         <font-awesome-icon :icon="displayGrid? 'align-justify' : 'th'" class="flush-right"/>
       </button>
@@ -44,6 +44,7 @@
     />
     <pa-create-note @create-note="createNote" :categories="categories"/>
     <div v-if="loading" class="loading">loading...</div>
+    <div v-if="!resultsFound" class="noresults">No notes found...</div>
     <transition-group
       v-if="!loading && notes && notes[0]"
       tag="div"
@@ -256,6 +257,9 @@ export default {
       creating: "isCreatePending"
     }),
     ...mapGetters("notes", { findNotesInStore: "find" }),
+    resultsFound() {
+      return !this.loading && this.notes && this.notes[0];
+    },
     category() {
       // For large datasets, an option is to implement a query-selector.
       // But for the Notes service, we can just filter on the client.

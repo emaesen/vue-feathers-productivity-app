@@ -271,6 +271,11 @@ button:hover,
 .actionable:hover {
   background-color: #201818;
 }
+.loading,
+.noresults {
+  color: #ffa04c;
+  font-style: italic;
+}
 .info {
   color: #e9e4f272;
 }
