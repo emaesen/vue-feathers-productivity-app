@@ -123,17 +123,17 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       - [x] add todos service to the store
       - [x] add todos service scaffold to the app
     - [ ] CRUD operations
-      - [ ] Create
-      - [ ] Read
+      - [x] Create
+      - [x] Read
       - [ ] Update
       - [ ] Delete
       - [ ] redirects to login when session has expired
     - [ ] todos board has "open tasks", "tasks in progress" and "completed tasks" lanes
-    - [ ] todos are integrated with the calendar
+    - [ ] todos with due date are shown on the calendar
     - [ ] todo can be associated with a reminder
     - [ ] the logged-in user can access only their own todos
     - [ ] real-time update todos are send only to the authenticated user
-    - [ ] when user logs out, their todos data are cleared from store
+    - [x] when user logs out, their todos data are cleared from store
     - [ ] changes in one browser are immediately reflected in another
     - [ ] todo has title, description, note, and due date properties
     - [ ] todo has status property
