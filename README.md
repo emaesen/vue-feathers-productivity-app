@@ -116,12 +116,12 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       - [x] day of the week recurring
 - [ ] **Todos service**
   - [ ] add Todos service
-    - [ ] prepare server side
+    - [x] prepare server side
       - [x] generate feathers service
-      - [ ] add authentication hooks
-    - [ ] prepare client side
-      - [ ] add todos service to the store
-      - [ ] add todos service scaffold to the app
+      - [x] add authentication hooks
+    - [x] prepare client side
+      - [x] add todos service to the store
+      - [x] add todos service scaffold to the app
     - [ ] CRUD operations
       - [ ] Create
       - [ ] Read
@@ -136,7 +136,8 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     - [ ] when user logs out, their todos data are cleared from store
     - [ ] changes in one browser are immediately reflected in another
     - [ ] todo has title, description, note, and due date properties
-    - [ ] todo has color and category properties
+    - [ ] todo has status property
+    - [ ] todo has color, category and pinned properties
 - [ ] **services**
   - [x] > Reminders service
   - [ ] > ToDos service
