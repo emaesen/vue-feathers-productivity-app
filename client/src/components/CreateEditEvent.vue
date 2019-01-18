@@ -13,7 +13,7 @@
       <div v-if="showForm" @keydown.s="onKeydownS">
         <div class>
           <div class>
-            <label for="text">
+            <label for="title">
               Event title
               <span v-if="!showError && !isValid" class="req">(required)</span>
               <span v-if="showError" class="error">Please provide a title</span>
@@ -30,7 +30,7 @@
             >
           </div>
           <div class>
-            <label for="text">Event description</label>
+            <label for="description">Event description</label>
             <textarea
               id="description"
               name="description"
