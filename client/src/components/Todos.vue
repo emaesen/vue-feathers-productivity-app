@@ -26,6 +26,8 @@
               :key="todo._id"
               @delete-todo="deleteTodo"
               @edit-todo="editTodo"
+              @transition-todo="transitionTodo"
+              transitionType="start"
             />
           </transition-group>
         </div>
@@ -39,6 +41,8 @@
               :key="todo._id"
               @delete-todo="deleteTodo"
               @edit-todo="editTodo"
+              @transition-todo="transitionTodo"
+              transition-type="complete"
             />
           </transition-group>
         </div>
@@ -157,6 +161,26 @@ export default {
         .update()
         .then(todo => {
           console.log("edit succesful", todo);
+        })
+        .catch(e => {
+          this.handleError(e);
+        });
+    },
+    transitionTodo(todo) {
+      // transition STATUS.OPEN -> STATUS.PROGRESS -> STATUS.COMPLETE
+      console.log("Transition todo ", todo);
+      switch (todo.status) {
+        case STATUS.OPEN:
+          todo.status = STATUS.PROGRESS;
+          break;
+        case STATUS.PROGRESS:
+          todo.status = STATUS.COMPLETE;
+          break;
+      }
+      todo
+        .update()
+        .then(todo => {
+          console.log("transition edit succesful", todo);
         })
         .catch(e => {
           this.handleError(e);

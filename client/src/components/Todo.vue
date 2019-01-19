@@ -52,6 +52,24 @@
                 </div>
               </transition>
             </div>
+            <div class="action-row" :class="{hidden:isCollapsed}">
+              <button
+                v-if="transitionType==='start'"
+                class="action button full-width"
+                title="start this task"
+                @click="transitionTodo(todo)"
+              >Start this task
+                <font-awesome-icon icon="play"/>
+              </button>
+              <button
+                v-if="transitionType==='complete'"
+                class="action button full-width"
+                title="complete this task"
+                @click="transitionTodo(todo)"
+              >Complete this task
+                <font-awesome-icon icon="stop"/>
+              </button>
+            </div>
           </div>
         </div>
         <pa-edit-todo
@@ -117,14 +135,10 @@ export default {
   },
   props: {
     todo: {
-      type: Object,
-      default: function() {
-        return {
-          text: "",
-          category: "",
-          color: ""
-        };
-      }
+      type: Object
+    },
+    transitionType: {
+      type: String
     },
     categories: {
       type: Array
@@ -279,6 +293,9 @@ export default {
         }
       });
     },
+    transitionTodo(todo) {
+      this.$emit("transition-todo", todo);
+    },
     deleteTodo(todo, isConfirmed) {
       if (typeof isConfirmed === "undefined") {
         // ask for confirmation
@@ -384,6 +401,10 @@ export default {
 .confirm {
   margin-left: 1em;
   display: inline-block;
+}
+.action.button.full-width {
+  width: 100%;
+  margin: 0 0 5px;
 }
 .fade-enter-active,
 .fade-leave-active {
