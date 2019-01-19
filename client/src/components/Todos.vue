@@ -12,19 +12,50 @@
       </button>
       <pa-clock v-if="!onDashboard"/>
     </div>
-    <div class>
+    <div>
       <pa-create-todo @create-todo="createTodo"/>
       <div v-if="loading" class="loading">loading...</div>
       <div v-if="!resultsFound" class="noresults">No todos found...</div>
-      <transition-group v-if="resultsFound" tag="div" name="todos-list">
-        <pa-todo
-          v-for="todo in todos"
-          :todo="todo"
-          :key="todo._id"
-          @delete-todo="deleteTodo"
-          @edit-todo="editTodo"
-        />
-      </transition-group>
+      <div class="columns" v-if="resultsFound">
+        <div class="column one-of-three">
+          <h4 class="todos-list-header">Open tasks</h4>
+          <transition-group tag="div" name="todos-list" class="todos-list">
+            <pa-todo
+              v-for="todo in openTodos"
+              :todo="todo"
+              :key="todo._id"
+              @delete-todo="deleteTodo"
+              @edit-todo="editTodo"
+            />
+          </transition-group>
+        </div>
+
+        <div class="column one-of-three">
+          <h4 class="todos-list-header">Tasks In Progress</h4>
+          <transition-group tag="div" name="todos-list" class="todos-list">
+            <pa-todo
+              v-for="todo in inProgressTodos"
+              :todo="todo"
+              :key="todo._id"
+              @delete-todo="deleteTodo"
+              @edit-todo="editTodo"
+            />
+          </transition-group>
+        </div>
+
+        <div class="column one-of-three">
+          <h4 class="todos-list-header">Completed tasks</h4>
+          <transition-group tag="div" name="todos-list" class="todos-list">
+            <pa-todo
+              v-for="todo in completedTodos"
+              :todo="todo"
+              :key="todo._id"
+              @delete-todo="deleteTodo"
+              @edit-todo="editTodo"
+            />
+          </transition-group>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -131,14 +162,19 @@ export default {
           this.handleError(e);
         });
     },
-    sortByDate(a, b) {
-      // a and b are todos
-      if (a._dateObj && b._dateObj) {
-        return calendarUtils.timeDiff(a._dateObj, b._dateObj);
-      } else {
-        // TODO!
-        return 1;
-      }
+    dateObj(dateStr) {
+      // convert yyyy-MM-dd string to date object
+      return dateStr ? new Date(dateStr + "T00:00:00") : null;
+    },
+    sortByDateDue(a, b) {
+      return !a.due
+        ? 1
+        : !b.due
+        ? -1
+        : this.dateObj(a.due) - this.dateObj(b.due);
+    },
+    sortByDateCreated(a, b) {
+      return new Date(b.createdAt) - new Date(a.createdAt);
     },
     isPastDue(d1) {
       // d1 must be a date object
@@ -179,6 +215,26 @@ export default {
 
       return query;
     },
+    openTodos() {
+      // order by due date (earliest due on top)
+      return this.todos
+        .filter(todo => todo.status === STATUS.OPEN)
+        .sort((a, b) => this.sortByDateCreated(a, b))
+        .sort((a, b) => this.sortByDateDue(a, b));
+    },
+    inProgressTodos() {
+      // order by due date (earliest due on top)
+      return this.todos
+        .filter(todo => todo.status === STATUS.PROGRESS)
+        .sort((a, b) => this.sortByDateCreated(a, b))
+        .sort((a, b) => this.sortByDateDue(a, b));
+    },
+    completedTodos() {
+      // order by date completed (latest on top)
+      return this.todos
+        .filter(todo => todo.status === STATUS.COMPLETE)
+        .sort((a, b) => b.dateCompleted - a.dateCompleted);
+    },
     todos() {
       if (this.todosUnfiltered && this.todosUnfiltered.length > 0) {
         let nextTodo = this.todosUnfiltered[0];
@@ -200,14 +256,12 @@ export default {
       return this.user
         ? this.findTodosInStore({
             query: this.query
+          }).data.map(td => {
+            if (td.due) {
+              td._dateObj = new Date(td.due + "T00:00:00");
+            }
+            return td;
           })
-            .data.map(td => {
-              if (td.due) {
-                td._dateObj = new Date(td.due + "T00:00:00");
-              }
-              return td;
-            })
-            .sort(this.sortByDate)
         : [];
     }
   },
@@ -228,6 +282,42 @@ h2.todos {
   display: inline-block;
   position: relative;
   top: -5px;
+}
+.columns {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  margin: 0 -0.7em;
+}
+.column {
+  display: inline-block;
+}
+.column + .column {
+  border-left: 1px solid #3b3636;
+  margin-left: -1px;
+}
+.column.one-of-three {
+  width: 33.333%;
+}
+.column.expanded {
+  width: 100%;
+}
+h4.todos-list-header {
+  text-align: center;
+}
+h4.todos-list-header {
+  margin: 0.7em;
+}
+.todos-list {
+  margin: 0 0.7em;
+}
+.todos-list-cell:nth-child(odd) {
+  background-color: #1e1d21;
+}
+.todos-list-cell + .todos-list-cell {
+  border-top: 1px dashed #454545;
 }
 .todos-list-cell {
   transition: all 1s;

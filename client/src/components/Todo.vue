@@ -13,11 +13,11 @@
           }"
         >
           <div ref="content" :class="dueClass">
-            <div class="due" :class="dueClass">{{ due }}</div>
             <div class="category">
               <font-awesome-icon icon="thumbtack" v-if="todo.isPinned"/>
               {{ todo.category }}
             </div>
+            <div class="due" :class="dueClass">{{ due }}</div>
             <div class="content-text" :class="'clr-' + todo.color">
               <div class="todo-title">{{ todo.title }}</div>
               <div v-if="todo.description" class="todo-description" v-html="descriptionAsHtml"/>
