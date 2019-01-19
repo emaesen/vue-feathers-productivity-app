@@ -18,6 +18,7 @@ import {
   faEllipsisV, // ellipsis vertical
   faFilter, // filter
   faMinusCircle, // remove
+  faPlay, // start, play
   faPlusCircle, // add
   faQuestionCircle, // info
   faRecycle, // recycle
@@ -27,6 +28,7 @@ import {
   faSortAmountUp, // sort up
   faSpinner,
   faStickyNote, // notes
+  faStop, // stop
   faTachometerAlt, // dashboard
   faTh, // grid layout
   faThumbtack, // pin
@@ -61,6 +63,7 @@ library.add(
   faEllipsisV,
   faFilter,
   faMinusCircle,
+  faPlay,
   faPlusCircle,
   faQuestionCircle,
   faRecycle,
@@ -70,6 +73,7 @@ library.add(
   faSortAmountUp,
   faSpinner,
   faStickyNote,
+  faStop,
   faTachometerAlt,
   faTh,
   faThumbtack,
