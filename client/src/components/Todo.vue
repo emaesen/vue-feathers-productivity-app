@@ -14,7 +14,7 @@
         >
           <div ref="content" :class="dueClass">
             <div class="category">
-              <font-awesome-icon icon="thumbtack" v-if="todo.isPinned"/>
+              <font-awesome-icon icon="thumbtack" v-if="showPin"/>
               {{ todo.category }}
             </div>
             <div class="due" :class="dueClass">{{ due }}</div>
@@ -184,7 +184,7 @@ export default {
       ]
     };
   },
-  mounted: function() {
+  mounted() {
     this.setContentStyleProps();
   },
   computed: {
@@ -197,6 +197,9 @@ export default {
     },
     noteAsHtml() {
       return simpleFormat(this.todo.note);
+    },
+    showPin() {
+      return this.todo.status !== STATUS.COMPLETE && this.todo.isPinned;
     },
     due() {
       //let today = new Date();
@@ -227,7 +230,7 @@ export default {
 
       return dueTxt;
     },
-    dueDate: function() {
+    dueDate() {
       return this.todo.status !== STATUS.COMPLETE && this.todo._dateObj;
     },
     daysUntilDue() {
@@ -238,16 +241,16 @@ export default {
     isNotYetDue() {
       return this.dueDate ? this.daysUntilDue > 0 : true;
     },
-    isPastDue: function() {
+    isPastDue() {
       return this.dueDate ? this.daysUntilDue < 0 : false;
     },
-    isDueToday: function() {
+    isDueToday() {
       return this.dueDate ? this.daysUntilDue === 0 : false;
     },
-    isDueSoon: function() {
+    isDueSoon() {
       return this.dueDate ? this.daysUntilDue <= DUEWARNINGWINDOWDAYS : false;
     },
-    dueClass: function() {
+    dueClass() {
       return (
         this.tickTock &&
         (this.isPastDue
