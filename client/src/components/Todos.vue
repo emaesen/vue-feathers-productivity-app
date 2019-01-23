@@ -13,7 +13,7 @@
       <pa-clock v-if="!onDashboard"/>
     </div>
     <div>
-      <pa-create-todo @create-todo="createTodo"/>
+      <pa-create-todo @create-todo="createTodo" :categories="categories"/>
       <div v-if="loading" class="loading">loading...</div>
       <div v-if="!resultsFound" class="noresults">No todos found...</div>
       <div class="columns" v-if="resultsFound">
@@ -27,6 +27,7 @@
               v-for="todo in openTodos"
               :todo="todo"
               :key="todo._id"
+              :categories="categories"
               @delete-todo="deleteTodo"
               @edit-todo="editTodo"
               @transition-todo="transitionTodo"
@@ -45,6 +46,7 @@
               v-for="todo in inProgressTodos"
               :todo="todo"
               :key="todo._id"
+              :categories="categories"
               @delete-todo="deleteTodo"
               @edit-todo="editTodo"
               @transition-todo="transitionTodo"
@@ -63,6 +65,7 @@
               v-for="todo in completedTodos"
               :todo="todo"
               :key="todo._id"
+              :categories="categories"
               @delete-todo="deleteTodo"
               @edit-todo="editTodo"
             />
@@ -105,7 +108,8 @@ export default {
   data() {
     return {
       minimize: this.onDashboard,
-      displayOnlyOne: false
+      displayOnlyOne: false,
+      categories: []
     };
   },
   created() {
@@ -123,7 +127,10 @@ export default {
     loadTodos() {
       // Find all todos from server. We'll filter/sort on the client.
       this.findTodos({ query: {} })
-        .then(resp => console.log({ findTodosResp: resp }))
+        .then(resp => {
+          console.log({ findTodosResp: resp });
+          this.setCategories();
+        })
         .catch(err => {
           this.handleError(err);
         });
@@ -138,6 +145,7 @@ export default {
         .save()
         .then(todo => {
           console.log("Todo created ", todo);
+          this.setCategories();
         })
         .catch(e => {
           this.handleError(e);
@@ -150,6 +158,7 @@ export default {
         .remove()
         .then(() => {
           console.log("remove succesful");
+          this.setCategories();
         })
         .catch(e => {
           this.handleError(e);
@@ -170,6 +179,7 @@ export default {
         .update()
         .then(todo => {
           console.log("edit succesful", todo);
+          this.setCategories();
         })
         .catch(e => {
           this.handleError(e);
@@ -218,6 +228,14 @@ export default {
     },
     uiPreviewFilter(todo) {
       return todo ? true : false;
+    },
+    setCategories() {
+      // get list of user-defined categories and remove duplicates
+      this.categories = this.todosUnfiltered
+        .map(n => n.category)
+        .filter((c, i, s) => s.indexOf(c) === i)
+        .sort();
+      //console.log({ categories: this.categories });
     }
   },
   computed: {
