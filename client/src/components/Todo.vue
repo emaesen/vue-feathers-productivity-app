@@ -371,6 +371,7 @@ export default {
 .content-text.clr-purple {
   border-color: #c114f9;
 }
+.duesoon.due,
 .pastdue.due {
   color: #ff0000;
 }
