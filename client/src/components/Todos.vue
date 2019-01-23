@@ -352,6 +352,9 @@ h2.todos {
 .column.one-of-three {
   width: 33.333%;
 }
+.column:nth-child(even) {
+  background-color: #1e1d21;
+}
 .column.expanded {
   width: 100%;
 }
