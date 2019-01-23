@@ -18,7 +18,10 @@
       <div v-if="!resultsFound" class="noresults">No todos found...</div>
       <div class="columns" v-if="resultsFound">
         <div class="column one-of-three">
-          <h4 class="todos-list-header">Open tasks</h4>
+          <h4 class="todos-list-header">
+            Open tasks
+            <span class="tally">({{ openTodos.length }})</span>
+          </h4>
           <transition-group tag="div" name="todos-list" class="todos-list">
             <pa-todo
               v-for="todo in openTodos"
@@ -33,7 +36,10 @@
         </div>
 
         <div class="column one-of-three">
-          <h4 class="todos-list-header">Tasks In Progress</h4>
+          <h4 class="todos-list-header">
+            Tasks In Progress
+            <span class="tally">({{ inProgressTodos.length }})</span>
+          </h4>
           <transition-group tag="div" name="todos-list" class="todos-list">
             <pa-todo
               v-for="todo in inProgressTodos"
@@ -48,7 +54,10 @@
         </div>
 
         <div class="column one-of-three">
-          <h4 class="todos-list-header">Completed tasks</h4>
+          <h4 class="todos-list-header">
+            Completed tasks
+            <span class="tally">({{ completedTodos.length }})</span>
+          </h4>
           <transition-group tag="div" name="todos-list" class="todos-list">
             <pa-todo
               v-for="todo in completedTodos"
@@ -333,6 +342,12 @@ h4.todos-list-header {
 }
 h4.todos-list-header {
   margin: 0.7em;
+}
+.tally {
+  color: #e9e4f272;
+  letter-spacing: normal;
+  font-size: 90%;
+  font-weight: normal;
 }
 .todos-list {
   margin: 0 0.7em;
