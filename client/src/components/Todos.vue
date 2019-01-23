@@ -358,6 +358,20 @@ h4.todos-list-header {
 .todos-list-cell + .todos-list-cell {
   border-top: 1px dashed #454545;
 }
+.todos-list-cell.pastdue,
+.todos-list-cell.duesoon {
+  margin: 2px;
+  background: #560000;
+  border: 1px solid #f00;
+}
+.todos-list-cell.duesoon {
+  background: #6d2400;
+}
+.todos-list-cell.pastdue .todo,
+.todos-list-cell.duesoon .todo {
+  margin-bottom: 0;
+}
+
 .todos-list-cell {
   transition: all 1s;
 }

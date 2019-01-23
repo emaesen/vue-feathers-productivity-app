@@ -1,5 +1,5 @@
 <template>
-  <div class="cell todos-list-cell">
+  <div class="cell todos-list-cell" :class="dueClass">
     <div :id="'todo-'+todo._id" class="todo">
       <transition name="fade" mode="out-in" @after-enter="editTransitionComplete">
         <div
@@ -89,9 +89,16 @@
 <script>
 import calendarUtils from "../utils/calendar";
 import EditTodo from "./CreateEditTodo";
+import { mapGetters } from "vuex";
 
 const DUETEXTWINDOWDAYS = 7;
 const DUEWARNINGWINDOWDAYS = 1;
+
+const STATUS = {
+  OPEN: "open",
+  PROGRESS: "progress",
+  COMPLETE: "complete"
+};
 
 // allow limited markdown-inspired formatting
 function simpleFormat(inp) {
@@ -181,6 +188,10 @@ export default {
     this.setContentStyleProps();
   },
   computed: {
+    ...mapGetters(["timeTick"]),
+    tickTock() {
+      return this.timeTick;
+    },
     descriptionAsHtml() {
       return simpleFormat(this.todo.description);
     },
@@ -217,10 +228,12 @@ export default {
       return dueTxt;
     },
     dueDate: function() {
-      return this.todo._dateObj;
+      return this.todo.status !== STATUS.COMPLETE && this.todo._dateObj;
     },
     daysUntilDue() {
-      return this.dueDate && calendarUtils.dayDiff(this.dueDate, new Date());
+      return this.dueDate
+        ? calendarUtils.dayDiff(this.dueDate, new Date())
+        : null;
     },
     isNotYetDue() {
       return this.dueDate ? this.daysUntilDue > 0 : true;
@@ -357,6 +370,9 @@ export default {
 }
 .content-text.clr-purple {
   border-color: #c114f9;
+}
+.pastdue.due {
+  color: #ff0000;
 }
 .todo hr {
   border-style: groove;
