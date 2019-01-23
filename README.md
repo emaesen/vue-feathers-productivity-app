@@ -127,12 +127,12 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       - [x] Read
       - [x] Update
       - [x] Delete
-    - [ ] redirects to login when session has expired
+    - [x] redirects to login when session has expired
     - [x] todos board has "open tasks", "tasks in progress" and "completed tasks" lanes
     - [ ] todos with due date are shown on the calendar
     - [ ] todo can be associated with a reminder
     - [ ] the logged-in user can access only their own todos
-    - [ ] real-time update todos are send only to the authenticated user
+    - [ ] real-time update events are send only to the authenticated user
     - [x] when user logs out, their todos data are cleared from store
     - [ ] changes in one browser are immediately reflected in another
     - [x] todo has title, description, note, and due date properties
