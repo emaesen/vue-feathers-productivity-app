@@ -374,6 +374,7 @@ export default {
   margin-top: 1em;
   padding-top: 0.5em;
   border-top: 1px dashed #383247;
+  font-size: 95%;
 }
 .todo-note {
   font-style: italic;
