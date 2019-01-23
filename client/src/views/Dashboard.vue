@@ -26,7 +26,7 @@ export default {
     "pa-notes": Notes,
     "pa-calendar": Calendar
   },
-  data: function() {
+  data() {
     return {};
   },
   methods: {

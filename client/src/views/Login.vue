@@ -60,7 +60,7 @@ import { mapState, mapActions } from "vuex";
 
 export default {
   name: "Login",
-  data: function() {
+  data() {
     return {
       errors: [],
       user: {
@@ -71,14 +71,14 @@ export default {
     };
   },
   computed: {
-    isValid: function() {
+    isValid() {
       return this.validUsername() && this.validPassword();
     },
     ...mapState("auth", { loading: "isAuthenticatePending" })
   },
   methods: {
     ...mapActions("auth", ["authenticate"]),
-    login: function(evt) {
+    login(evt) {
       if (this.validForm()) {
         //submit form
         console.log("submitting login form");
@@ -112,11 +112,11 @@ export default {
       }
       return err.length === 0;
     },
-    validUsername: function() {
+    validUsername() {
       var re = /^[0-9A-Za-z][0-9A-Za-z ]{0,16}[0-9A-Za-z]$/;
       return re.test(this.user.username);
     },
-    validPassword: function() {
+    validPassword() {
       var re = /^.{4,18}$/;
       return re.test(this.user.password);
     }

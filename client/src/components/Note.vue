@@ -109,7 +109,7 @@ export default {
   props: {
     note: {
       type: Object,
-      default: function() {
+      default() {
         return {
           text: "",
           category: "",
@@ -139,7 +139,7 @@ export default {
       isDeleteClicked: false
     };
   },
-  mounted: function() {
+  mounted() {
     this.setContentStyleProps();
   },
   computed: {

@@ -71,7 +71,7 @@ import { mapState } from "vuex";
 
 export default {
   name: "Register",
-  data: function() {
+  data() {
     return {
       errors: [],
       user: {
@@ -82,7 +82,7 @@ export default {
     };
   },
   computed: {
-    isValid: function() {
+    isValid() {
       return (
         this.validUsername() && this.validPassword() && this.matchingPasswords()
       );
@@ -90,7 +90,7 @@ export default {
     ...mapState("users", { loading: "isCreatePending" })
   },
   methods: {
-    register: function(evt) {
+    register(evt) {
       if (this.validForm()) {
         console.log("submitting form");
         // create user instance
@@ -122,15 +122,15 @@ export default {
       }
       return err.length === 0;
     },
-    validUsername: function() {
+    validUsername() {
       var re = /^[0-9A-Za-z][0-9A-Za-z ]{0,16}[0-9A-Za-z]$/;
       return re.test(this.user.username);
     },
-    validPassword: function() {
+    validPassword() {
       var re = /^.{4,18}$/;
       return re.test(this.user.password);
     },
-    matchingPasswords: function() {
+    matchingPasswords() {
       return this.user.password === this.confirmPassword;
     }
   }

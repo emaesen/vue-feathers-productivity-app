@@ -170,7 +170,7 @@ export default {
       ]
     };
   },
-  mounted: function() {
+  mounted() {
     this.setContentStyleProps();
   },
   computed: {
@@ -287,7 +287,7 @@ export default {
         return calendarUtils.dateObj(this.reminder);
       }
     },
-    dueDate: function() {
+    dueDate() {
       if (this.isInGraceWindow) {
         return this.dueDateAfterGracePeriod;
       } else {
@@ -297,13 +297,13 @@ export default {
     isNotYetDue() {
       return calendarUtils.timeDiff(this.dueDate, new Date()) > 0;
     },
-    isPastDue: function() {
+    isPastDue() {
       return calendarUtils.timeDiff(this.dueDate, new Date()) < 0;
     },
-    isDueToday: function() {
+    isDueToday() {
       return calendarUtils.dayDiff(this.dueDate, new Date()) === 0;
     },
-    isDueSoon: function() {
+    isDueSoon() {
       let timeDiff = calendarUtils.timeDiff(this.dueDate, new Date());
       return timeDiff < this.countDownMSecBeforeDue && timeDiff > 0;
     },
@@ -321,7 +321,7 @@ export default {
         timeDiff > 0
       );
     },
-    dueClass: function() {
+    dueClass() {
       return (
         this.tickTock &&
         (this.isPastDue

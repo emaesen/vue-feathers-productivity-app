@@ -30,7 +30,7 @@ export default {
   components: {
     "pa-clock": Clock
   },
-  data: function() {
+  data() {
     return {};
   },
   computed: {

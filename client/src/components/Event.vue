@@ -121,7 +121,7 @@ export default {
   props: {
     event: {
       type: Object,
-      default: function() {
+      default() {
         return {
           title: "",
           description: "",
@@ -151,7 +151,7 @@ export default {
       isDeleteClicked: false
     };
   },
-  mounted: function() {
+  mounted() {
     this.setContentStyleProps();
   },
   computed: {
