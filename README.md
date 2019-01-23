@@ -41,7 +41,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       - [x] Read
       - [x] Update
       - [x] Delete
-      - [x] redirects to login when session has expired
+    - [x] redirects to login when session has expired
     - [x] display Create/Update error messages
     - [x] ask confirmation before Delete
     - [x] the logged-in user can access only their own notes
@@ -73,7 +73,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       - [x] Read
       - [x] Update
       - [x] Delete
-      - [x] redirects to login when session has expired
+    - [x] redirects to login when session has expired
     - [x] the logged-in user can access only their own reminders
     - [x] real-time update events are send only to the authenticated user
     - [x] when user logs out, their reminders data are cleared from store
@@ -102,7 +102,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       - [x] Read
       - [x] Update
       - [x] Delete
-      - [x] redirects to login when session has expired
+    - [x] redirects to login when session has expired
     - [x] events are integrated with the calendar
     - [ ] event can be associated with a reminder
     - [x] the logged-in user can access only their own events
@@ -122,22 +122,22 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     - [x] prepare client side
       - [x] add todos service to the store
       - [x] add todos service scaffold to the app
-    - [ ] CRUD operations
+    - [x] CRUD operations
       - [x] Create
       - [x] Read
-      - [ ] Update
-      - [ ] Delete
-      - [ ] redirects to login when session has expired
-    - [ ] todos board has "open tasks", "tasks in progress" and "completed tasks" lanes
+      - [x] Update
+      - [x] Delete
+    - [ ] redirects to login when session has expired
+    - [x] todos board has "open tasks", "tasks in progress" and "completed tasks" lanes
     - [ ] todos with due date are shown on the calendar
     - [ ] todo can be associated with a reminder
     - [ ] the logged-in user can access only their own todos
     - [ ] real-time update todos are send only to the authenticated user
     - [x] when user logs out, their todos data are cleared from store
     - [ ] changes in one browser are immediately reflected in another
-    - [ ] todo has title, description, note, and due date properties
-    - [ ] todo has status property
-    - [ ] todo has color, category and pinned properties
+    - [x] todo has title, description, note, and due date properties
+    - [x] todo has status property
+    - [x] todo has color, category and pinned properties
 - [ ] **services**
   - [x] > Reminders service
   - [ ] > ToDos service
