@@ -75,13 +75,15 @@
             name="category"
             type="text"
             v-model="category"
+            maxlength="15"
             placeholder="type new or select below"
           >
           <span
             class="action button dashboard"
             :class="{checked: isPinned}"
             @click="toggleIsPinned"
-          >{{ isPinned ? "pinned" : "pin" }} on dashboard</span>
+            :title="isPinned ? 'pinned on dashboard' : 'pin on dashboard'"
+          >{{ isPinned ? "pinned" : "pin" }}</span>
           <div class="categories">
             <span class="expl">└ select ➔</span>
             <div class="category" v-for="cat in categories" :key="cat">
@@ -228,6 +230,9 @@ export default {
 <style scoped>
 input#title {
   width: 80%;
+}
+input#category {
+  width: 8em;
 }
 .form {
   background-color: #212027;
