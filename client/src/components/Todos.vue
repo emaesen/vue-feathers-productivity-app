@@ -7,7 +7,11 @@
       <button @click="toggleOpenTasks" class="action button">Open
         <font-awesome-icon :icon="showOpenTasks? 'eye' : 'eye-slash'" class="flush-right"/>
       </button>
-      <button @click="toggleProgressTasks" class="action button">Progress
+      <button
+        v-if="allowToggleProgressTasks"
+        @click="toggleProgressTasks"
+        class="action button"
+      >Progress
         <font-awesome-icon :icon="showProgressTasks? 'eye' : 'eye-slash'" class="flush-right"/>
       </button>
       <button @click="toggleCompletedTasks" class="action button">Completed
@@ -21,60 +25,66 @@
       <div v-if="!resultsFound" class="noresults">No todos found...</div>
 
       <div class="columns" v-if="resultsFound">
-        <div class="column" :class="'one-of-'+ nrOfColumns" v-if="showOpenTasks">
-          <h4 class="todos-list-header">
-            Open tasks
-            <span class="tally">({{ openTodos.length }})</span>
-          </h4>
-          <transition-group tag="div" name="todos-list" class="todos-list">
-            <pa-todo
-              v-for="todo in openTodos"
-              :todo="todo"
-              :key="todo._id"
-              :categories="categories"
-              @delete-todo="deleteTodo"
-              @edit-todo="editTodo"
-              @transition-todo="transitionTodo"
-              transitionType="start"
-            />
-          </transition-group>
-        </div>
+        <transition name="fadex">
+          <div class="column" :class="'one-of-'+ nrOfColumns" v-if="showOpenTasks">
+            <h4 class="todos-list-header">
+              Open tasks
+              <span class="tally">({{ openTodos.length }})</span>
+            </h4>
+            <transition-group tag="div" name="todos-list" class="todos-list">
+              <pa-todo
+                v-for="todo in openTodos"
+                :todo="todo"
+                :key="todo._id"
+                :categories="categories"
+                @delete-todo="deleteTodo"
+                @edit-todo="editTodo"
+                @transition-todo="transitionTodo"
+                transitionType="start"
+              />
+            </transition-group>
+          </div>
+        </transition>
 
-        <div class="column" :class="'one-of-'+ nrOfColumns" v-if="showProgressTasks">
-          <h4 class="todos-list-header">
-            Tasks In Progress
-            <span class="tally">({{ inProgressTodos.length }})</span>
-          </h4>
-          <transition-group tag="div" name="todos-list" class="todos-list">
-            <pa-todo
-              v-for="todo in inProgressTodos"
-              :todo="todo"
-              :key="todo._id"
-              :categories="categories"
-              @delete-todo="deleteTodo"
-              @edit-todo="editTodo"
-              @transition-todo="transitionTodo"
-              transition-type="complete"
-            />
-          </transition-group>
-        </div>
+        <transition name="fadex">
+          <div class="column" :class="'one-of-'+ nrOfColumns" v-if="showProgressTasks">
+            <h4 class="todos-list-header">
+              Tasks In Progress
+              <span class="tally">({{ inProgressTodos.length }})</span>
+            </h4>
+            <transition-group tag="div" name="todos-list" class="todos-list">
+              <pa-todo
+                v-for="todo in inProgressTodos"
+                :todo="todo"
+                :key="todo._id"
+                :categories="categories"
+                @delete-todo="deleteTodo"
+                @edit-todo="editTodo"
+                @transition-todo="transitionTodo"
+                transition-type="complete"
+              />
+            </transition-group>
+          </div>
+        </transition>
 
-        <div class="column" :class="'one-of-'+ nrOfColumns" v-if="showCompletedTasks">
-          <h4 class="todos-list-header">
-            Completed tasks
-            <span class="tally">({{ completedTodos.length }})</span>
-          </h4>
-          <transition-group tag="div" name="todos-list" class="todos-list">
-            <pa-todo
-              v-for="todo in completedTodos"
-              :todo="todo"
-              :key="todo._id"
-              :categories="categories"
-              @delete-todo="deleteTodo"
-              @edit-todo="editTodo"
-            />
-          </transition-group>
-        </div>
+        <transition name="fadex">
+          <div class="column" :class="'one-of-'+ nrOfColumns" v-if="showCompletedTasks">
+            <h4 class="todos-list-header">
+              Completed tasks
+              <span class="tally">({{ completedTodos.length }})</span>
+            </h4>
+            <transition-group tag="div" name="todos-list" class="todos-list">
+              <pa-todo
+                v-for="todo in completedTodos"
+                :todo="todo"
+                :key="todo._id"
+                :categories="categories"
+                @delete-todo="deleteTodo"
+                @edit-todo="editTodo"
+              />
+            </transition-group>
+          </div>
+        </transition>
       </div>
     </div>
   </section>
@@ -115,7 +125,8 @@ export default {
       categories: [],
       showOpenTasks: true,
       showProgressTasks: true,
-      showCompletedTasks: true
+      showCompletedTasks: true,
+      allowToggleProgressTasks: false
     };
   },
   created() {
@@ -421,5 +432,22 @@ h4.todos-list-header {
 }
 .todos-list-leave-active {
   position: absolute;
+}
+
+.column {
+  transition: width 1s;
+}
+.fadex-enter-active,
+.fadex-leave-active {
+  transition: all 1s;
+  visibility: hidden;
+}
+.fadex-leave-active {
+  display: none;
+}
+.fadex-enter,
+.fadex-leave-to {
+  visibility: hidden;
+  width: 0 !important;
 }
 </style>
