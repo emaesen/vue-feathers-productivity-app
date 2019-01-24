@@ -4,11 +4,14 @@
       <font-awesome-icon icon="clipboard-list"/>Todos
     </h2>
     <div v-if="resultsFound" class="controls convert-to-block-on-small-device">
-      <button @click="minimize=!minimize" class="action button">
-        <font-awesome-icon
-          :icon="minimize? 'align-justify' : ['far','window-minimize']"
-          class="flush-right"
-        />
+      <button @click="toggleOpenTasks" class="action button">Open
+        <font-awesome-icon :icon="showOpenTasks? 'eye' : 'eye-slash'" class="flush-right"/>
+      </button>
+      <button @click="toggleProgressTasks" class="action button">Progress
+        <font-awesome-icon :icon="showProgressTasks? 'eye' : 'eye-slash'" class="flush-right"/>
+      </button>
+      <button @click="toggleCompletedTasks" class="action button">Completed
+        <font-awesome-icon :icon="showCompletedTasks? 'eye' : 'eye-slash'" class="flush-right"/>
       </button>
       <pa-clock v-if="!onDashboard"/>
     </div>
@@ -16,8 +19,9 @@
       <pa-create-todo @create-todo="createTodo" :categories="categories"/>
       <div v-if="loading" class="loading">loading...</div>
       <div v-if="!resultsFound" class="noresults">No todos found...</div>
+
       <div class="columns" v-if="resultsFound">
-        <div class="column one-of-three">
+        <div class="column" :class="'one-of-'+ nrOfColumns" v-if="showOpenTasks">
           <h4 class="todos-list-header">
             Open tasks
             <span class="tally">({{ openTodos.length }})</span>
@@ -36,7 +40,7 @@
           </transition-group>
         </div>
 
-        <div class="column one-of-three">
+        <div class="column" :class="'one-of-'+ nrOfColumns" v-if="showProgressTasks">
           <h4 class="todos-list-header">
             Tasks In Progress
             <span class="tally">({{ inProgressTodos.length }})</span>
@@ -55,7 +59,7 @@
           </transition-group>
         </div>
 
-        <div class="column one-of-three">
+        <div class="column" :class="'one-of-'+ nrOfColumns" v-if="showCompletedTasks">
           <h4 class="todos-list-header">
             Completed tasks
             <span class="tally">({{ completedTodos.length }})</span>
@@ -107,14 +111,19 @@ export default {
   },
   data() {
     return {
-      minimize: this.onDashboard,
       displayOnlyOne: false,
-      categories: []
+      categories: [],
+      showOpenTasks: true,
+      showProgressTasks: true,
+      showCompletedTasks: true
     };
   },
   created() {
     // Find all todos from server. We'll filter/sort on the client.
     this.loadTodos();
+    if (this.onDashboard) {
+      this.showCompletedTasks = false;
+    }
   },
   methods: {
     ...mapActions("todos", { findTodos: "find" }),
@@ -236,6 +245,15 @@ export default {
         .filter((c, i, s) => s.indexOf(c) === i)
         .sort();
       //console.log({ categories: this.categories });
+    },
+    toggleOpenTasks() {
+      this.showOpenTasks = !this.showOpenTasks;
+    },
+    toggleProgressTasks() {
+      this.showProgressTasks = !this.showProgressTasks;
+    },
+    toggleCompletedTasks() {
+      this.showCompletedTasks = !this.showCompletedTasks;
     }
   },
   computed: {
@@ -286,19 +304,16 @@ export default {
         .filter(todo => todo.status === STATUS.COMPLETE)
         .sort((a, b) => b.dateCompleted - a.dateCompleted);
     },
+    nrOfColumns() {
+      let nr = 0;
+      if (this.showOpenTasks) nr += 1;
+      if (this.showProgressTasks) nr += 1;
+      if (this.showCompletedTasks) nr += 1;
+      return nr;
+    },
     todos() {
       if (this.todosUnfiltered && this.todosUnfiltered.length > 0) {
-        let nextTodo = this.todosUnfiltered[0];
-        if (this.minimize) {
-          if (this.displayOnlyOne) {
-            return [nextTodo];
-          } else {
-            let todosArray = this.todosUnfiltered.filter(this.uiPreviewFilter);
-            return todosArray.length > 0 ? todosArray : [nextTodo];
-          }
-        } else {
-          return this.todosUnfiltered.filter(this.uiFilter);
-        }
+        return this.todosUnfiltered.filter(this.uiFilter);
       } else {
         return [];
       }
@@ -349,11 +364,14 @@ h2.todos {
   border-left: 1px solid #3b3636;
   margin-left: -1px;
 }
-.column.one-of-three {
+.column.one-of-3 {
   width: 33.333%;
 }
-.column:nth-child(even) {
-  background-color: #1e1d21;
+.column.one-of-2 {
+  width: 50%;
+}
+.column.one-of-1 {
+  width: 100%;
 }
 .column.expanded {
   width: 100%;
