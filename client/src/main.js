@@ -16,6 +16,8 @@ import {
   faClipboardList, // to do list
   faEdit, // edit
   faEllipsisV, // ellipsis vertical
+  faEye, // eye, view
+  faEyeSlash, // hide
   faFilter, // filter
   faMinusCircle, // remove
   faPlay, // start, play
@@ -61,6 +63,8 @@ library.add(
   faClipboardList,
   faEdit,
   faEllipsisV,
+  faEye,
+  faEyeSlash,
   faFilter,
   faMinusCircle,
   faPlay,
