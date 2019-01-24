@@ -361,12 +361,12 @@ h2.todos {
   top: -5px;
 }
 .columns {
+  width: 100%;
   position: relative;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: stretch;
-  margin: 0 -0.7em;
 }
 .column {
   display: inline-block;
@@ -384,14 +384,11 @@ h2.todos {
 .column.one-of-1 {
   width: 100%;
 }
-.column.expanded {
-  width: 100%;
-}
 h4.todos-list-header {
   text-align: center;
 }
 h4.todos-list-header {
-  margin: 0.7em;
+  margin: 1em 0;
 }
 .tally {
   color: #e9e4f272;
@@ -449,5 +446,24 @@ h4.todos-list-header {
 .fadex-leave-to {
   visibility: hidden;
   width: 0 !important;
+}
+
+@media all and (max-width: 900px) {
+  .column.one-of-3 {
+    border-top: 1px solid #555;
+    border-left: 0;
+    margin: 1em 0;
+    width: 100%;
+  }
+}
+
+@media all and (max-width: 800px) {
+  .column.one-of-2 {
+    border-top: 1px solid #555;
+    border-left: 0;
+    margin: 1em 0;
+    padding-top: 1em;
+    width: 100%;
+  }
 }
 </style>
