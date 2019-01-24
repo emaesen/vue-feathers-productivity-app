@@ -83,7 +83,7 @@
             :class="{checked: isPinned}"
             @click="toggleIsPinned"
             :title="isPinned ? 'pinned on dashboard' : 'pin on dashboard'"
-          >{{ isPinned ? "pinned" : "pin" }}</span>
+          >{{ isPinned ? "pinned" : "pin" }} on dashboard</span>
           <div class="categories">
             <span class="expl">└ select ➔</span>
             <div class="category" v-for="cat in categories" :key="cat">
