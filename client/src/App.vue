@@ -317,6 +317,9 @@ button:hover,
 .right.spaced {
   right: 5px;
 }
+.left-margin {
+  margin-left: 5px;
+}
 .nav-item {
   display: inline;
 }
