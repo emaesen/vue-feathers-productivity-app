@@ -7,17 +7,17 @@
       <button @click="toggleOpenTasks" class="action button">
         Open
         <span class="tally">({{ openTodos.length }})</span>
-        <font-awesome-icon :icon="showOpenTasks? 'eye' : 'eye-slash'" class="left-margin"/>
+        <font-awesome-icon :icon="showOpenTasks? 'eye' : 'eye-slash'" class="left-margin5"/>
       </button>
       <button v-if="allowToggleProgressTasks" @click="toggleProgressTasks" class="action button">
         Progress
         <span class="tally">({{ inProgressTodos.length }})</span>
-        <font-awesome-icon :icon="showProgressTasks? 'eye' : 'eye-slash'" class="left-margin"/>
+        <font-awesome-icon :icon="showProgressTasks? 'eye' : 'eye-slash'" class="left-margin5"/>
       </button>
       <button @click="toggleCompletedTasks" class="action button">
         Completed
         <span class="tally">({{ completedTodos.length }})</span>
-        <font-awesome-icon :icon="showCompletedTasks? 'eye' : 'eye-slash'" class="left-margin"/>
+        <font-awesome-icon :icon="showCompletedTasks? 'eye' : 'eye-slash'" class="left-margin5"/>
       </button>
       <pa-clock v-if="!onDashboard"/>
     </div>
