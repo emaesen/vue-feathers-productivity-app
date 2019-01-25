@@ -407,10 +407,12 @@ export default {
   padding-top: 0.5em;
   border-top: 1px dashed #383247;
   font-size: 95%;
+  color: #cbd6c7c9;
 }
 .todo-note {
   font-style: italic;
   font-size: 90%;
+  color: #cbd6c790;
 }
 .trans {
   /* use max-height to transition the height */
