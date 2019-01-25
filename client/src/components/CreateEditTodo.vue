@@ -145,11 +145,15 @@ export default {
     },
     descriptionAreaHeight() {
       const minHeight = 150;
-      return this.contentHeight > minHeight ? this.contentHeight : minHeight;
+      return this.contentHeight / 2 > minHeight
+        ? this.contentHeight / 2
+        : minHeight;
     },
     noteAreaHeight() {
-      const minHeight = 150;
-      return this.contentHeight > minHeight ? this.contentHeight : minHeight;
+      const minHeight = 75;
+      return this.contentHeight / 3 > minHeight
+        ? this.contentHeight / 3
+        : minHeight;
     }
   },
   methods: {
