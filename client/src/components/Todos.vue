@@ -4,18 +4,20 @@
       <font-awesome-icon icon="clipboard-list"/>Todos
     </h2>
     <div v-if="resultsFound" class="controls convert-to-block-on-small-device">
-      <button @click="toggleOpenTasks" class="action button">Open
-        <font-awesome-icon :icon="showOpenTasks? 'eye' : 'eye-slash'" class="flush-right"/>
+      <button @click="toggleOpenTasks" class="action button">
+        Open
+        <span class="tally">({{ openTodos.length }})</span>
+        <font-awesome-icon :icon="showOpenTasks? 'eye' : 'eye-slash'" class="left-margin"/>
       </button>
-      <button
-        v-if="allowToggleProgressTasks"
-        @click="toggleProgressTasks"
-        class="action button"
-      >Progress
-        <font-awesome-icon :icon="showProgressTasks? 'eye' : 'eye-slash'" class="flush-right"/>
+      <button v-if="allowToggleProgressTasks" @click="toggleProgressTasks" class="action button">
+        Progress
+        <span class="tally">({{ inProgressTodos.length }})</span>
+        <font-awesome-icon :icon="showProgressTasks? 'eye' : 'eye-slash'" class="left-margin"/>
       </button>
-      <button @click="toggleCompletedTasks" class="action button">Completed
-        <font-awesome-icon :icon="showCompletedTasks? 'eye' : 'eye-slash'" class="flush-right"/>
+      <button @click="toggleCompletedTasks" class="action button">
+        Completed
+        <span class="tally">({{ completedTodos.length }})</span>
+        <font-awesome-icon :icon="showCompletedTasks? 'eye' : 'eye-slash'" class="left-margin"/>
       </button>
       <pa-clock v-if="!onDashboard"/>
     </div>
