@@ -13,6 +13,18 @@
           }"
         >
           <div ref="content" :class="dueClass">
+            <div class="inline-block float right right-margin5">
+              <font-awesome-icon
+                v-if="isCollapsed && transitionType==='start'"
+                icon="play"
+                @click="transitionTodo(todo)"
+              />
+              <font-awesome-icon
+                v-if="isCollapsed && transitionType==='complete'"
+                icon="stop"
+                @click="transitionTodo(todo)"
+              />
+            </div>
             <div class="category">
               <font-awesome-icon icon="thumbtack" v-if="showPin"/>
               {{ todo.category }}
