@@ -17,6 +17,11 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
   - implements client-side sorting and filtering.
   - has several types of animation: vue-based as well as plain css.
   - changes in one browser are immediately reflected in another.
+- **_WORK IN PROGRESS_**: _Multiple Services_
+  - extends v0.2.
+  - adds Todos service.
+  - adds Reminders service.
+  - adds Events service.
 
 ## _--WORK IN PROGRESS--_
 
@@ -112,7 +117,8 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     - [x] event has title, description and start/end date & time properties
     - [x] event has color and category properties
     - [x] event has recurring scheduling properties
-      - [x] start date of recurring schedule
+      - [x] start and end date of recurring schedule
+      - [x] start and end time of recurring event
       - [x] day of the week recurring
 - [ ] **Todos service**
   - [ ] add Todos service
