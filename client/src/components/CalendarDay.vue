@@ -103,8 +103,8 @@ export default {
           rem =>
             rem.date === today ||
             (rem.weekdays &&
-              (rem.startDate === "" ||
-                calendarUtils.yyyymmdd(rem.startDate) <= todayNumeric) &&
+              (rem.date.start === "" ||
+                calendarUtils.yyyymmdd(rem.date.start) <= todayNumeric) &&
               rem.weekdays.includes(weekday) &&
               (rem.date === "" ||
                 calendarUtils.yyyymmdd(rem.date) >= todayNumeric))
@@ -127,23 +127,24 @@ export default {
       let todayString = calendarUtils.yyyy_mm_dd(today);
       let todayNumeric = calendarUtils.yyyymmdd(today);
       let weekday = today.getDay();
-      const occursToday = event => {
+      const occursToday = evt => {
+        const isRecurring = evt.weekdays && evt.weekdays.length > 0;
+        const startDateNumeric = evt.date.start.replace(/-/g, "");
+        const endDateNumeric = evt.date.end.replace(/-/g, "") || 
+          (isRecurring ? "99999999" : startDateNumeric);
+        const isWithinRange = 
+          todayNumeric >= startDateNumeric
+          && todayNumeric <= endDateNumeric;
         return (
-          todayString === event.date.start ||
-          (todayNumeric >= event.date.start.replace(/-/g, "") &&
-            todayNumeric <= event.date.end.replace(/-/g, ""))
+          todayString === evt.date.start ||
+          (!isRecurring && isWithinRange) ||
+          (isRecurring && isWithinRange && evt.weekdays.includes(weekday))
         );
       };
       let events = this.events
         .filter(
           evt =>
-            occursToday(evt) ||
-            (evt.weekdays &&
-              (evt.startDate === "" ||
-                calendarUtils.yyyymmdd(evt.startDate) <= todayNumeric) &&
-              evt.weekdays.includes(weekday) &&
-              (evt.endDate === "" ||
-                calendarUtils.yyyymmdd(evt.endDate) >= todayNumeric))
+            occursToday(evt)
         )
         .sort(
           (a, b) =>

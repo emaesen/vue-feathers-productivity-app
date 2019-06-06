@@ -56,43 +56,90 @@
               <span
                 v-if="!showError && !isValid"
                 class="req"
-              >= D&amp;T (required D&amp;T -or- REW)</span>
-              <span v-if="showError" class="error">Please provide a date</span>
+              >(required)</span>
+              <span v-if="showError" class="error">Please provide at least a date</span>
             </label>
-            <input
-              id="date"
-              name="date"
-              v-model="date.start"
-              type="date"
-              placeholder="yyyy-mm-dd"
-              min="new Date()"
-            >
-            <input
-              id="time"
-              name="time"
-              v-model="time.start"
-              type="time"
-              placeholder="hh:mm"
-              step="300"
-            >
-            <div class="inline-block nowrap">
-              <span class="divider-word">to</span>
-              <input
-                id="time-end"
-                name="time-end"
-                v-model="time.end"
-                type="time"
-                placeholder="hh:mm"
-                step="300"
-              >
-              <input
-                id="date-end"
-                name="date-end"
-                v-model="date.end"
-                type="date"
-                placeholder="yyyy-mm-dd"
-                min="new Date()"
-              >
+            <div v-if="isRecurring">
+              <div class="nowrap">
+                <span class="divider-word">repeat from</span>
+                <input
+                  id="date"
+                  name="date"
+                  v-model="date.start"
+                  type="date"
+                  placeholder="yyyy-mm-dd"
+                  min="new Date()"
+                >
+                <span class="divider-word">to</span>
+                <input
+                  id="date-end"
+                  name="date-end"
+                  v-model="date.end"
+                  type="date"
+                  placeholder="yyyy-mm-dd"
+                  min="new Date()"
+                >
+              </div>
+              <div class="nowrap">
+                <span class="divider-word">each event starts at</span>
+                <input
+                  id="time"
+                  name="time"
+                  v-model="time.start"
+                  type="time"
+                  placeholder="hh:mm"
+                  step="300"
+                >
+                <span class="divider-word">and ends at</span>
+                <input
+                  id="time-end"
+                  name="time-end"
+                  v-model="time.end"
+                  type="time"
+                  placeholder="hh:mm"
+                  step="300"
+                >
+              </div>
+            </div>
+            <div v-else>
+              <div class="nowrap">
+                <span class="divider-word">event starts</span>
+                <input
+                  id="date"
+                  name="date"
+                  v-model="date.start"
+                  type="date"
+                  placeholder="yyyy-mm-dd"
+                  min="new Date()"
+                >
+                <input
+                  id="time"
+                  name="time"
+                  v-model="time.start"
+                  type="time"
+                  placeholder="hh:mm"
+                  step="300"
+                >
+              </div>
+              <div class="nowrap">
+                <span class="divider-word">event ends</span>
+                <input
+                  id="time-end"
+                  name="time-end"
+                  v-model="time.end"
+                  type="time"
+                  placeholder="hh:mm"
+                  step="300"
+                >
+                <input
+                  id="date-end"
+                  name="date-end"
+                  v-model="date.end"
+                  type="date"
+                  placeholder="yyyy-mm-dd"
+                  min="new Date()"
+                >
+              </div>
             </div>
           </div>
 
@@ -100,14 +147,6 @@
             <div class="cell">
               <label>
                 Repeat every week
-                <span
-                  v-if="!showError && !isValid"
-                  class="req"
-                >= REW (required REW -or- D&amp;T)</span>
-                <span
-                  v-if="showError"
-                  class="error"
-                >Please select one or more days, with start and end date</span>
               </label>
               <span class="expl">└ on ➔</span>
               <div class="weekday" v-for="(day, index) in week" :key="'evt'+day">
@@ -115,26 +154,6 @@
                 <label :for="'evt'+day" class="action button checkbox">
                   <span class="day" :class="day">{{ day }}</span>
                 </label>
-              </div>
-              <div class="inline-block nowrap">
-                <span class="divider-word">from</span>
-                <input
-                  id="start-date"
-                  name="start-date"
-                  v-model="startDate"
-                  type="date"
-                  placeholder="yyyy-mm-dd"
-                  min="new Date()"
-                >
-                <span class="divider-word">to</span>
-                <input
-                  id="end-date"
-                  name="end-date"
-                  v-model="endDate"
-                  type="date"
-                  placeholder="yyyy-mm-dd"
-                  min="new Date()"
-                >
               </div>
             </div>
           </div>
@@ -207,8 +226,6 @@ export default {
         end: (this.event && this.event.time && this.event.time.end) || ""
       },
       weekdays: (this.event && this.event.weekdays) || [],
-      startDate: (this.event && this.event.startDate) || "",
-      endDate: (this.event && this.event.endDate) || "",
       category: (this.event && this.event.category) || "",
       color: (this.event && this.event.color) || "",
       showForm: !!(this.event && this.event.title),
@@ -233,6 +250,9 @@ export default {
     isEdit() {
       return !!(this.event && this.event.title);
     },
+    isRecurring() {
+      return this.weekdays && this.weekdays.length > 0;
+    },
     isValid() {
       // cover basic isValid conditions
       const hasTitle = !!(this.title && this.title !== "");
@@ -246,13 +266,8 @@ export default {
         !!this.time.start ||
         !!this.date.end ||
         !!this.time.end;
-      const hasRecurringDate = !!(
-        this.startDate &&
-        this.endDate &&
-        this.weekdays.length > 0
-      );
       const hasRecurringDateProperty =
-        !!this.startDate || !!this.endDate || this.weekdays.length > 0;
+        this.weekdays.length > 0;
       const endDateIsAfterStartDate =
         new Date(
           (this.date.end || this.date.start) +
@@ -263,18 +278,15 @@ export default {
         new Date(
           this.date.start + "T" + (this.time.start || "00:00") + ":00"
         ).getTime();
-      const recurringEndDateIsAfterStartDate =
-        new Date(this.endDate + "T00:00:00") >
-        new Date(this.startDate + "T00:00:00");
+      const hasStartAndEndDates =
+        !!this.date.start && !!this.date.end;
       const hasConflict =
-        (hasRegularDate && hasRecurringDate) ||
         !!(this.time.end && !this.time.start) ||
         !!(this.date.end && !this.date.start) ||
-        (hasRegularDate && !endDateIsAfterStartDate) ||
-        (hasRecurringDate && !recurringEndDateIsAfterStartDate) ||
-        (hasRegularDateProperty && hasRecurringDateProperty);
+        !endDateIsAfterStartDate ||
+        (hasRecurringDateProperty && !hasStartAndEndDates);
 
-      return hasTitle && (hasRegularDate || hasRecurringDate) && !hasConflict;
+      return hasTitle && (hasRegularDate) && !hasConflict;
     },
     textAreaHeight() {
       const minHeight = 150;
@@ -308,8 +320,6 @@ export default {
       this.date = this.event.date;
       this.time = this.event.time;
       this.weekdays = this.event.weekdays;
-      this.startDate = this.event.startDate;
-      this.endDate = this.event.endDate;
       this.category = this.event.category;
       this.color = this.event.color;
     },
@@ -319,8 +329,6 @@ export default {
       this.date = { start: "", end: "" };
       this.time = { start: "", end: "" };
       this.weekdays = [];
-      this.startDate = "";
-      this.endDate = "";
       this.category = "";
       this.color = "";
       this.showForm = false;
@@ -335,8 +343,6 @@ export default {
           date: this.date,
           time: this.time,
           weekdays: this.weekdays,
-          startDate: this.startDate,
-          endDate: this.endDate,
           category: this.category,
           color: this.color
         });

@@ -91,9 +91,7 @@ export default new Vuex.Store({
         time: { start: "", end: "" },
         category: "",
         color: "",
-        weekdays: [],
-        startDate: "",
-        endDate: ""
+        weekdays: []
       }
     }),
     service("todos", {
