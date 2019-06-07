@@ -1,6 +1,7 @@
 <template>
   <div id="app" :class="{alert:alert}">
     <div id="header">
+      <img src="/img/icons/favicon-32x32.png" class="icon"/>
       <div class="header">Personal Assistant Suite</div>
       <pa-clock/>
     </div>
@@ -219,6 +220,14 @@ pre,
 code {
   color: #daefff;
 }
+img.icon{
+  position: absolute;
+  left: 2px;
+  top: 0;
+  background-color: #fff;
+  border: 1px solid #fff;
+  opacity: 0.8;
+}
 #nav {
   position: absolute;
   right: 9px;
@@ -357,6 +366,11 @@ button:hover,
   }
   .convert-to-block-on-small-device {
     display: block !important;
+  }
+}
+@media all and (max-width: 500px) {
+  img.icon{
+    top: 17px;
   }
 }
 </style>
