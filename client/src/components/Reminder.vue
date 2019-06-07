@@ -280,7 +280,7 @@ export default {
       return this.isNotYetDue ? this.dueDate : this.dueDateAfterGracePeriod;
     },
     reminderDate() {
-      if (this.reminder.weekdays && this.reminder.weekdays.length > 0) {
+      if (this.reminder.weekdays && this.reminder.weekdays.length > 0 && calendarUtils.timeDiff(this.reminder.date, new Date()) > 0) {
         // in case this is a recurring reminder, calculate next reminder date
         return calendarUtils.upcomingDate(this.reminder);
       } else {
