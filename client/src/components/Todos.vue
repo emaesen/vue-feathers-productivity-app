@@ -375,10 +375,11 @@ h2.todos {
 }
 .column {
   display: inline-block;
+  padding-bottom: 10px;
 }
 .column + .column {
-  border-left: 1px solid #3b3636;
-  margin-left: -1px;
+  border-left: 5px solid #3b3636;
+  margin-left: -5px;
 }
 .column.one-of-3 {
   width: 33.333%;
@@ -388,6 +389,12 @@ h2.todos {
 }
 .column.one-of-1 {
   width: 100%;
+}
+.column:nth-child(odd) {
+  background-color: #1e1d21;
+}
+.column:nth-child(even) {
+  background-color: #19181f;
 }
 h4.todos-list-header {
   text-align: center;
@@ -405,7 +412,7 @@ h4.todos-list-header {
   margin: 0 0.7em;
 }
 .todos-list-cell:nth-child(odd) {
-  background-color: #1e1d21;
+  background-color: #31303a;
 }
 .todos-list-cell:nth-child(even) {
   background-color: #020204;
