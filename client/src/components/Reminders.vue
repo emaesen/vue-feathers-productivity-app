@@ -200,8 +200,9 @@ export default {
       // The 'before' hooks in reminders.hooks.js guarantee that only
       // the current user's reminders are returned.
       // In combination with reminders service clearAll on logout
-      let query = {};
-
+      let query = {
+        dismissedAt: undefined
+      };
       return query;
     },
     reminders() {
