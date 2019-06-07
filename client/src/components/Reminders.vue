@@ -286,7 +286,7 @@ h2.reminders {
   background-color: #1e1d21;
 }
 .reminders-list-cell:nth-child(even) {
-  background-color: #212027;
+  background-color: #020204;
 }
 .reminders-list-cell + .reminders-list-cell {
   border-top: 1px dashed #454545;

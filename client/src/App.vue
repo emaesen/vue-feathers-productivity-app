@@ -100,6 +100,7 @@ h2 {
   color: #fffef5;
   padding-bottom: 3px;
   border-bottom: 5px solid #333;
+  opacity: 0.8;
 }
 #header .date,
 #header .time {
@@ -116,7 +117,7 @@ h2 {
 }
 section {
   padding: 5px;
-  background-color: #212027;
+  background-color: #393744;
   border: 1px solid #2c2b31;
   border-radius: 5px;
   position: relative;
@@ -251,7 +252,7 @@ a,
 button,
 .action.button {
   background-color: transparent;
-  border: 1px solid #4b3f69;
+  border: 1px solid #8270ad;
 }
 .action.button + .action.button {
   margin-left: 5px;
@@ -262,14 +263,14 @@ button,
 }
 button:hover,
 .action.button:hover {
-  background-color: #160000;
+  background-color: #351212;
 }
 .actionable {
   margin: -4px;
   padding: 4px;
 }
 .actionable:hover {
-  background-color: #201818;
+  background-color: #1f0303;
 }
 .loading,
 .noresults {
@@ -337,17 +338,18 @@ button:hover,
   margin-right: 0;
 }
 ::-webkit-scrollbar {
-  background-color: #3d3b4a;
-  width: 6px;
-  height: 6px;
-  border-radius: 6px;
+  background-color: #676479;
+  width: 9px;
+  height: 9px;
+  border-radius: 9px;
 }
 ::-webkit-scrollbar-track {
-  border-radius: 6px;
+  border-radius: 9px;
 }
 ::-webkit-scrollbar-thumb {
-  background-color: #ada0a0;
-  border-radius: 6px;
+  background-color: #c6c1e4;
+  border-radius: 9px;
+  border: 1px solid #676479;
 }
 @media all and (max-width: 700px) {
   .remove-on-small-device {

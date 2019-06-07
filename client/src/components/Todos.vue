@@ -407,6 +407,9 @@ h4.todos-list-header {
 .todos-list-cell:nth-child(odd) {
   background-color: #1e1d21;
 }
+.todos-list-cell:nth-child(even) {
+  background-color: #020204;
+}
 .todos-list-cell + .todos-list-cell {
   border-top: 1px dashed #454545;
 }
