@@ -200,6 +200,7 @@ export default {
       props.todo.category = props.mod.category;
       props.todo.color = props.mod.color;
       props.todo.isPinned = props.mod.isPinned;
+      props.todo.timeElapsed = props.mod.timeElapsed;
       props.todo
         .update()
         .then(todo => {

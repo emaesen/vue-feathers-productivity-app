@@ -29,6 +29,7 @@
               <font-awesome-icon icon="thumbtack" v-if="showPin"/>
               {{ todo.category }}
             </div>
+            <div v-if="todoIsComplete" class="elapsed">{{ storedElapsedTime }}</div>
             <div class="due" :class="dueClass">{{ due }}</div>
             <div class="content-text" :class="'clr-' + todo.color">
               <div class="todo-title">{{ todo.title }}</div>
@@ -63,6 +64,18 @@
                   </button>
                 </div>
               </transition>
+
+              <button
+                v-if="todoIsInProgress"
+                class="action button"
+                title="flip hourglass"
+                @click="toggleTimer(todo)"
+              >{{ timerButtonText }}
+                <font-awesome-icon v-if="isTimerRunning" icon="hourglass-start"/>
+                <font-awesome-icon v-if="!isTimerRunning" icon="hourglass-end"/>
+                {{ elapsedTime }}
+                <span class="demph">{{ storedElapsedTime }}</span>
+              </button>
             </div>
             <div class="action-row" :class="{hidden:isCollapsed}">
               <button
@@ -179,6 +192,10 @@ export default {
       maxTodoHeight: "100",
       transitionDuration: "1",
       isDeleteClicked: false,
+      isTimerRunning: false,
+      timerStartTime: null,
+      timerStoredTime: this.todo.timeElapsed || 0,
+      timerElapsedTime: null,
       week: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
       month: [
         "Jan",
@@ -210,8 +227,14 @@ export default {
     noteAsHtml() {
       return simpleFormat(this.todo.note);
     },
+    todoIsInProgress() {
+      return this.todo.status === STATUS.PROGRESS;
+    },
+    todoIsComplete() {
+      return this.todo.status === STATUS.COMPLETE;
+    },
     showPin() {
-      return this.todo.status !== STATUS.COMPLETE && this.todo.isPinned;
+      return !this.todoIsComplete && this.todo.isPinned;
     },
     due() {
       //let today = new Date();
@@ -243,7 +266,7 @@ export default {
       return dueTxt;
     },
     dueDate() {
-      return this.todo.status !== STATUS.COMPLETE && this.todo._dateObj;
+      return !this.todoIsComplete && this.todo._dateObj;
     },
     daysUntilDue() {
       return this.dueDate
@@ -273,6 +296,23 @@ export default {
           ? "duetoday"
           : "notyetdue")
       );
+    },
+    timerButtonText() {
+      return this.isTimerRunning? "stop timer": "start timer";
+    },
+    elapsedTime() {
+      let nrMinutes = this.timerElapsedTime;
+      let nrHours = Math.floor(nrMinutes / 60);
+      nrMinutes = nrMinutes - nrHours*60;
+      return this.isTimerRunning
+        ? nrHours? nrHours + "h:" + nrMinutes + 'm' : nrMinutes + 'm'
+        : "";
+    },
+    storedElapsedTime() {
+      let nrMinutes = this.timerStoredTime;
+      let nrHours = Math.floor(nrMinutes / 60);
+      nrMinutes = nrMinutes - nrHours*60;
+      return this.timerStoredTime? "(" + (nrHours? nrHours + "h:" + nrMinutes + 'm' : nrMinutes + 'm') + ")" : "";
     }
   },
   methods: {
@@ -284,7 +324,7 @@ export default {
     },
     setContentStyleProps() {
       this.$nextTick(function() {
-        let elHeight = this.$refs.content.offsetHeight;
+        let elHeight = this.$refs.content ? this.$refs.content.offsetHeight : 100;
         // set max-height to actual height
         // (to allow for non-delay smooth open/close transition)
         this.maxTodoHeight = elHeight;
@@ -321,7 +361,32 @@ export default {
         }
       });
     },
+    toggleTimer(todo) {
+      this.isTimerRunning = !this.isTimerRunning;
+      if (this.isTimerRunning) {
+        this.timerElapsedTime = this.timerElapsedTime || 0;
+        this.timerStartTime = new Date().getTime();
+      } else {
+        this.updateTimeElapsed();
+      }
+    },
+    updateTimeElapsed() {
+      this.timerElapsedTime = Math.round((new Date().getTime() - this.timerStartTime) / 1000 / 60) ;
+      if (!this.isTimerRunning && this.timerElapsedTime > 0) {
+        this.storeTimeElapsed();
+        this.timerStoredTime = this.timerElapsedTime + this.timerStoredTime;
+        this.timerElapsedTime = null;
+      }
+    },
+    storeTimeElapsed() {
+      let todoMod = this.todo;
+      todoMod.timeElapsed = this.timerElapsedTime + this.timerStoredTime;
+      this.editTodo(todoMod);
+    },
     transitionTodo(todo) {
+      if (this.isTimerRunning) {
+        this.toggleTimer(todo);
+      }
       this.$emit("transition-todo", todo);
     },
     deleteTodo(todo, isConfirmed) {
@@ -352,7 +417,18 @@ export default {
     editTodoWarning(warning) {
       this.$emit("edit-todo-warning", warning);
     }
-  }
+  },
+  watch: {
+    timeTick() {
+      if (this.isTimerRunning) {
+        this.updateTimeElapsed();
+        // every 5 minutes, store/backup the elapsed time
+        if (this.timerElapsedTime > 0 && this.timerElapsedTime % 5 === 0) {
+          this.storeTimeElapsed();
+        }
+      }
+    }
+  },
 };
 </script>
 
@@ -394,12 +470,16 @@ export default {
   border-style: groove;
 }
 .due,
-.category {
+.category,
+.elapsed {
   float: right;
   font-style: italic;
   color: #cec0a1;
   font-size: 90%;
   padding: 0 10px;
+}
+.demph {
+  color: #cec0a1;
 }
 .todo-description,
 .todo-note {

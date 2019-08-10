@@ -103,7 +103,8 @@ export default new Vuex.Store({
         status: "",
         category: "",
         color: "",
-        isPinned: false
+        isPinned: false,
+        timeElapsed: ""
       }
     }),
     // Setup the auth plugin.
