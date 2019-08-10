@@ -144,6 +144,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     - [x] todo has title, description, note, and due date properties
     - [x] todo has status property
     - [x] todo has color, category and pinned properties
+    - [x] todo has elapsed-time property
 - [ ] **services**
   - [x] > Reminders service
   - [ ] > ToDos service
