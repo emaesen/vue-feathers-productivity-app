@@ -71,7 +71,7 @@
                 title="flip hourglass"
                 @click="toggleTimer(todo)"
               >{{ timerButtonText }}
-                <font-awesome-icon v-if="isTimerRunning" icon="hourglass-start"/>
+                <font-awesome-icon v-if="isTimerRunning" icon="hourglass-start" class="pendulum"/>
                 <font-awesome-icon v-if="!isTimerRunning" icon="hourglass-end"/>
                 {{ elapsedTime }}
                 <span class="demph">{{ storedElapsedTime }}</span>
@@ -531,5 +531,21 @@ export default {
 .fade-leave-to {
   opacity: 0;
   transform: scaleY(0);
+}
+.pendulum {
+position: relative;
+transform: translateZ(0);
+animation: pendulum 10s infinite ease-in-out;
+}
+@keyframes pendulum {
+0% {
+transform: rotate(-70deg);
+}
+50% {
+transform: rotate(70deg);
+}
+100% {
+transform: rotate(-70deg);
+}
 }
 </style>
