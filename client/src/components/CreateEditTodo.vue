@@ -130,6 +130,7 @@ export default {
       status: (this.todo && this.todo.status) || "",
       category: (this.todo && this.todo.category) || "",
       color: (this.todo && this.todo.color) || "",
+      timeElapsed: (this.todo && this.todo.timeElapsed) || "",
       showForm: !!(this.todo && this.todo.title),
       isPinned: !!(this.todo && this.todo.isPinned),
       showError: false,
@@ -185,6 +186,7 @@ export default {
       this.status = this.todo.status;
       this.category = this.todo.category;
       this.color = this.todo.color;
+      this.timeElapsed = this.todo.timeElapsed;
       this.isPinned = this.todo.isPinned;
     },
     clearTodoForm() {
@@ -195,6 +197,7 @@ export default {
       this.status = "";
       this.category = "";
       this.color = "";
+      this.timeElapsed = "";
       this.isPinned = false;
       this.showForm = false;
     },
@@ -213,7 +216,8 @@ export default {
           status: this.status,
           category: this.category,
           color: this.color,
-          isPinned: this.isPinned
+          isPinned: this.isPinned,
+          timeElapsed: this.timeElapsed
         });
         this.closeTodoForm();
       } else {
