@@ -165,7 +165,7 @@ const formattedTime = (date, opts) => {
   let ampmStr;
   let timeStr;
   if (opts.ampm) {
-    ampmStr = hours > 12 ? "PM" : "AM";
+    ampmStr = hours >= 12 ? "PM" : "AM";
     if (hours > 12) {
       hours = hours - 12;
     }
