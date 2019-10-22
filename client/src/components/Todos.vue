@@ -319,7 +319,7 @@ export default {
       // order by date completed (latest on top)
       return this.todos
         .filter(todo => todo.status === STATUS.COMPLETE)
-        .sort((a, b) => b.dateCompleted - a.dateCompleted);
+        .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
     },
     nrOfColumns() {
       let nr = 0;
