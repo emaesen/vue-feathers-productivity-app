@@ -12,20 +12,20 @@
     "prod": "npm run build && serve -s dist -p 8298"
   },
   "dependencies": {
-    "@feathersjs/authentication-client": "^1.0.8",
-    "@feathersjs/feathers": "^3.2.3",
-    "@feathersjs/socketio-client": "^1.1.5",
+    "@feathersjs/authentication-client": "1.0.8",
+    "@feathersjs/feathers": "3.2.3",
+    "@feathersjs/socketio-client": "1.1.5",
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.5.0",
     "@fortawesome/vue-fontawesome": "^0.1.2",
-    "feathers-vuex": "^1.6.2",
+    "feathers-vuex": "1.6.2",
     "register-service-worker": "^1.0.0",
     "serve": "^11.3.2",
     "socket.io-client": "^2.1.1",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vuex": "3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.1.1",
