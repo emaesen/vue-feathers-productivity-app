@@ -8,7 +8,8 @@
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit",
-    "dev": "npm run serve"
+    "dev": "npm run serve",
+    "prod": "npm run build && serve -s dist -p 8298"
   },
   "dependencies": {
     "@feathersjs/authentication-client": "^1.0.8",
