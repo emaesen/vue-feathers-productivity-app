@@ -13,7 +13,12 @@ module.exports = function(app) {
   Model.ensureIndex({ fieldName: 'username', unique: true }, function(err) {
     // handle errors...
     // err.errorType, err.key, err.message
+    if (err) {
+      console.log("users.model ensureIndex error", err)
+    }
   });
+
+  console.log("INFO: User Model\n", {Model})
 
   return Model;
 };
