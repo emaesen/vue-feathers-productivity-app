@@ -90,16 +90,30 @@ export default {
     ...mapState("users", { loading: "isCreatePending" })
   },
   methods: {
+    handleError(e) {
+      console.error("User Registration Error: ", e);
+      if (e.name === "NotAuthenticated") {
+        this.$router.push("/login");
+      }
+    },
     register(evt) {
       if (this.validForm()) {
-        console.log("submitting form");
+        console.log("submitting registration form");
         // create user instance
         const { User } = this.$FeathersVuex;
+        console.log("User: ", User);
+        console.log("this.user: ", this.user);
         const user = new User(this.user);
-        user.save().then(user => {
-          console.log({ user: user });
-          this.$router.push("/login");
-        });
+        console.log("user: ", user);
+        user
+          .save()
+          .then(user => {
+            console.log("User created ", user);
+            this.$router.push("/login");
+          })
+          .catch(e => {
+            this.handleError(e);
+          });
       }
       evt.preventDefault();
     },
