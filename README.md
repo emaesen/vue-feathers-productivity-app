@@ -250,7 +250,7 @@ $ cd client
 $ npm run dev
 ```
 
-You can view the client app at <http://localhost:8289/> (local) or <http://192.168.56.1:8289/> (network).
+You can view the client app at <http://localhost:8289/> (local) or at a LAN address (LAN network) - the build output will show the LAN IP address to use.
 
 ## Dependencies
 
