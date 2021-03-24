@@ -363,7 +363,7 @@ export default {
         }
       });
     },
-    toggleTimer(todo) {
+    toggleTimer() {
       this.isTimerRunning = !this.isTimerRunning;
       if (this.isTimerRunning) {
         this.timerElapsedTime = this.timerElapsedTime || 0;

@@ -261,11 +261,13 @@ export default {
         ((!this.time.start && !this.time.end) ||
           (this.time.start && this.time.end))
       );
+      /*
       const hasRegularDateProperty =
         !!this.date.start ||
         !!this.time.start ||
         !!this.date.end ||
         !!this.time.end;
+      */
       const hasRecurringDateProperty =
         this.weekdays.length > 0;
       const endDateIsAfterStartDate =
