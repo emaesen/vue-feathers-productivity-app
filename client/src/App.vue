@@ -168,12 +168,18 @@ input,
 textarea,
 select,
 button {
-  background-color: #000;
-  color: #e9e4f2;
+  background-color: rgba(206, 192, 161, 0.473);
+  color: #0e0d0f;
+  font-weight: 700;
   border: 1px solid #333;
   border-radius: 5px;
   padding: 5px 10px;
   margin-bottom: 1em;
+}
+input::placeholder {
+  color: rgba(255,188,0, 0.63);
+  font-weight: 400;
+  font-style: italic;
 }
 input:focus,
 textarea:focus,
