@@ -18,7 +18,5 @@ module.exports = function(app) {
     }
   });
 
-  console.log("INFO: User Model\n", {Model})
-
   return Model;
 };
