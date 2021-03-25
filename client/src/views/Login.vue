@@ -40,7 +40,7 @@
         <span class="validation">Acceptable</span>
       </div>
       <div class>
-        <button v-if="!loading" :disabled="!isValid">
+        <button v-if="!loading" :disabled="!isValid" class="action button">
           <font-awesome-icon icon="sign-in-alt"/>Login
         </button>
         <input v-if="loading" class="button loading" type="submit" value="in progress..." disabled>

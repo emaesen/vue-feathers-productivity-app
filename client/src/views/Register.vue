@@ -52,7 +52,7 @@
         <span class="warning">Match password</span>
       </div>
       <div class>
-        <button v-if="!loading" :disabled="!isValid">
+        <button v-if="!loading" :disabled="!isValid" class="action button">
           <font-awesome-icon icon="user-plus"/>Register
         </button>
         <input v-if="loading" class="button loading" type="submit" value="in progress..." disabled>
