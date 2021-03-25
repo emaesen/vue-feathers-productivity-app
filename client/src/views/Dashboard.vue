@@ -5,8 +5,8 @@
     </h1>
     <pa-reminders view="dashboard" :onDashboard="true" class="section"/>
     <pa-todos view="dashboard" :onDashboard="true" class="section"/>
-    <pa-calendar view="dashboard" :onDashboard="true" class="section"/>
     <pa-notes view="dashboard" :onDashboard="true" class="section"/>
+    <pa-calendar view="dashboard" :onDashboard="true" class="section"/>
   </div>
 </template>
 
