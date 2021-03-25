@@ -176,6 +176,7 @@ button {
   padding: 5px 10px;
   margin-bottom: 1em;
 }
+textarea::placeholder,
 input::placeholder {
   color: rgba(255,188,0, 0.63);
   font-weight: 400;
