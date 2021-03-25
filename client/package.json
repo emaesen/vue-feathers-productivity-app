@@ -3,13 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --port 8289",
+    "serve:dev": "vue-cli-service serve --port 8289",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:e2e": "vue-cli-service test:e2e",
     "test:unit": "vue-cli-service test:unit",
-    "dev": "npm run serve",
-    "prod": "npm run build && serve -s dist -p 8298"
+    "dev": "npm run serve:dev",
+    "serve:prod": "serve -s dist -p 8298",
+    "prod": "npm run build && npm run serve:prod",
+    "start": "npm run serve:prod"
   },
   "dependencies": {
     "@feathersjs/authentication-client": "1.0.8",
