@@ -342,3 +342,15 @@ npm start
 ## Screenshot - Add Calendar Event
 
 ![screenshot](screenshot-calendar-add-2021-03-26-140219.png)
+
+## Screenshot - Sample content
+
+![screenshot](screenshot-sample-content-2021-03-26-150130.png)
+
+## Screenshot - Sample content expanded
+
+![screenshot](screenshot-sample-content-expanded-2021-03-26-150130.png)
+
+## Screenshot - Notes filter
+
+![screenshot](screenshot-notes-filter-2021-03-26-150348.png)
