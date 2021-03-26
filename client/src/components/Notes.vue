@@ -108,7 +108,9 @@ export default {
       .catch(err => {
         this.handleError(err);
       });
-    if (this.onDashboard) {
+    if (this.onDashboard && this.hasPinnedNote) {
+      // if on dashboard and there is at least one note that is pinned,
+      // we'll apply display filter to show pinned notes and hide the others. 
       this.filter.pins.push(true);
     }
   },
@@ -288,6 +290,11 @@ export default {
             query: this.query
           }).data
         : [];
+    },
+    hasPinnedNote() {
+      const pinReducer = (acc, cur) => acc || cur.isPinned;
+      const hasPinnedNote = this.notesUnfiltered.reduce(pinReducer, false);
+      return hasPinnedNote;
     },
     nrFiltersApplied() {
       return (
