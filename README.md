@@ -142,6 +142,7 @@ Intended to be run on a LAN on a dedicated server (desktop or laptop) it offers 
       - [x] Delete
     - [x] redirects to login when session has expired
     - [x] todos board has "open tasks", "tasks in progress" and "completed tasks" lanes
+      - [x] "open tasks" and "completed tasks" lanes can be toggled between viewed and hidden states
     - [ ] todos with due date are shown on the calendar
     - [ ] todo can be associated with a reminder
     - [x] the logged-in user can access only their own todos
@@ -152,6 +153,7 @@ Intended to be run on a LAN on a dedicated server (desktop or laptop) it offers 
     - [x] todo has status property
     - [x] todo has color, category and pinned properties
     - [x] todo has elapsed-time property
+      - [x] logged-in user can start/stop the timer (repeatable) to keep track of amount of time spend on task
 - [ ] **services**
   - [x] > Reminders service
   - [x] > ToDos service
