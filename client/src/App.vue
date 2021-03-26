@@ -17,7 +17,12 @@
         </button>
       </div>
     </div>
+
     <router-view/>
+
+    <div class="build-info">
+      {{ buildInfoText }} 
+    </div>
   </div>
 </template>
 
@@ -43,7 +48,11 @@ export default {
     },
     alert() {
       return this.nrPastDueReminders > 0;
-    }
+    },
+    buildInfoText() {
+      const options = { dateStyle: "medium", timeStyle: "short" };
+      return "Dashboard build: " + (new Date()).toLocaleString('en-US', options);
+    },
   },
   methods: {
     ...mapActions("auth", { authLogout: "logout" }),
@@ -51,7 +60,7 @@ export default {
       console.log("logging out...");
       this.authLogout().then(() => this.$router.push("login"));
     }
-  }
+  },
 };
 </script>
 
@@ -89,6 +98,7 @@ h2 {
 #app {
   position: relative;
 }
+
 #header {
   position: fixed;
   top: 0;
@@ -103,6 +113,18 @@ h2 {
   border-bottom: 5px solid #333;
   opacity: 0.8;
 }
+
+.build-info{
+  font-family: monospace;
+  text-align: center;
+  color: #fffef5;
+  opacity: 0.6;
+  letter-spacing: .45em;
+  font-size: 72%;
+  text-transform: uppercase;
+  margin-top: 9em;
+}
+
 #header .date,
 #header .time {
   display: inline-block;
@@ -378,10 +400,9 @@ button:hover,
   .convert-to-block-on-small-device {
     display: block !important;
   }
-}
-@media all and (max-width: 500px) {
-  img.icon{
-    top: 17px;
+  .header,
+  .build-info{
+    letter-spacing: .27em;
   }
 }
 </style>
