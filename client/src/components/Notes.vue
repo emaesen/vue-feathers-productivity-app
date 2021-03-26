@@ -44,7 +44,7 @@
     />
     <pa-create-note @create-note="createNote" :categories="categories"/>
     <div v-if="loading" class="loading">loading...</div>
-    <div v-if="!resultsFound" class="noresults">No notes found...</div>
+    <div v-if="!resultsFound" class="noresults">{{ noResultsText }}</div>
     <transition-group
       v-if="!loading && notes && notes[0]"
       tag="div"
@@ -110,7 +110,7 @@ export default {
       });
     if (this.onDashboard && this.hasPinnedNote) {
       // if on dashboard and there is at least one note that is pinned,
-      // we'll apply display filter to show pinned notes and hide the others. 
+      // we'll apply filter to show pinned notes and hide the others. 
       this.filter.pins.push(true);
     }
   },
@@ -302,6 +302,13 @@ export default {
         this.filter.categories.length +
         this.filter.pins.length
       );
+    },
+    noResultsText() {
+      if (this.nrFiltersApplied === 0) {
+        return "No notes found..."
+      } else {
+        return "No notes match the filter settings..."
+      }
     },
     notesFilterMeta() {
       return this.notesUnfiltered.map(n => ({
