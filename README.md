@@ -326,3 +326,19 @@ npm start
 - nedb
 - serve-favicon
 - winston
+
+## Screenshot - Add Reminder
+
+![screenshot](screenshot-reminders-add-2021-03-26-140050.png)
+
+## Screenshot - Add ToDo
+
+![screenshot](screenshot-todos-add-2021-03-26-140003.png)
+
+## Screenshot - Add Note
+
+![screenshot](screenshot-notes-add-2021-03-26-140133.png)
+
+## Screenshot - Add Calendar Event
+
+![screenshot](screenshot-calendar-add-2021-03-26-140219.png)
