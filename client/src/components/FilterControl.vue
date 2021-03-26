@@ -55,14 +55,14 @@
           <input type="checkbox" id="pin-true" :value="true" v-model="filter.pins">
           <label for="pin-true" class="action button">
             yes
-            <span class="clr cntr pinned">({{ pinsCount[true] }})</span>
+            <span class="cntr pinned">({{ pinsCount[true] }})</span>
           </label>
         </div>
         <div class="filter">
           <input type="checkbox" id="pin-false" :value="false" v-model="filter.pins">
           <label for="pin-false" class="action button">
             no
-            <span class="clr cntr pinned">({{ pinsCount[false] }})</span>
+            <span class="cntr pinned">({{ pinsCount[false] }})</span>
           </label>
         </div>
       </div>
