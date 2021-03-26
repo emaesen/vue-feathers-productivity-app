@@ -168,9 +168,9 @@ input,
 textarea,
 select,
 button {
-  background-color: rgba(206, 192, 161, 0.473);
+  background-color: rgba(206, 192, 161, 0.54);
   color: #0e0d0f;
-  font-weight: 700;
+  font-weight: 400;
   border: 1px solid #333;
   border-radius: 5px;
   padding: 5px 10px;
@@ -178,7 +178,7 @@ button {
 }
 textarea::placeholder,
 input::placeholder {
-  color: rgba(255,188,0, 0.63);
+  color: rgba(255, 202, 58, 0.87);
   font-weight: 400;
   font-style: italic;
 }
@@ -188,6 +188,8 @@ select:focus,
 button:focus {
   outline-color: #888;
   outline-width: 1px;
+  color: #050505;
+  background-color: rgba(206, 192, 161, 0.81);
 }
 input[type="number"] {
   width: 5rem;
