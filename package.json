@@ -1,7 +1,7 @@
 {
   "name": "vue-feathers-productivity-app",
-  "version": "0.2.0",
-  "description": "Productivity app (ToDos, reminders, notes) created with Vue and Feathers",
+  "version": "0.3.0",
+  "description": "Productivity app (ToDos, reminders, notes, calendar) created with Vue and Feathers",
   "main": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

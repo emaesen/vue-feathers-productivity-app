@@ -1,6 +1,10 @@
 # vue-feathers-productivity-app
 
-A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeDB.
+A productivity web-app (with ToDo, reminders, notes and a calendar of events) created with Vue, Feathers-Vuex, NeDB.
+
+Intended to be run on a LAN on a dedicated server (desktop or laptop) it offers a web-app interface that is accessible to all other devices on the same network.
+
+![screenshot](screenshot-2021-03-26-134907.png)
 
 ## Versions
 
@@ -17,15 +21,17 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
   - implements client-side sorting and filtering.
   - has several types of animation: vue-based as well as plain css.
   - changes in one browser are immediately reflected in another.
-- **_WORK IN PROGRESS_**: _Multiple Services_
+- **_v0.3_**: _Multiple Services_
   - extends v0.2.
   - adds Todos service.
   - adds Reminders service.
   - adds Events service.
 
-## _--WORK IN PROGRESS--_
+## V0.3
 
-- [x] **Authentication (v0.1)**
+### Features
+
+- [x] **Authentication**
   - [x] functional registration page
     - [x] on success: redirect to login
       - [x] user is created in db
@@ -36,7 +42,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
   - [x] basic dashboard page
     - [x] dashboard is not accessible when not logged in
       - [x] if not logged in: redirect to login
-- [x] **Notes service (v0.2)**
+- [x] **Notes service**
   - [x] add Notes service
     - [x] enable server side
       - [x] generate feathers service
@@ -63,6 +69,7 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
       - [x] support filtering by
         - [x] color
         - [x] category
+        - [x] pinned on dashboard
     - [x] has list and grid mode
     - [x] implement pure css animations as well as vue-based transitions
 - [ ] **Reminders service**
@@ -137,17 +144,17 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
     - [x] todos board has "open tasks", "tasks in progress" and "completed tasks" lanes
     - [ ] todos with due date are shown on the calendar
     - [ ] todo can be associated with a reminder
-    - [ ] the logged-in user can access only their own todos
-    - [ ] real-time update events are send only to the authenticated user
+    - [x] the logged-in user can access only their own todos
+    - [x] real-time update events are send only to the authenticated user
     - [x] when user logs out, their todos data are cleared from store
-    - [ ] changes in one browser are immediately reflected in another
+    - [x] changes in one browser are immediately reflected in another
     - [x] todo has title, description, note, and due date properties
     - [x] todo has status property
     - [x] todo has color, category and pinned properties
     - [x] todo has elapsed-time property
 - [ ] **services**
   - [x] > Reminders service
-  - [ ] > ToDos service
+  - [x] > ToDos service
   - [x] > Notes service
   - [ ] > Bookmarks service
   - [x] > Events service
@@ -155,8 +162,9 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
   - [ ] > Archive service
   - [x] import vue-fontawesome icons
   - [ ] Each service has a dedicated view page.
-  - [ ] Each service has a summary view on the Dashboard page
-    - [ ] Dashboard page from top to bottom: Reminders, ToDos, Calendar, Notes, Bookmarks, Archive
+  - [x] Each service has a summary view on the Dashboard page
+    - [x] Dashboard page from top to bottom: Reminders, ToDos, Notes, Calendar
+    - [ ] Dashboard page from top to bottom: Reminders, ToDos, Notes, Calendar, Bookmarks, Archive
     - [x] Reminders has small strip on top of Dashboard page with upcoming reminder
     - [x] Reminders has countdown when next reminder is close
     - [x] Notes applies filter to hide non-pinned items
@@ -175,9 +183,12 @@ A productivity app (ToDo, reminders, notes) created with Vue, Feathers-Vuex, NeD
   - [ ] app syncs when back online
 - [ ] **deployment**
   - [ ] app is deployed on "cloud" service
-  - [ ] app is accessible on desktop and mobile device
+  - [x] app is deployed on dedicated LAN server (PC/Laptop)
+  - [x] app is accessible on desktop and mobile device
 - [ ] add "remain logged in" option to extend 1-day jwt expiration
-- [x] Page flow:
+- [x] Scales from large screen desktop to small screen mobile (but due to the amount of information per page, best to view on medium to large screen)
+
+### Page flow
 
 ```pseudo
 /
@@ -195,24 +206,25 @@ if authenticated -> dashboard
 if valid entry -> login
 ```
 
+### Nice to have but not implemented
+
 - [ ] Encrypt NeDB data items - each with user's key
-- [ ] Mobile optimized
 - [ ] Progressive Web App
 - [ ] Test suite
 - [ ] CI
-- [ ] Deploy to cloud
+- [ ] Deployable to cloud
   - [ ] Static (pre-rendered) + Lambda functions?
+  - [ ] Replace NeDB with MongoDB or similar
   - [ ] AWS? Netlify?
-  - [ ] For personal use: on mobile device using termux app?
-- [ ] Replace NeDB with Solid POD implementation
+- [ ] to run server on mobile device using termux app?
 
 ## Setup
 
 Clone or download this repo.
 
 ```bash
-# cd to vue-feathers-productivity repo directory
-$ cd [path/to/vue-feathers-productivity]
+# cd to vue-feathers-productivity-app repo directory
+$ cd [path/to/vue-feathers-productivity-app]
 # install node_modules in server directory
 $ cd server
 $ npm install
@@ -221,15 +233,13 @@ $ cd ../client
 $ npm install
 ```
 
-**_Note_**: _You may receive vulnerability warnings. They are in 'cli-plugin-e2e-nightwatch', an e2e test utility. Thus they do no impact the normal usage of either server or client. Run `npm audit fix` to fix them, or `npm audit` for details. (As of 11/08/2018 no fix is yet available)_
-
 ## Development Usage
 
 **In Git Bash window #1 - run server**:
 
 ```bash
-# cd to vue-feathers-productivity repo directory
-$ cd [path/to/vue-feathers-productivity]
+# cd to vue-feathers-productivity-app repo directory
+$ cd [path/to/vue-feathers-productivity-app]
 $ cd server
 # copy dummy data as a starting point
 # 4 users: test1, test2, test3 and test4. Password equals username
@@ -243,14 +253,41 @@ You should see a generic Feathers page at <http://localhost:3030/>.
 **In Git Bash window #2 - run client**:
 
 ```bash
-# cd to vue-feathers-productivity repo directory
-$ cd [path/to/vue-feathers-productivity]
+# cd to vue-feathers-productivity-app repo directory
+$ cd [path/to/vue-feathers-productivity-app]
 $ cd client
 # start the server (hot-reload enabled)
 $ npm run dev
 ```
 
 You can view the client app at <http://localhost:8289/> (local) or at a LAN address (LAN network) - the build output will show the LAN IP address to use.
+
+## "Production" Usage
+
+This app is meant for local use, it's not designed to be able to handle a large user base. Besides, content is stored in simple clear text format only.
+
+This app is meant to run on your LAN on one PC/laptop and you can then access the browser interface from any of your other devices when on the same network.
+
+When used like this, you no longer need to run the server and client in "dev" mode. Instead of
+
+```bash
+# in the command windows for client and server
+npm run dev
+```
+
+you can now build the client code with
+
+```bash
+# in the command window for the client
+npm run build
+```
+
+and start both server and client with
+
+```bash
+# in the command windows for client and server
+npm start
+```
 
 ## Dependencies
 
@@ -259,12 +296,13 @@ You can view the client app at <http://localhost:8289/> (local) or at a LAN addr
 - @feathersjs/authentication-client
 - @feathersjs/feathers
 - @feathersjs/socketio-client
-- @fortawesome/vue-fontawesome
 - @fortawesome/fontawesome-svg-core
 - @fortawesome/free-regular-svg-icons
 - @fortawesome/free-solid-svg-icons
+- @fortawesome/vue-fontawesome
 - feathers-vuex
 - register-service-worker
+- serve
 - socket.io-client
 - vue
 - vue-router
@@ -288,11 +326,3 @@ You can view the client app at <http://localhost:8289/> (local) or at a LAN addr
 - nedb
 - serve-favicon
 - winston
-
-**_Vue-CLI plugins:_**
-
-- [babel](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel)
-- [pwa](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa)
-- [eslint](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint)
-- [unit-mocha](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-unit-mocha)
-- [e2e-nightwatch](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-e2e-nightwatch)
