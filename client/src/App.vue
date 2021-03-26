@@ -184,12 +184,14 @@ input::placeholder {
 }
 input:focus,
 textarea:focus,
-select:focus,
-button:focus {
+select:focus {
   outline-color: #888;
   outline-width: 1px;
   color: #050505;
   background-color: rgba(206, 192, 161, 0.81);
+}
+button:focus {
+  outline: none;
 }
 input[type="number"] {
   width: 5rem;
