@@ -199,4 +199,10 @@ export default {
   opacity: 0;
   transform: translateY(-9px);
 }
+
+@media all and (max-width: 600px) {
+  .calendar-body {
+    margin: 0 -5px;
+  }
+}
 </style>

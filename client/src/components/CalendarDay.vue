@@ -238,6 +238,7 @@ h4 {
 .day-compact .event,
 .day-compact .reminder {
   display: flex;
+  flex-direction: row;
 }
 .text {
   overflow: hidden;
@@ -276,5 +277,12 @@ h4 {
 }
 .events-list-cell {
   border: 1px dashed #454545;
+}
+
+@media all and (max-width: 800px) {
+  .day-compact .event,
+  .day-compact .reminder {
+    flex-direction: column;
+  }
 }
 </style>

@@ -400,6 +400,21 @@ button:hover,
   .convert-to-block-on-small-device {
     display: block !important;
   }
+  body,
+  input,
+  textarea,
+  select,
+  button {
+    font-size: 12px;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    letter-spacing: normal;
+  }
   .header,
   .build-info{
     letter-spacing: .27em;

@@ -42,4 +42,11 @@ export default {
   padding: 3px;
   border-radius: 5px;
 }
+
+@media all and (max-width: 700px) {
+  .calendar-container {
+    border: none;
+    padding: 0;
+  }
+}
 </style>
