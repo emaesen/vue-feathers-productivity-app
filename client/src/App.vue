@@ -1,12 +1,12 @@
 <template>
   <div id="app" :class="{alert:alert}">
-    <div id="header">
+    <header id="header">
       <img src="/img/icons/favicon-32x32.png" class="icon"/>
       <div class="header">Personal Assistant Suite</div>
       <pa-clock/>
-    </div>
-    <div id="nav">
-      <div v-if="user" class="nav-item">
+    </header>
+    <div id="auth">
+      <div v-if="user" class="auth-state">
         <span class="info">
           <font-awesome-icon icon="user-check"/>
           <span class="remove-on-small-device">Logged in as</span>
@@ -17,12 +17,13 @@
         </button>
       </div>
     </div>
+    <main id="main">
+      <router-view/>
+    </main>
 
-    <router-view/>
-
-    <div class="build-info">
+    <footer class="build-info">
       {{ buildInfoText }} 
-    </div>
+    </footer>
   </div>
 </template>
 
@@ -98,7 +99,9 @@ h2 {
 #app {
   position: relative;
 }
-
+#main {
+  min-height: calc(100vh - 180px);
+}
 #header {
   position: fixed;
   top: 0;
@@ -122,7 +125,7 @@ h2 {
   letter-spacing: .45em;
   font-size: 72%;
   text-transform: uppercase;
-  margin-top: 9em;
+  margin-top: 90px;
 }
 
 #header .date,
@@ -261,7 +264,7 @@ img.icon{
   border: 1px solid #fff;
   opacity: 0.8;
 }
-#nav {
+#auth {
   position: absolute;
   right: 9px;
   a {
@@ -366,7 +369,7 @@ button:hover,
 .right-margin5 {
   margin-right: 5px;
 }
-.nav-item {
+.auth-state {
   display: inline;
 }
 .hidden {
