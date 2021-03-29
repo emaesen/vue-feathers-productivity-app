@@ -50,7 +50,7 @@
             </span>
           </div>
 
-          <div class>
+          <div>
             <label for="date">
               Date &amp; time
               <span
@@ -59,6 +59,7 @@
               >(required)</span>
               <span v-if="showError" class="error">Please provide at least a date</span>
             </label>
+
             <div v-if="isRecurring">
               <div class="nowrap">
                 <span class="divider-word">repeat from</span>
@@ -256,10 +257,13 @@ export default {
     isValid() {
       // cover basic isValid conditions
       const hasTitle = !!(this.title && this.title !== "");
+      const isAllDay = this.date.start && !this.date.end && !this.time.start && !this.time.end;
       const hasRegularDate = !!(
         this.date.start &&
-        ((!this.time.start && !this.time.end) ||
-          (this.time.start && this.time.end))
+        ( isAllDay ||
+          (!this.time.start && !this.time.end) ||
+          (this.time.start && this.time.end)
+        )
       );
       /*
       const hasRegularDateProperty =
@@ -285,7 +289,7 @@ export default {
       const hasConflict =
         !!(this.time.end && !this.time.start) ||
         !!(this.date.end && !this.date.start) ||
-        !endDateIsAfterStartDate ||
+        (!isAllDay && !endDateIsAfterStartDate) ||
         (hasRecurringDateProperty && !hasStartAndEndDates);
 
       return hasTitle && (hasRegularDate) && !hasConflict;
