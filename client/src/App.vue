@@ -51,8 +51,12 @@ export default {
       return this.nrPastDueReminders > 0;
     },
     buildInfoText() {
-      const options = { dateStyle: "medium", timeStyle: "short" };
-      return "Dashboard build: " + (new Date()).toLocaleString('en-US', options);
+      const buildAt = process.env.VUE_APP_BUILD_AT
+      if (buildAt) {
+        const options = { dateStyle: "medium", timeStyle: "short" };
+        return "Dashboard build: " + (new Date(buildAt)).toLocaleString('en-US', options);
+      }
+      return ""
     },
   },
   methods: {
