@@ -102,7 +102,9 @@ export default {
   text-align: center;
   vertical-align: middle;
   color: #daf6ff;
-  text-shadow: 0 0 10px rgba(10, 175, 230, 1), 0 0 20px rgba(10, 175, 230, 0.5);
+  text-shadow: 0 0 9px rgb(157, 225, 248),
+               0 0 18px rgba(50, 199, 248, 0.836),  
+               0 0 3px rgb(144, 225, 248);
 }
 .time {
   letter-spacing: 0.2em;
