@@ -220,7 +220,7 @@ if valid entry -> login
   - [ ] AWS? Netlify?
 - [ ] to run server on mobile device using termux app?
 
-NOTE: The ["pwa" branch](/tree/pwa) contains the basics to turn this web-app into a Progressive Web App (PWA).
+NOTE: The ["pwa" branch](https://github.com/emaesen/vue-feathers-productivity-app/tree/pwa) contains the basics to turn this web-app into a Progressive Web App (PWA).
 
 ## Setup
 
