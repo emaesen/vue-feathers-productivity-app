@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "serve:dev": "vue-cli-service serve --port 8289",
-    "build": "vue-cli-service build && npm run set:env",
+    "build:dist": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "dev": "npm run serve:dev",
+    "build": "npm run set:env && npm run build:dist",
     "serve:prod": "serve -s dist -p 8298",
     "prod": "npm run build && npm run serve:prod",
     "start": "npm run serve:prod",
