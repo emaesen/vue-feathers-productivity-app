@@ -220,6 +220,8 @@ if valid entry -> login
   - [ ] AWS? Netlify?
 - [ ] to run server on mobile device using termux app?
 
+NOTE: The ["pwa" branch](tree/pwa) contains the basics to turn this web-app into a Progressive Web App (PWA).
+
 ## Setup
 
 If you do not yet have [NodeJs](https://nodejs.org/en/) installed, I suggest to install [nvm](https://github.com/nvm-sh/nvm), the NodeJs Version Manager, and use that to install NodeJs V9.0.0 or later (I have this project running on an old eeepc netbook with [Linux Lite 3.8](https://osdn.net/projects/linuxlite/storage/3.8/), the last 32bit version. After much trial and error I installed Node V9.0.0 because that is the latest major version for which binaries are available)
