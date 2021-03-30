@@ -21,6 +21,11 @@
       <router-view/>
     </main>
 
+    <div id="update-alert" :class="['alert-offscreen', showUpdateAlert ? 'alert' : '']">
+      New version available
+      <button class="action" @click="updateApp">UPDATE</button>
+    </div>
+
     <footer class="build-info">
       {{ buildInfoText }} 
     </footer>
@@ -32,13 +37,24 @@
 import { mapState, mapGetters, mapActions } from "vuex";
 import Clock from "./components/Clock";
 
+import { 
+  areNotificationsAvailable,
+  addAppMessageListeners,
+  getAppUpdate 
+} from "./utils/sw-interface.js";
+
 export default {
   name: "App",
   components: {
     "pa-clock": Clock
   },
   data() {
-    return {};
+    return {
+      showUpdateAlert: false,
+    };
+  },
+  mounted() {
+    addAppMessageListeners(this.onAppMessage);
   },
   computed: {
     ...mapState("auth", { user: "user" }),
@@ -58,13 +74,26 @@ export default {
       }
       return ""
     },
+    areNotificationsAvailable() {
+      return areNotificationsAvailable
+    },
   },
   methods: {
     ...mapActions("auth", { authLogout: "logout" }),
     logout() {
       console.log("logging out...");
       this.authLogout().then(() => this.$router.push("login"));
-    }
+    },
+    onAppMessage(msg) {
+      if (msg === "sw:updated") {
+        this.showUpdateAlert = true;
+      }
+      this.msg = this.msg? this.msg + " ; " + msg : "msg = " + msg;
+    },
+    updateApp() {
+      this.showUpdateAlert = false;
+      getAppUpdate();
+    },
   },
 };
 </script>
@@ -386,6 +415,26 @@ button:hover,
 .svg-inline--fa.flush-right {
   margin-right: 0;
 }
+
+.alert-offscreen {
+  position:fixed;
+  transition: right 1s ease;
+  bottom: -80px;
+  right: -500px;
+}
+.alert{
+  position:fixed;
+  bottom:27px;
+  right:10px;
+  background-color: #f6d55de8;
+  border-radius: 5px;
+  padding: 2px 50px;
+  color: #2e2846;
+  text-shadow: none;
+  font-weight: 700;
+  box-shadow: 0 0 5px #5a0703;
+}
+
 ::-webkit-scrollbar {
   background-color: #676479;
   width: 9px;
@@ -425,6 +474,9 @@ button:hover,
   .header,
   .build-info{
     letter-spacing: .27em;
+  }
+ .alert{
+    padding: 2px 5px;
   }
 }
 </style>
