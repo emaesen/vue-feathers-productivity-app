@@ -66,3 +66,6 @@ typings/
 
 # ref files
 _ref_*
+
+# VSC workspace
+*.code-workspace
