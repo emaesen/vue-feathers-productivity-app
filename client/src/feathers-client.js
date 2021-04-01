@@ -11,7 +11,9 @@ console.log("connecting to feathersServer: " + feathersServer)
 const socket = io(feathersServer, { transports: ["websocket"] });
 
 const feathersClient = feathers()
-  .configure(socketio(socket))
+  .configure(socketio(socket, {
+    timeout: 10000
+  }))
   .configure(auth({ storage: window.localStorage }));
 
 export default feathersClient;
