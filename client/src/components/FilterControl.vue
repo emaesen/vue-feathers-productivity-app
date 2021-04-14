@@ -181,8 +181,6 @@ label {
   font-style: normal;
   font-weight: 400;
   color: #948972;
-  line-height: 22px;
-  font-size: 14px;
 }
 .slidefade-enter-active,
 .slidefade-leave-active {

@@ -383,8 +383,8 @@ h2.notes {
   margin: 0 5px;
   vertical-align: middle;
   text-align: center;
-  width: 25px;
-  height: 25px;
+  min-height: 22px;
+  min-width: 20px;
 }
 .clr.clr-red {
   border-color: #f91414;
