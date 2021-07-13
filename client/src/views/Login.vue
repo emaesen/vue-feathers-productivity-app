@@ -43,7 +43,9 @@
         <button v-if="!loading" :disabled="!isValid" class="action button">
           <font-awesome-icon icon="sign-in-alt"/>Login
         </button>
-        <input v-if="loading" class="button loading" type="submit" value="in progress..." disabled>
+        <button v-if="loading" class="action button loading" disabled>
+          in progress..
+        </button>
         <span class="register">-or- &nbsp;
           <router-link to="/register">
             <font-awesome-icon icon="user-plus"/>Register
@@ -51,7 +53,9 @@
         </span>
       </div>
       <div v-if="authError" class="auth-error">{{ authError }}</div>
+      <div v-if="retryMsg" class="auth-retry">{{ retryMsg }}</div>
     </fieldset>
+    <img class="feathers-icon" :src="feathersServerIcon"/>
   </form>
 </template>
 
@@ -67,18 +71,34 @@ export default {
         username: "",
         password: ""
       },
-      authError: ""
+      authError: "",
+      retryCntr: 0,
+      retryDelay: 10,
+      maxRetry: 2,
+      retryCountdown: 0,
     };
   },
   computed: {
     isValid() {
       return this.validUsername() && this.validPassword();
     },
-    ...mapState("auth", { loading: "isAuthenticatePending" })
+    ...mapState("auth", { loading: "isAuthenticatePending" }),
+    feathersServerIcon() {
+      //display the feathers icon as indication that the server is up and running
+      const loc = window.location
+      const feathersServer = loc.protocol + "//" + loc.hostname + ":3030"
+      console.log("this:",this)
+      return feathersServer + "/favicon.ico"
+    },
+    retryMsg() {
+      return this.retryCountdown > 0 ? "Retry in " + this.retryCountdown + " seconds (" + this.retryCntr + ")": ""
+    },
   },
   methods: {
     ...mapActions("auth", ["authenticate"]),
     login(evt) {
+      this.clearError()
+      this.clearRetry()
       if (this.validForm()) {
         //submit form
         console.log("submitting login form");
@@ -93,9 +113,21 @@ export default {
           .catch(e => {
             console.error("Authentication error: ", e);
             this.authError = e.message;
+            this.retryLogin()
           });
       }
-      evt.preventDefault();
+      if(evt) evt.preventDefault();
+    },
+    retryLogin() {
+      if (this.retryCntr<this.maxRetry) {
+        this.retryCountdown = this.retryDelay
+        this.cntDwnIntv = setInterval(()=>this.retryCountdown--, 1000)
+        setTimeout(this.login, this.retryCountdown*1000) 
+        this.retryCntr++
+      }
+    },
+    clearRetry() {
+      clearInterval(this.cntDwnIntv)
     },
     clearError() {
       this.authError = "";
@@ -143,8 +175,13 @@ input:valid + span + span.validation {
   font-size: 0.85rem;
   color: #e67d09;
 }
+.auth-retry,
 .auth-error {
   margin-left: 0.2em;
+}
+.auth-retry {
+  font-size: 0.85rem;
+  font-style: italic;
 }
 ul {
   margin: 0 -1em 1em 0;
@@ -154,5 +191,12 @@ ul {
   font-size: 0.85rem;
   color: #999;
   font-style: italic;
+}
+label {
+  display: flex;
+}
+.feathers-icon {
+  vertical-align: top;
+  margin: 10px 0 0 10px;
 }
 </style>
